@@ -1,0 +1,10 @@
+==========
+chdir
+==========
+#include <unistd.h>
+
+int	chdir(const char *path);
+permet de ce deplacer dans les fichier avec le path indique
+le chemin ne peut etre que un dir pas un fichier
+
+
