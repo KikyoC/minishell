@@ -1,0 +1,9 @@
+=========
+readdir
+=========
+#include <dirent.h>
+
+int readdir(DIR *dir, struct dirent *entry, struct dirent **result);
+
+permet de lire chaque fichier present dans un directory
+Se referer a la page dirent pour plus d'informations

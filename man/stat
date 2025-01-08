@@ -1,0 +1,35 @@
+===========
+stat
+===========
+#include <sys/stat.h>
+
+int stat(const char *path, struct stat *buf);
+
+la fonction stat permet de recuperer certaines infos sur un fichier demander.
+Pour tester, voici un main :
+
+
+int main(int argc, char **argv)
+{
+	// les informations se stockent dans une struct stat
+	struct stat fileStat;
+
+	// vous pouvez changer les permissions du fichier pour voir les infos changer
+    if (argc != 2) {
+        printf("Usage: %s <file_path>\n", argv[0]);
+        return 1;
+    }
+
+    if (stat(argv[1], &fileStat) < 0) {
+        perror("Erreur lors de l'accès au fichier");
+        return 1;
+    }
+	
+    printf("Informations sur le fichier : %s\n", argv[1]);
+    printf("Taille : %ld octets\n", fileStat.st_size);
+    printf("Permissions : %o\n", fileStat.st_mode & 0777);
+    printf("Propriétaire (UID) : %d\n", fileStat.st_uid);
+    printf("Groupe (GID) : %d\n", fileStat.st_gid);
+
+    return 0;
+}

@@ -1,0 +1,30 @@
+Dirent est une structure necessaire lorsque l'on parle de directory en C
+
+elle est compose de 4 parametres : 
+	-d_ino
+	-d_off
+	-d_reclen
+	-d_type
+	-d_name[256]
+
+d_ino : numero d'inode (index node)
+	un inode est une valeur donnant les metadonnees d'un fichier
+	ses permissions taille proprio
+	une inode pour un fichier sauf si hard link
+
+d_off :
+	nombre d'octer avant le prochain fichier
+	ignorer dans une majorite des cas
+	et souvent mis a 0
+
+d_reclen :
+	masque par readdir, 
+	est utilise pour passer avoir la taille d'un fichier de maniere a passer au 
+	fichier suivant
+
+d_type :
+	Give the type of the file if this doesn't work,
+	then consider doing it with the lstat function.
+
+d_name :
+	give the name of the file (no way Sherlock) up to 256 characters 

@@ -1,0 +1,8 @@
+=========
+fstat
+=========
+#include <sys/stat.h>
+
+la meme commande que stat et lstat a la difference que lui travail sur un fd 
+et non pas un path
+

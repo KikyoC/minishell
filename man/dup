@@ -1,0 +1,10 @@
+=========
+dup
+=========
+#include <unistd.h>
+
+int dup(int oldfd);
+
+duplique le fd..
+rien de plus..
+

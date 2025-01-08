@@ -1,0 +1,10 @@
+========
+opendir
+========
+#include <sys/types.h>
+#include <dirent.h>
+
+permet de lire un directory, renvoi NULL si le dir n'existe pas.
+se stock dans un pointeur de type DIR *
+
+DIR *di = opendir(<dir>);

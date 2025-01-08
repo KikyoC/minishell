@@ -1,0 +1,8 @@
+===============
+dup2
+===============
+#include <unistd.h>
+
+int dup2(int oldfd, int newfd);
+
+copie oldfd dans newfd
