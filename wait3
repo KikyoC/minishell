@@ -1,0 +1,5 @@
+=============
+WAIT3
+=============
+Do like wait function but you can give ressource usage (rusage)
+You should use it like wait3(int *status, int options, struct rusage *ressource usage)
