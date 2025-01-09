@@ -1,0 +1,7 @@
+=========
+fstat
+=========
+#include <sys/stat.h>
+
+same command as stat and lstat, only difference is that fstat works on fds not 
+on pathes.

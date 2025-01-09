@@ -1,0 +1,9 @@
+==========
+chdir
+==========
+#include <unistd.h>
+
+int	chdir(const char *path);
+Allows you to move from a dir to an other 
+The path can only be a dir not a file
+

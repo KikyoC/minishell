@@ -1,0 +1,34 @@
+===========
+stat
+===========
+#include <sys/stat.h>
+
+int stat(const char *path, struct stat *buf);
+
+the stat function allows you to get some infos on the asked file
+here is a main to test because it's a little abstract
+
+
+int main(int argc, char **argv)
+{
+	// infos goes to this struct
+	struct stat fileStat;
+
+    if (argc != 2) {
+        printf("Usage: %s <file_path>\n", argv[0]);
+        return 1;
+    }
+
+    if (stat(argv[1], &fileStat) < 0) {
+        perror("Could read the file");
+        return 1;
+    }
+	
+    printf("File info : %s\n", argv[1]);
+    printf("size : %ld octets\n", fileStat.st_size);
+    printf("Permissions : %o\n", fileStat.st_mode & 0777);
+    printf("Owner (UID) : %d\n", fileStat.st_uid);
+    printf("Group (GID) : %d\n", fileStat.st_gid);
+
+    return (0);
+}
