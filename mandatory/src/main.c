@@ -6,12 +6,12 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/09 13:48:33 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/09 15:45:09 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-int main(int argc, char **argv)
+int main(void)
 {
 	return (0);
 }
