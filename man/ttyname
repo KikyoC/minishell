@@ -1,0 +1,9 @@
+==============
+ttyname
+==============
+#include <unistd.h>
+
+char *ttyname(int fd)
+
+ttyname gives the path to the fd, if it's a terminal if not
+returns NULL

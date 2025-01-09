@@ -1,0 +1,21 @@
+==========
+isatty
+==========
+#include <unistd.h>
+
+int isatty(int desc);
+
+isatty is user to see if desc is connected to a terminal,
+return 1 if it's connected to a terminal, 0 if not
+for example here is a normal case :
+
+> ./a.out
+1
+
+whereas
+> ./a.out > test.txt
+> cat test.txt
+0
+
+here is the written command :
+isatty(STDOUT_FILENO)

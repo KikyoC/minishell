@@ -1,0 +1,9 @@
+===========
+strerror
+===========
+#include <string.h>
+
+char *strerror(int errnum);
+
+strerror explains from a code (int) which error was generated
+
