@@ -1,0 +1,5 @@
+=============
+GETENV
+=============
+Try to find something in environment variable (if you use getenv("PATH") it will return you the path)
+If it's not found it return null;

@@ -1,0 +1,10 @@
+===========
+getcwd
+===========
+#include <unistd.h>
+
+char	*getcwd(char *buf, size_t size);
+
+get the buffer the current directory
+the buffer is not taken if the size < current dir
+returns NULL

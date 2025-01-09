@@ -1,0 +1,13 @@
+=======
+unlink
+=======
+#include <unistd.h>
+
+int unlink(const char *pathname);
+
+removes a file on the path.
+you can remove an open file, it will be removed once close
+
+success : code = 0
+fail : code = -1
+

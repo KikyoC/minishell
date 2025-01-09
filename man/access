@@ -1,0 +1,13 @@
+=============
+ACCESS
+=============
+Check if a file exists with a specific mode;
+You should use the function like access("path/to/file.txt", MODE)
+
+In mode you can use:
+- F_OK (Check if file exists)
+- X_OK (Check if file exists and the program can execute it)
+- R_OK (Check if file exists and it's readable)
+- W_OK (Check if file exists and it's writable)
+
+Returns 0 if it's ok and non-zero number if not

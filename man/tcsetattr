@@ -1,0 +1,28 @@
+=============
+TCSETATTR
+=============
+
+This function is made for edit terminal behaviour
+You should use it like int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);
+
+Fd is the file descriptor of the terminal
+
+optional actions can be:
+	- TCSANOW (Apply changes immediatly)
+	- TCSADRAIN (Apply changes when all output written)
+	- TCSAFLUSH (Like TCSADRAIN but not read will be discarded)
+
+return 0 on success and -1 on fail
+
+termios_p is a structure who looks like this:
+
+struct termios {
+    tcflag_t c_iflag;    // Input modes
+    tcflag_t c_oflag;    // Output modes
+    tcflag_t c_cflag;    // Control modes
+    tcflag_t c_lflag;    // Local modes
+    cc_t     c_cc[NCCS]; // Control characters
+};
+
+There are many flags
+Check the man and ask copilot for explanations

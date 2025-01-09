@@ -1,0 +1,7 @@
+=============
+TCGETADDR
+=============
+int tcgetattr(int fd, struct termios *termios_p);
+
+Return 0 on success and -1 on failure
+Take a fd as parameter (should be terminal fd) and a termios struct. It will save into the struct current parameters

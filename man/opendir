@@ -1,0 +1,10 @@
+========
+opendir
+========
+#include <sys/types.h>
+#include <dirent.h>
+
+allows you to read a Dir, returns NULL if the dir doesn't exits.
+Stock itself in a pointer of the DIR *type.
+
+DIR *di = opendir(<dir>);
