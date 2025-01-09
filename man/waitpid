@@ -1,0 +1,7 @@
+=============
+WAITPID
+=============
+Wait for a child process to end
+You should use it like waitpid(pid_t pid, int *status, int option)
+
+If you don't care about options it does like wait but it will wait a definied child (pid_t parameter). Have the same behaviour than wait if you use it like wait(-1, &status)
