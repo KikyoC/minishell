@@ -1,0 +1,12 @@
+=============
+FORK
+=============
+Create a child process from the parent process
+You should use it like this fork();
+
+Returns:
+ - -1 if there is an error
+ - 0 if you are in the child process
+ - the child pid if you are in the parent process
+
+It make sense to check if it's 0 or -1 to handle child process and error and save the pid to wait it later
