@@ -1,8 +1,0 @@
-=============
-WAIT
-=============
-Wait for a child process to end (it's a random child process we don't care about which one)
-You should use it like wait(int *status)
-
-If you want to see the status code of a child process, you can store it in the parameter of the function
-It return the pid of the child process and continue the program
