@@ -5,10 +5,9 @@ unlink
 
 int unlink(const char *pathname);
 
-supprime un fichier designer par le path
-il est possible de supprimer un fichier qui est deja ouvert, le fichier sera toujours existant tant
-que le fichier n'est pas fermer
+removes a file on the path.
+you can remove an open file, it will be removed once close
 
-reussite : code = 0
-echec : code = -1
+success : code = 0
+fail : code = -1
 

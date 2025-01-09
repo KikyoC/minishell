@@ -3,6 +3,5 @@ fstat
 =========
 #include <sys/stat.h>
 
-la meme commande que stat et lstat a la difference que lui travail sur un fd 
-et non pas un path
-
+same command as stat and lstat, only difference is that fstat works on fds not 
+on pathes.

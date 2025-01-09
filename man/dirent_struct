@@ -1,26 +1,25 @@
-Dirent est une structure necessaire lorsque l'on parle de directory en C
+Dirent is a necessary structure when you talk about directories in C
 
-elle est compose de 4 parametres : 
+There are 5 component which are : 
 	-d_ino
 	-d_off
 	-d_reclen
 	-d_type
 	-d_name[256]
 
-d_ino : numero d'inode (index node)
-	un inode est une valeur donnant les metadonnees d'un fichier
-	ses permissions taille proprio
-	une inode pour un fichier sauf si hard link
+d_ino : inode number (node index)
+	The ibnode value is a number gives every infos about a file,
+	would it be it's size, it's authorisations
+	An inode is a unique number until hard link are involved
 
 d_off :
-	nombre d'octer avant le prochain fichier
-	ignorer dans une majorite des cas
-	et souvent mis a 0
+	octal number until the next file,
+	commonly forgoten and not used
+	often put to 0
 
 d_reclen :
-	masque par readdir, 
-	est utilise pour passer avoir la taille d'un fichier de maniere a passer au 
-	fichier suivant
+	readdir doesn't read that
+	achive the size of a file, untile the next one
 
 d_type :
 	Give the type of the file if this doesn't work,

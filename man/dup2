@@ -5,4 +5,4 @@ dup2
 
 int dup2(int oldfd, int newfd);
 
-copie oldfd dans newfd
+copy oldfd to the newfd

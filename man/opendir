@@ -4,7 +4,7 @@ opendir
 #include <sys/types.h>
 #include <dirent.h>
 
-permet de lire un directory, renvoi NULL si le dir n'existe pas.
-se stock dans un pointeur de type DIR *
+allows you to read a Dir, returns NULL if the dir doesn't exits.
+Stock itself in a pointer of the DIR *type.
 
 DIR *di = opendir(<dir>);

@@ -3,7 +3,5 @@ lstat
 =============
 #include <sys/stat.h>
 
-meme chose que pour la fonction de base,
-la seule diff est dans la lectures des fichiers avec des liens symbolique
-lstat -> revoi les infos du lien et non pas du fichier sur lequel pointe le lien symbolique
-
+same as stat, only diff, it reads the link not the linked file on a symbolically
+linked file

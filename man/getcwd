@@ -5,8 +5,6 @@ getcwd
 
 char	*getcwd(char *buf, size_t size);
 
-recupere dans le buffer la le repertoire courrant (pwd)
-on recupere le fichier sur lequel on est
-si la size < que le chemin courrant : renvoie NULL
-
-
+get the buffer the current directory
+the buffer is not taken if the size < current dir
+returns NULL

@@ -5,5 +5,5 @@ readdir
 
 int readdir(DIR *dir, struct dirent *entry, struct dirent **result);
 
-permet de lire chaque fichier present dans un directory
-Se referer a la page dirent pour plus d'informations
+allows to read each fule present in a dir
+Consider reading the "dirent" file for more infos
