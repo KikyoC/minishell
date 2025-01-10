@@ -57,6 +57,7 @@ $(NAME) : $(OBJ)
 	@ar -rcs $(NAME) $@ $^ $(OBJ)
 
 o_files/%.o : %.c
+	@mkdir -p o_files 
 	@$(CC) -o $@ -c $< $(CFLAGS)
 	
 clean : 
