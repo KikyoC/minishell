@@ -6,22 +6,20 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 17:53:47 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/10 18:10:09 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
 	char	*line;
 	char	**path;
 
 	path = get_paths(getenv("PATH"));
-	for (int i = 0; path[i]; i++)
-	{
-		printf("path : %s\n", path[i]);
-	}
+	(void)argc;
+	(void)argv;
 	while (1)
 	{
 		line = readline("\e[0;36m──(\e[0;33m \e[1;32mSegfault\e[0;36m)──\e[1;36m> ");
@@ -32,11 +30,7 @@ int main(void)
 		else if (ft_strnstr("exit", line, 5))
 			return (0);
 		else if (ft_strnstr("c", line, 1))
-		{
-			printf("test\n");
-			clear(path);
-			printf("test\n");
-		}
+			clear(env);
 		add_history(line);
 		free(line);
 	}

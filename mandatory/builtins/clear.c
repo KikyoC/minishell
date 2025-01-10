@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:19:54 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 17:55:55 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/10 18:09:32 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 void	clear(char **path)
 {
 	int		pid;
-	char	*cmd;
-	char	**c = ft_calloc(3, sizeof(char *));
+	char	*c[2] = {NULL, NULL};
 
-	cmd = does_exist("clear", path);
-	printf("%s\n",cmd);
 	pid = fork();
 	if (pid == 0)
-	{
-		execve(cmd, c, path);
-	}
-	waitpid(pid, NULL, 0);
+		execve("/usr/bin/clear", c, path);
+	else
+		waitpid(pid, NULL, 0);
 }
