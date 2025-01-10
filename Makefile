@@ -21,8 +21,8 @@ UTILS_PATH = mandatory/utils/
 # PARSING_PATH = mandatory/parsing/
 
 SRC = main.c
-BUILTIN = pwd.c
-UTIL = strings.c
+BUILTIN = pwd.c clear.c
+UTIL = strings.c commands.c
 # SIGNAL = 
 # PARSING = 
 

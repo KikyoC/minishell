@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 15:05:09 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/10 17:47:59 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -36,6 +36,12 @@
 
 void	pwd(void);
 
-int	strings(char *input, char *command);
+int		strings(char *input, char *command);
+
+char	**get_paths(char *env);
+
+char	*does_exist(char *cmd, char **paths);
+
+void	clear(char **path);
 
 #endif
