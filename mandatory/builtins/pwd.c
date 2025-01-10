@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 11:11:39 by togauthi         ###   ########.fr       */
+/*   Created: 2025/01/09 17:39:16 by togauthi          #+#    #+#             */
+/*   Updated: 2025/01/10 10:13:22 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
+#include <linux/limits.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
+#include "../includes/libft/libft.h"
 
-int main(int argc, char **argv)
+/* pwd:
+*	Print the current path 
+*/
+void	pwd(void)
 {
-	char	*line;
+	char	*location;
 
-	(void)argc;
-	(void)argv;
-	while (1)
-	{
-		line = readline("\e[0;36m──(\e[0;33m \e[1;32mSegfault\e[0;36m)──\e[1;36m> ");
-		if (!line)
-			break;
-		//He we should do something with the line
-		add_history(line);
-		free(line);
-	}
-	rl_clear_history();
-	return (0);
+	location = ft_calloc(PATH_MAX + 1, sizeof(char));
+	getcwd(location, PATH_MAX);
+	printf("%s\n", location);
 }
