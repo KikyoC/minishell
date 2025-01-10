@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 09:28:19 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/10 09:31:32 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -25,7 +25,6 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include "../includes/libft/libft.h"
-jkcbaweiobdjab
 
 // structs
 
