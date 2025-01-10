@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -lreadline
+CFLAGS = -Wall -Werror -Wextra -g
 
 # Couleurs pour les messages
 GREEN = \033[32m
@@ -51,7 +51,7 @@ all: $(NAME)
 	@:	
 
 $(NAME): $(LIBFT_LIB) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL)
-	@$(CC) $(CFLAGS) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(LIBFT_LIB) -o $@
+	@$(CC) $(CFLAGS) -lreadline $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(LIBFT_LIB) -o $@
 	@echo "$(GREEN)>>>	MINISHELL COMPILED	<<<"
 
 $(LIBFT_LIB):
