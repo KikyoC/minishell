@@ -47,7 +47,7 @@ BONUS = ft_lstnew_bonus.c \
 OBJ = $(SRC:%.c=o_files/%.o)
 B_OBJ = $(SRC:%.c=o_files/%.o)
 NAME = libft.a
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -g
 
 .PHONY : all clean fclean re
 
