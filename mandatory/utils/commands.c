@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:26:59 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 17:48:07 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/10 18:41:13 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**get_paths(char *env)
 		return (NULL);
 	i = 0;
 	paths = NULL;
-	paths = ft_split(env, ':');
+	paths = ft_split(env, ":");
 	if (!paths)
 		return (paths);
 	paths = reformat_all(paths);
