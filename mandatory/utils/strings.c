@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   strings.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 17:39:16 by togauthi          #+#    #+#             */
-/*   Updated: 2025/01/10 14:55:46 by cmorel           ###   ########.fr       */
+/*   Created: 2025/01/10 15:01:39 by cmorel            #+#    #+#             */
+/*   Updated: 2025/01/10 15:01:56 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 
-/* pwd:
-*	Print the current path 
-*/
-void	pwd(void)
+int	strings(char *input, char *command)
 {
-	char	*location;
+	int	i;
 
-	location = ft_calloc(PATH_MAX + 1, sizeof(char));
-	getcwd(location, PATH_MAX);
-	printf("%s\n", location);
+	i = 0;
+	while ((input[i] && command[i]) && (input[i] == command[i]))
+		i++;
+	if (input[i] == '\n' && command[i] == '\0')
+		return (1);
+	return (0);
 }

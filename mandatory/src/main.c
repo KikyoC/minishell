@@ -6,15 +6,11 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 11:11:39 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:09:24 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "../h_files/minishell.h"
 
 int main(int argc, char **argv)
 {
@@ -27,7 +23,8 @@ int main(int argc, char **argv)
 		line = readline("\e[0;36m──(\e[0;33m \e[1;32mSegfault\e[0;36m)──\e[1;36m> ");
 		if (!line)
 			break;
-		//He we should do something with the line
+		if (ft_strnstr("pwd", line, 3))
+			pwd();
 		add_history(line);
 		free(line);
 	}
