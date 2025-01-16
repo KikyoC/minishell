@@ -1,4 +1,7 @@
 #include "../h_files/minishell.h"
+#include <linux/limits.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 static char	*parse(char *str, int *new_line)
 {
@@ -19,22 +22,41 @@ static char	*parse(char *str, int *new_line)
 	return (&str[i]);
 }
 
+int	try_print_home(char *str)
+{
+	char	*home;
+	int		i;
+
+	if (str[0] == '~' && (str[1] == '\0' || str[1] == ' '))
+	{
+		home = getenv("HOME");
+		i = -1;
+		if (home)	
+			while (home[++i])
+				write (1, &home[i], 1);
+		return (1);
+	}
+	return (0);
+}
+
 void	write_echo(char *str)
 {
-	int	in_quote;
-	int	in_word;
-	int	i;
+	char	in_quote;
+	int		i;
 
-	in_quote = -1;
-	in_word = 1;
+	in_quote = 0;
 	i = -1;
 	while (str[++i])
 	{
-		if (in_quote == -1 && i > 1 && str[i] != ' ' && str[i - 1] == ' ')
+		if (try_print_home(&str[i]))
+			continue ;
+		if (!in_quote && i > 1 && str[i] != ' ' && str[i - 1] == ' ')
 			write(1, " ", 1);
-		if (str[i] == '"')
-			in_quote = -in_quote;
-		else if (str[i] == ' ' && in_quote == -1)
+		if (!in_quote && (str[i] == '"' || str[i] == '\''))
+			in_quote = str[i];
+		else if (in_quote && (str[i] == '"' || str[i] == '\''))
+			in_quote = 0;
+		else if (str[i] == ' ' && !in_quote)
 			continue ;
 		else if (str[i] == '\\' && str[i + 1] == '"')
 			write(1, &str[++i], 1);
