@@ -6,13 +6,12 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:22:13 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 18:39:17 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:06:26 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H	
+#ifndef LIBFT_H
 # define LIBFT_H
-
 # include <stdlib.h>
 # include <unistd.h> 
 
@@ -64,7 +63,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 
 char	*ft_strtrim(char const *s1, char const *set);
 
-char	**ft_split(char *s, char *splitter);
+char	**ft_split(char *s, char *splitter);	
 
 char	*ft_itoa(int n);
 
@@ -109,5 +108,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+void	*ft_free_split(char **split);
 
 #endif

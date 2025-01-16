@@ -33,7 +33,7 @@ SRC = ft_bzero.c \
 	  ft_putnbr_fd.c \
 	  ft_strdup.c \
 	  ft_substr.c \
-	  ft_free_split.c 
+	  ft_free_split.c
 
 BONUS = ft_lstnew_bonus.c \
 		ft_lstadd_front_bonus.c \
@@ -48,7 +48,7 @@ BONUS = ft_lstnew_bonus.c \
 OBJ = $(SRC:%.c=o_files/%.o)
 B_OBJ = $(SRC:%.c=o_files/%.o)
 NAME = libft.a
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -g
 
 .PHONY : all clean fclean re
 
