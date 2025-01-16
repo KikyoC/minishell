@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 12:02:37 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 17:40:40 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:35:45 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,4 @@ char	**ft_split(char *str, char *splitter)
 	}
 	return (split);
 }
+
