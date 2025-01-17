@@ -21,32 +21,42 @@ int	args(char *str)
 
 	i = 0;
 	in_quote = -1;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '"')
 			in_quote = -in_quote;
 		else if (str[i] == ' ' && in_quote == -1)
-			return 1;
+			return (1);
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
-void	cd(char *str)
+int	cd(char *str)
 {
 	char	*final;
+
 	final = parse(str);
 	if (args(final))
 	{
 		ft_putstr_fd("Minishell: too many arguments\n", 2);
-		return ;
+		return (1);
 	}
 	if (!final)
 	{
 		final = getenv("HOME");
 		if (final && chdir(final))
+		{
 			perror("Minishell");
+			return (1);
+		}
 	}
 	if (chdir(final))
+	{
 		perror("Minishell");
+		return (1);
+	}
+	return (0);
 }
