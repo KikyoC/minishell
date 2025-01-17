@@ -1,7 +1,4 @@
 #include "../h_files/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 char	*parse(char *str)
 {
@@ -17,10 +14,33 @@ char	*parse(char *str)
 	return (&str[i]);
 }
 
+int	args(char *str)
+{
+	int	i;
+	int	in_quote;
+
+	i = 0;
+	in_quote = -1;
+	while (str[i])
+	{
+		if (str[i] == '"')
+			in_quote = -in_quote;
+		else if (str[i] == ' ' && in_quote == -1)
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
 void	cd(char *str)
 {
 	char	*final;
 	final = parse(str);
+	if (args(final))
+	{
+		ft_putstr_fd("Minishell: too many arguments\n", 2);
+		return ;
+	}
 	if (!final)
 	{
 		final = getenv("HOME");
