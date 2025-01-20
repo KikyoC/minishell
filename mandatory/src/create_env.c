@@ -1,4 +1,5 @@
 #include "../h_files/minishell.h"
+#include <string.h>
 
 void	*destroy_node(t_env *node);
 void	*destroy(t_env *env);
@@ -35,15 +36,32 @@ t_env	*create_node(char *str)
 void	add_back(t_env **env, t_env *element)
 {
 	t_env	*node;
+	size_t	len;
 
 	if (env && !*env)
 	{
 		*env = element;
 		return ;
 	}
+	len = ft_strlen(element->name);
 	node = *env;
 	while (node->next)
+	{
+		if (ft_strncmp(node->name, element->name, len) == 0)
+		{
+			free(node->content);
+			node->content = element->content;
+			free(element->name);
+			free(element);
+			return ;
+		}
+		else if (node->next == NULL)
+		{
+			node->next = element;
+			return ;
+		}
 		node = node->next;
+	}
 	node->next = element;
 }
 
