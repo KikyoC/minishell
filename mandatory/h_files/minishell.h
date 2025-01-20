@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/16 17:08:42 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/20 13:09:00 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -46,8 +46,14 @@ void	clear(char **path);
 
 int		quote_parsing(char *command);
 
-int		is_operator(char str, int op);
+int		is_operator(char ch);
 
-int		reset(int *before, int *sign);
+t_list	*check_until(char *line, int *j);
+
+t_list	*ft_split_skip_quotes(char *line);
+
+t_list	*find_operator(int *i, char *line);
+
+int		quote_parsing(char *command);
 
 #endif

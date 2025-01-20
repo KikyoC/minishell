@@ -6,13 +6,32 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 14:11:39 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/01/20 15:30:22 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv)
+{
+	t_list	*lst;
+	t_list	*curr;
+
+	if (argc != 2)
+		return (printf("merci de me donner un argument !\n"));
+	lst = ft_split_skip_quotes(argv[1]);
+	curr = lst;
+	int i = 0;
+	while (curr)
+	{
+		printf("%s\n", (char *)curr->content);
+		curr = curr->next;
+		i++;
+	}
+	ft_lstclear(&lst, free);
+}
+
+int mainn(int argc, char **argv, char **env)
 {
 	char	*line;
 	char	**path;

@@ -1,7 +1,7 @@
 CC = cc
 SRC = ft_bzero.c \
 	  ft_isalpha.c \
-	  ft_isdigit.c\
+	  ft_isdigit.c \
 	  ft_memchr.c \
 	  ft_memcpy.c \
 	  ft_memset.c \
@@ -38,7 +38,7 @@ SRC = ft_bzero.c \
 BONUS = ft_lstnew_bonus.c \
 		ft_lstadd_front_bonus.c \
 		ft_lstsize_bonus.c \
-		ft_lstlast_bonus.c\
+		ft_lstlast_bonus.c \
 		ft_lstadd_back_bonus.c \
 		ft_lstdelone_bonus.c \
 		ft_lstclear_bonus.c \
@@ -46,28 +46,30 @@ BONUS = ft_lstnew_bonus.c \
 		ft_lstmap_bonus.c
 
 OBJ = $(SRC:%.c=o_files/%.o)
-B_OBJ = $(SRC:%.c=o_files/%.o)
+B_OBJ = $(BONUS:%.c=o_files/%.o)
 NAME = libft.a
 CFLAGS = -Werror -Wextra -Wall -g
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re bonus
 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	@ar -rcs $(NAME) $@ $^ $(OBJ)
+	@ar -rcs $(NAME) $^
+	@echo "Library $(NAME) created."
+
+bonus : $(OBJ) $(B_OBJ)
+	@ar -rcs $(NAME) $^
 
 o_files/%.o : %.c
 	@mkdir -p o_files 
 	@$(CC) -o $@ -c $< $(CFLAGS)
 	
 clean : 
-	@rm -f $(OBJ) $(B_OBJ)
+	@rm -f o_files/*.o
 
 fclean : clean
 	@rm -f $(NAME)
 
-bonus : $(OBJ) $(B_OBJ)
-	@ar -rcs $(NAME) (BONUS) $(B_OBJ)
-
 re : fclean all
+
