@@ -13,10 +13,20 @@ t_list	*find_operator(int *i, char *line)
 	t_list	*node;
 	char	*str;
 	int		count;
+	int		little;
+	int		big;
 
 	count = 0;
-	while (!is_operator(line[count]) && line[count])
+	little = 0;
+	big = 0;
+	while ((!is_operator(line[count]) || big % 2 != 0 || little % 2 != 0)&& line[count])
+	{
+		if (line[count] == '\'' && big % 2 == 0)
+			little++;
+		else if (line[count] == '"' && little % 2 == 0)
+			big++;
 		count++;
+	}
 	str = ft_calloc(count + 1, sizeof(char));
 	while (--count >= 0)
 	{
@@ -25,17 +35,6 @@ t_list	*find_operator(int *i, char *line)
 	}
 	node = ft_lstnew(str);
 	return (node);
-}
-
-int	skip_quotes(char *line, char ch, int *i)
-{
-	while (line[*i])
-	{
-		if (ch == '"' || ch == '\'')
-			break ;
-		(*i)++;
-	}
-	return (*i);
 }
 
 t_list	*ft_split_skip_quotes(char *line)
@@ -47,13 +46,9 @@ t_list	*ft_split_skip_quotes(char *line)
 	lst = NULL;
 	while (line[i])
 	{
-		if (line[i] == '\'')
-			skip_quotes(line, '\'', &i);
-		else if (line[i] == '"')
-			skip_quotes(line, '"', &i);
-		else if (!is_operator(line[i]))
+		if (!is_operator(line[i]))
 			ft_lstadd_back(&lst, find_operator(&i, line + i));
-		else if (is_operator(line[i]))
+		else
 			ft_lstadd_back(&lst, check_until(line + i, &i));
 	}
 	return (lst);

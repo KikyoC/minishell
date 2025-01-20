@@ -8,7 +8,7 @@ t_list	*check_until(char *line, int *j)
 	char	*str;
 
 	i = 0;
-	while (is_operator(line[i]))
+	while (is_operator(line[i]) && line[i])
 		i++;
 	str = ft_calloc(i + 1, sizeof(char));
 	*j += i;
