@@ -33,36 +33,40 @@ t_env	*create_node(char *str)
 	return (node);
 }
 
+void	free_it_good(t_env **node, t_env *content)
+{
+	free((*node)->content);
+	(*node)->content = content->content;
+	free(content->name);
+	free(content);
+}
+
 void	add_back(t_env **env, t_env *element)
 {
 	t_env	*node;
 	size_t	len;
+	int		assigned;
 
 	if (env && !*env)
 	{
 		*env = element;
 		return ;
 	}
+	assigned = 0;
 	len = ft_strlen(element->name);
 	node = *env;
 	while (node->next)
 	{
 		if (ft_strncmp(node->name, element->name, len) == 0)
 		{
-			free(node->content);
-			node->content = element->content;
-			free(element->name);
-			free(element);
-			return ;
-		}
-		else if (node->next == NULL)
-		{
-			node->next = element;
+			free_it_good(&node, element);
+			assigned = 1;
 			return ;
 		}
 		node = node->next;
 	}
-	node->next = element;
+	if (!assigned)
+		node->next = element;
 }
 
 t_env	*get_env(char **envp)
