@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/20 13:09:00 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/21 13:59:52 by xray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -30,6 +30,11 @@
 
 // structs
 
+typedef	struct s_duet
+{
+	int	single_quote;
+	int	double_quote;
+}	t_duet;
 
 
 // functions
@@ -55,5 +60,13 @@ t_list	*ft_split_skip_quotes(char *line);
 t_list	*find_operator(int *i, char *line);
 
 int		quote_parsing(char *command);
+
+int		len_quotes(t_duet duet, char *line);
+
+int		remove_quote(char *line, t_list *cmds);
+
+t_list	*get_correct_commands(t_list *cmds);
+
+t_list	*get_commands(char *line);
 
 #endif

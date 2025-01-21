@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/20 16:42:39 by xray             ###   ########.fr       */
+/*   Updated: 2025/01/21 14:00:08 by xray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ int main(int argc, char **argv)
 	ft_lstclear(&lst, free);
 }
 
-// int mainn(int argc, char **argv, char **env)
+// int main(int argc, char **argv, char **env)
 // {
 // 	char	*line;
-// 	char	**path;
 //
-// 	path = get_paths(getenv("PATH"));
 // 	(void)argc;
 // 	(void)argv;
 // 	while (1)

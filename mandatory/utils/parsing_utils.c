@@ -19,7 +19,8 @@ t_list	*find_operator(int *i, char *line)
 	count = 0;
 	little = 0;
 	big = 0;
-	while ((!is_operator(line[count]) || big % 2 != 0 || little % 2 != 0)&& line[count])
+	while ((!is_operator(line[count]) || big % 2 != 0
+			|| little % 2 != 0) && line[count])
 	{
 		if (line[count] == '\'' && big % 2 == 0)
 			little++;
@@ -28,11 +29,9 @@ t_list	*find_operator(int *i, char *line)
 		count++;
 	}
 	str = ft_calloc(count + 1, sizeof(char));
+	(*i) += count;
 	while (--count >= 0)
-	{
 		str[count] = line[count];
-		(*i)++;
-	}
 	node = ft_lstnew(str);
 	return (node);
 }
@@ -71,4 +70,20 @@ int	quote_parsing(char *command)
 			double_quote++;
 	}
 	return (!(quote % 2) && !(double_quote % 2));
+}
+
+int	len_quotes(t_duet duet, char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'' && duet.single_quote != -1)
+			return (i);
+		else if (line[i] == '"' && duet.double_quote != -1)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
