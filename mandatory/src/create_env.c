@@ -33,10 +33,10 @@ t_env	*create_node(char *str)
 	return (node);
 }
 
-void	free_it_good(t_env **node, t_env *content)
+void	free_it_good(t_env *node, t_env *content)
 {
-	free((*node)->content);
-	(*node)->content = content->content;
+	free(node->content);
+	node->content = content->content;
 	free(content->name);
 	free(content);
 }
@@ -45,27 +45,21 @@ void	add_back(t_env **env, t_env *element)
 {
 	t_env	*node;
 	size_t	len;
-	int		assigned;
 
-	if (env && !*env)
-	{
-		*env = element;
-		return ;
-	}
-	assigned = 0;
 	len = ft_strlen(element->name);
 	node = *env;
 	while (node->next)
 	{
 		if (ft_strncmp(node->name, element->name, len) == 0)
 		{
-			free_it_good(&node, element);
-			assigned = 1;
+			free_it_good(node, element);
 			return ;
 		}
 		node = node->next;
 	}
-	if (!assigned)
+	if (ft_strncmp(node->name, element->name, len) == 0)
+		free_it_good(node, element);
+	else
 		node->next = element;
 }
 
@@ -82,7 +76,10 @@ t_env	*get_env(char **envp)
 		node = create_node(envp[i]);
 		if (!node)
 			return (destroy(res));
-		add_back(&res, node);
+		if (!res)
+			res = node;
+		else
+			add_back(&res, node);
 		i++;
 	}
 	return (res);
