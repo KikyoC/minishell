@@ -6,12 +6,28 @@ void	add_back(t_env **env, t_env *node);
 
 char	*parse(char *line)
 {
-	int	i;
+	int		i;
+	int		j;
+	int		skip;
+	char	*final;
 
 	i = 6;
 	while (line[i] == ' ')
 		i++;
-	return (ft_strdup(&line[i]));
+	final = ft_calloc(ft_strlen(&line[i]) + 1, sizeof(char));
+	if (!final)
+		return (NULL);
+	j = i;
+	skip = 0;
+	while (line[j] && line[j] != ' ')
+	{
+		if (line[j] == '"')
+			skip++;
+		else
+			final[j - i - skip] = line[j];
+		j++;
+	}
+	return (final);
 }
 
 void	*destroy_little(t_env *node)
@@ -26,30 +42,15 @@ void	*destroy_little(t_env *node)
 	return (NULL);
 }
 
-t_env	*little_split(char *str)
+t_env	*new_env(char *str)
 {
 	t_env	*res;
-	size_t	i;
-	size_t	j;
 
+	(void)str;
 	res = ft_calloc(1, sizeof(t_env));
 	if (!res)
 		return (NULL);
-	i = 0;
-	while (str[i] != '=')
-	{
-		if (str[i] == '\0')
-			return (destroy_little(res));
-		i++;
-	}
-	res->name = ft_substr(str, 0, i);
-	i++;
-	j = i;
-	while (str[j] != ' ' && str[j])
-		j++;
-	res->content = ft_substr(str, i, j - i);
-	if (!res->name || !res->content || res->content[0] == '\0')
-		return (destroy_little(res));
+	
 	return (res);
 }
 
@@ -59,7 +60,8 @@ int	export(char *line, t_env **env)
 	t_env	*node;
 
 	final = parse(line);
-	node = little_split(final);
+	printf("%s\n", final);
+	return (0);
 	if (!node)
 		return (1);
 	add_back(env, node);	
