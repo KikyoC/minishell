@@ -48,23 +48,9 @@ t_env	*little_split(char *str)
 	while (str[j] != ' ' && str[j])
 		j++;
 	res->content = ft_substr(str, i, j - i);
-	if (!res->name || !res->content)
+	if (!res->name || !res->content || res->content[0] == '\0')
 		return (destroy_little(res));
 	return (res);
-}
-
-t_env	*find(t_env **env, char *str)
-{
-	t_env	*node;
-
-	node = *env;
-	while (node)
-	{
-		if (strncmp(node->name, str, 6) == 0)
-			return (node);
-		node = node->next;
-	}
-	return (NULL);
 }
 
 int	export(char *line, t_env **env)
@@ -76,9 +62,6 @@ int	export(char *line, t_env **env)
 	node = little_split(final);
 	if (!node)
 		return (1);
-	add_back(env, node);
-	
-	node = find(env, "coucou");
-	printf("The added node is now: %s=%s\n", node->name, node->content);
+	add_back(env, node);	
 	return (0);
 }
