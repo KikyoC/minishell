@@ -6,10 +6,8 @@
 static char	*parse(char *str, int *new_line)
 {
 	int	i;
-	int	var;
 
 	i = 4;
-	var = 0;
 	while (str[i] == ' ')
 		i++;
 	if (str[i] == '-' && str[i + 1] == 'n')
