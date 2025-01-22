@@ -16,39 +16,34 @@ LIBFT_FILE = libft.a
 OBJ_PATH = obj/
 SRC_PATH = mandatory/src/
 BUILTIN_PATH = mandatory/builtins/
-# SIGNALS_PATH = mandatory/signals/
-UTILS_PATH = mandatory/utils/
 PARSING_PATH = mandatory/parsing/
+UTILS_PATH = mandatory/utils/
+# SIGNALS_PATH = mandatory/signals/
 
 SRC = main.c
 BUILTIN = pwd.c clear.c
 UTIL = strings.c commands.c parsing_utils.c split_skip_quotes_utils.c
-
+PARSING = parsing.c text_handle.c clean_commands.c
 # SIGNAL = 
-PARSING = parsing.c
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 BUILTINS = $(addprefix $(BUILTIN_PATH), $(BUILTIN))
-
 UTILS = $(addprefix $(SRC_PATH), $(UTIL))
-
-# SIGNALS = $(addprefix $(SRC_PATH), $(SIGNAL))
 PARSINGS = $(addprefix $(PARSING_PATH), $(PARSING))
+# SIGNALS = $(addprefix $(SRC_PATH), $(SIGNAL))
+
 
 OBJ_SRC = $(SRC:.c=.o)
 OBJ_BUILTIN = $(BUILTIN:.c=.o)
-
 OBJ_UTILS = $(UTIL:.c=.o)
-
-# OBJ_SIGNALS = $(SIGNAL:.c=.o)
 OBJ_PARSING = $(PARSING:.c=.o)
+# OBJ_SIGNALS = $(SIGNAL:.c=.o)
+
+
 
 OBJS_SRC = $(addprefix $(OBJ_PATH), $(OBJ_SRC))
 OBJS_BUILTIN = $(addprefix $(OBJ_PATH), $(OBJ_BUILTIN))
-
-
 OBJS_UTILS = $(addprefix $(OBJ_PATH), $(OBJ_UTILS))
-
 OBJS_PARSING = $(addprefix $(OBJ_PATH), $(OBJ_PARSING))
 # OBJS_SIGNALS = $(addprefix $(OBJ_PATH), $(OBJ_SIGNALS))
 
@@ -59,7 +54,7 @@ all: $(NAME)
 
 
 $(NAME): $(LIBFT_LIB) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(OBJS_PARSING)
-	@$(CC) $(CFLAGS) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(LIBFT_LIB) $(OBJS_PARSING) -o $@ -lreadline
+	@$(CC) $(CFLAGS) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(OBJS_PARSING) $(LIBFT_LIB) -o $@ -lreadline
 	@echo "$(GREEN)>>>	MINISHELL COMPILED	<<<"
 
 $(LIBFT_LIB):

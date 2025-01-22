@@ -6,11 +6,20 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/21 14:00:08 by xray             ###   ########.fr       */
+/*   Updated: 2025/01/22 11:18:40 by xray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../h_files/minishell.h"
+
+void	print_split(char **split)
+{
+	int	i;
+	
+	i = -1;
+	while (split[++i])
+		printf("\b\b%s\n", split[i]);
+}
 
 int main(int argc, char **argv)
 {
@@ -19,12 +28,14 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 		return (printf("merci de me donner un argument !\n"));
-	lst = ft_split_skip_quotes(argv[1]);
+	lst = get_commands(argv[1]);
 	curr = lst;
 	int i = 0;
 	while (curr)
 	{
-		printf("%s\n", (char *)curr->content);
+		printf("%d.\n\b command: %s\n",i,  curr->command);
+		if (curr->flags)
+			print_split(curr->flags);
 		curr = curr->next;
 		i++;
 	}
