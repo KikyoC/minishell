@@ -1,10 +1,8 @@
 #include "../h_files/minishell.h"
-#include <stdlib.h>
-#include <string.h>
 
 void	add_back(t_env **env, t_env *node);
 
-char	*parse(char *line)
+static char	*parse(char *line)
 {
 	int		i;
 	int		j;
@@ -45,12 +43,26 @@ void	*destroy_little(t_env *node)
 t_env	*new_env(char *str)
 {
 	t_env	*res;
+	int		i;
+	int		j;
 
-	(void)str;
+	i = 0;
 	res = ft_calloc(1, sizeof(t_env));
 	if (!res)
 		return (NULL);
-	
+	while (str[i] != '=')
+	{
+		if (str[i] == '\0')
+			return (destroy_little(res));
+		i++;
+	}
+	res->name = ft_substr(str, 0, i);
+	j = i + 1;
+	while (str[j])
+		j++;
+	res->content = ft_substr(str, i + 1, j);
+	if (!res->name || !res->content || ! res->content[0])
+		return (destroy_little(res));
 	return (res);
 }
 
@@ -60,10 +72,12 @@ int	export(char *line, t_env **env)
 	t_env	*node;
 
 	final = parse(line);
-	printf("%s\n", final);
-	return (0);
+	if (!final)
+		return (1);
+	node = new_env(final);
 	if (!node)
 		return (1);
 	add_back(env, node);	
+	free(final);
 	return (0);
 }
