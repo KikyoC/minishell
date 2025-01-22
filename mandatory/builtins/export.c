@@ -1,6 +1,7 @@
 #include "../h_files/minishell.h"
 
 void	add_back(t_env **env, t_env *node);
+t_env	*sort_env(t_env **e);
 
 static char	*parse(char *line)
 {
@@ -66,18 +67,39 @@ t_env	*new_env(char *str)
 	return (res);
 }
 
+void	print_env(t_env **env)
+{
+	t_env	*node;
+
+	node = *env;
+	while (node)
+	{
+		printf("%s=%s\n", node->name, node->content);
+		node = node->next;
+	}
+}
+
+void	*destroy(t_env *env);
+
 int	export(char *line, t_env **env)
 {
 	char	*final;
 	t_env	*node;
+	t_env	*sort;
 
 	final = parse(line);
 	if (!final)
 		return (1);
+	if (final[0] == '\0')
+	{
+		sort = sort_env(env);
+		print_env(&sort);
+		destroy(sort);
+	}
 	node = new_env(final);
+	free(final);
 	if (!node)
 		return (1);
 	add_back(env, node);	
-	free(final);
 	return (0);
 }

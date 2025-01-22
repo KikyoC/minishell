@@ -8,7 +8,7 @@ static char	*parse(char *line)
 	int		skip;
 	char	*final;
 
-	i = 6;
+	i = 5;
 	while (line[i] == ' ')
 		i++;
 	final = ft_calloc(ft_strlen(&line[i]) + 1, sizeof(char));
@@ -27,7 +27,6 @@ static char	*parse(char *line)
 	return (final);
 }
 
-
 int	unset(char *line, t_env **env)
 {
 	char	*final;
@@ -44,7 +43,7 @@ int	unset(char *line, t_env **env)
 	while (node)
 	{
 		if (!node->next)
-			return (0);
+			break ;
 		if (strncmp(final, node->next->name, i) == 0)
 		{
 			to_delete = node->next;
@@ -59,5 +58,6 @@ int	unset(char *line, t_env **env)
 		free(to_delete->content);
 		free(to_delete);
 	}
+	free(final);
 	return (0);
 }
