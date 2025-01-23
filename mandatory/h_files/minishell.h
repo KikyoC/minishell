@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/22 14:35:49 by xray             ###   ########.fr       */
+/*   Updated: 2025/01/23 09:57:02 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -63,12 +63,16 @@ int		quote_parsing(char *command);
 
 int		len_quotes(t_duet duet, char *line);
 
-int		remove_quote(char *line, t_list *cmds);
+void	remove_quote(char *line, t_list *cmds);
 
 t_list	*get_correct_commands(t_list *cmds);
 
 t_list	*get_commands(char *line);
 
 char	*cpy_without_quote(char *line);
+
+char	*ft_charjoin(char *str, char ch);
+
+void	skip_spaces(char *line, int *i);
 
 #endif

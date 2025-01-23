@@ -1,5 +1,4 @@
 
-
 #include "../h_files/minishell.h"
 
 void	clean_flags(char **flags)
@@ -24,18 +23,20 @@ t_list	*get_correct_commands(t_list *cmds)
 	curr = cmds;
 	while (curr)
 	{
-		if (remove_quote(curr->content, cmds) == -1)
+		remove_quote(curr->content, curr);
+		if (!ft_strnstr(curr->command, "echo", 4))
+			clean_flags(curr->flags);
+		if (curr->type == -1)
+			curr->type = 1;
+		if (curr->type == 3 && curr->flags)
+			modify_flags(curr);
+		if (ft_strnstr(">>", curr->command, 2) || ft_strnstr("<<", curr->command, 2)
+				|| ft_strnstr("<", curr->command, 1) || ft_strnstr(">", curr->command, 1))
 		{
-			ft_lstclear(&cmds, free);
-			return (NULL);
+			curr->type = 2;
+			curr->next->type = 3;
 		}
-		// else
-		// {
-		// 	get_infos(curr->content, cmds);
-		// }
-		clean_flags(curr->flags);
 		curr = curr->next;
 	}
 	return (cmds);
 }
-

@@ -22,7 +22,7 @@ UTILS_PATH = mandatory/utils/
 
 SRC = main.c
 BUILTIN = pwd.c clear.c
-UTIL = strings.c commands.c parsing_utils.c split_skip_quotes_utils.c
+UTIL = utils.c commands.c parsing_utils.c split_skip_quotes_utils.c
 PARSING = parsing.c text_handle.c clean_commands.c
 # SIGNAL = 
 

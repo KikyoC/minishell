@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:22:13 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/21 12:46:54 by xray             ###   ########.fr       */
+/*   Updated: 2025/01/23 13:04:53 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,12 @@ void	*ft_free_split(char **split);
 typedef struct s_list
 {
 	void			*content;
+	struct s_list	*prev;
 	struct s_list	*next;
 	int				type;
 	char			**flags;
 	char			*command;
+	int				been_quoted;
 }	t_list;
 
 t_list	*ft_lstnew(void *content);

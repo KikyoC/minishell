@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strings.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:01:39 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/22 17:40:44 by xray             ###   ########.fr       */
+/*   Updated: 2025/01/23 11:15:12 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../h_files/minishell.h"
-
-int	strings(char *input, char *command)
-{
-	int	i;
-
-	i = 0;
-	while ((input[i] && command[i]) && (input[i] == command[i]))
-		i++;
-	if (input[i] == '\n' && command[i] == '\0')
-		return (1);
-	return (0);
-}
 
 char	*ft_charjoin(char *str, char ch)
 {
@@ -45,5 +33,11 @@ char	*ft_charjoin(char *str, char ch)
 		join[i] = str[i];
 	join[i] = ch;
 	free(str);
-	return(join);
+	return (join);
+}
+
+void	skip_spaces(char *line, int *i)
+{
+	while (line[*i + 1] == ' ' && line[*i + 1])
+		(*i)++;
 }

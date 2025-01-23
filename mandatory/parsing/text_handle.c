@@ -29,58 +29,6 @@ char	**get_flags(char *line, t_list *cmds)
 	return (flags);
 }
 
-int	remove_quote(char *line, t_list *cmds)
-{
-	int		i;
-	t_duet	duet;
-	char	*command;
-
-	duet.double_quote = 0;
-	duet.single_quote = 0;
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'')
-			command = quote_remover('\'', line, command, &i);
-		else if (line[i] == '"')
-			command = quote_remover('"', line, command, &i);
-		else if (line[i] == ' ')
-				break ;
-		else
-
-
-	}
-}
-
-int	get_infos(char *line, t_list *cmds)
-{
-	int	i;
-	int	size;
-
-	i = 0;
-	while (line[i] == ' ' || line[i] == '\'' || line[i] == '"')
-		i++;
-	// while ()
-	// size = len_quotes(duet, line + i);
-	// if (size == -1 || !size)
-	// 	return (-1);
-	// command = ft_calloc(size + 1, sizeof(char));
-	// if (!command)
-	// 	return (-1);
-	// while (line[i])
-	// {
-	// 	if (line[i] == '"')
-	// 		break ;
-	// 	else if (line[i] == '\'')
-	// 		break ;
-	// 	command[j++] = line[i++];
-	// }
-	// cmds->command = command;
-	// get_flags(line + i + 1, cmds);
-	return (0);
-	//
-}
-
 char	*cpy_without_quote(char *line)
 {
 	int		i;
@@ -99,4 +47,40 @@ char	*cpy_without_quote(char *line)
 	}
 	free(line);
 	return (cpy);
+}
+
+char	*quote_remover(char quote, char *line, char *command, int *i)
+{
+	while (line[++(*i)] && line[*i] != quote)
+		command = ft_charjoin(command, line[*i]);
+	return (command);
+}
+
+void	remove_quote(char *line, t_list *cmds)
+{
+	int		i;
+	char	*command;
+
+	i = -1;
+	command = NULL;
+	skip_spaces(line, &i);
+	while (line[++i])
+	{
+		if (line[i] == '\'')
+		{
+			command = quote_remover('\'', line, command, &i);
+			cmds->been_quoted = 1;
+		}
+		else if (line[i] == '"')
+		{
+			command = quote_remover('"', line, command, &i);
+			cmds->been_quoted = 1;
+		}
+		else if (line[i] == ' ')
+			break ;
+		else
+			command = ft_charjoin(command, line[i]);
+	}
+	cmds->command = command;
+	get_flags(line + i, cmds);
 }
