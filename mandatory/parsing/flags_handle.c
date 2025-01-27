@@ -35,6 +35,23 @@ char	**split_flags(char **flags)
 	return (cpy);
 }
 
+char	**give_flags(t_list *curr, t_list *cmds)
+{
+	int len;
+	int	index;
+	char	**new;
+
+	index = 0;
+	len = split_len(curr->flags) + split_len(cmds->flags);
+	new = ft_calloc(len + 1, sizeof(char *));
+	new[len] = NULL;
+	split_realloc(curr->flags, new, &index);
+	curr->flags = NULL;
+	split_realloc(cmds->flags, new, &index);
+	cmds->flags = NULL;
+	return (new);
+}
+
 void	modify_flags(t_list *cmds)
 {
 	t_list	*curr;
@@ -53,4 +70,6 @@ void	modify_flags(t_list *cmds)
 		cmds->flags = NULL;
 		new->type = 1;
 	}
+	else
+		curr->flags = give_flags(curr, cmds);
 }

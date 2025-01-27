@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/23 09:57:02 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/27 11:10:29 by xray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -74,5 +74,11 @@ char	*cpy_without_quote(char *line);
 char	*ft_charjoin(char *str, char ch);
 
 void	skip_spaces(char *line, int *i);
+
+int		split_len(char **spl);
+
+char	**split_realloc(char **old, char **cpy, int	*index);
+
+void	modify_flags(t_list *cmds);
 
 #endif

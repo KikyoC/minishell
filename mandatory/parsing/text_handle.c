@@ -31,8 +31,8 @@ char	**get_flags(char *line, t_list *cmds)
 
 char	*cpy_without_quote(char *line)
 {
-	int		i;
 	int		len;
+	int		i;
 	char	*cpy;
 
 	len = ft_strlen(line);

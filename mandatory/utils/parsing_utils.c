@@ -77,7 +77,6 @@ int	quote_parsing(char *command)
 int	len_quotes(t_duet duet, char *line)
 {
 	int	i;
-	int	size;
 
 	i = 0;
 	while (line[i])
@@ -86,7 +85,6 @@ int	len_quotes(t_duet duet, char *line)
 			return (i);
 		else if (line[i] == '"' && duet.double_quote != -1)
 			return (i);
-		size = 1;
 		i++;
 	}
 	return (-1);

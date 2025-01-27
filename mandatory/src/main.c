@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/23 12:20:02 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/27 11:42:32 by xray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,13 @@ int main(int argc, char **argv)
 			curr = curr->next;
 			i++;
 		}
+		ft_lstclear(&lst, free);
+		if (ft_strnstr("exit", line, 4))
+			break ;
 		add_history(line);
 		free(line);
 	}
+
 	rl_clear_history();
 	return (0);
 }
