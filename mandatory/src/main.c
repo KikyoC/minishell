@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/27 11:42:32 by xray             ###   ########.fr       */
+/*   Updated: 2025/01/28 09:46:04 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	print_split(char **split)
 // 	ft_lstclear(&lst, free);
 // }
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_list	*lst;
@@ -70,6 +70,8 @@ int main(int argc, char **argv)
 		ft_lstclear(&lst, free);
 		if (ft_strnstr("exit", line, 4))
 			break ;
+		if (ft_strnstr("c", line, 1))
+			clear(env);
 		add_history(line);
 		free(line);
 	}

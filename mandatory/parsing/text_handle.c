@@ -16,12 +16,13 @@ char	**get_flags(char *line, t_list *cmds)
 	curr = lst;
 	size = ft_lstsize(lst);
 	flags = ft_calloc (size + 1, sizeof(char *));
-	flags[size] = NULL;
+	if (!flags)
+		return (NULL);
 	i = 0;
 	while (curr)
 	{
-		flags[i] = ft_strdup((char *)curr->content);
-		i++;
+		if (((char *)curr->content)[0] != ' ')
+			flags[i++] = ft_strdup((char *)curr->content);
 		curr = curr->next;
 	}
 	ft_lstclear(&lst, free);

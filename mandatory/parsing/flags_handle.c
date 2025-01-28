@@ -1,5 +1,6 @@
 
 #include "../h_files/minishell.h"
+#include <string.h>
 
 t_list	*find_command(t_list *cmd)
 {
@@ -16,24 +17,25 @@ t_list	*find_command(t_list *cmd)
 char	**split_flags(char **flags)
 {
 	int		i;
+	int		j;
 	char	**cpy;
 
 	i = 0;
+	j = 0;
 	while (flags[i])
 		i++;
-	cpy = calloc(i - 1, sizeof(char *));
+	cpy = ft_calloc(i, sizeof(char *));
 	if (!cpy)
 		return (NULL);
 	cpy[i - 1] = NULL;
-	i -= 2;
-	while (i >= 0)
+	while (j < i - 1)
 	{
-		cpy[i] = strdup(flags[i]);
-		i--;
+		cpy[j] = ft_strdup(flags[j + 1]);
+		j++;
 	}
-	(*flags) = NULL;
+	ft_free_split(flags);
 	return (cpy);
-}
+}	
 
 char	**give_flags(t_list *curr, t_list *cmds)
 {
@@ -52,24 +54,24 @@ char	**give_flags(t_list *curr, t_list *cmds)
 	return (new);
 }
 
-void	modify_flags(t_list *cmds)
+void	modify_flags(t_list **cmds)
 {
 	t_list	*curr;
 	t_list	*new;
 
-	curr = find_command(cmds);
+	curr = find_command(*cmds);
 	if (!curr)
 	{
-		new = ft_lstnew(ft_strdup(cmds->flags[0]));
-		new->next = cmds->next;
-		new->prev = cmds;
-		cmds->next = new;
-		new->next->prev = new;
-		new->command = cmds->flags[0];
-		new->flags = split_flags(cmds->flags);
-		cmds->flags = NULL;
-		new->type = 1;
+		new = ft_lstnew(ft_strdup((*cmds)->flags[0]));
+		new->next = (*cmds)->next;
+		new->prev = (*cmds);
+		new->command = strdup((*cmds)->flags[0]);
+		(*cmds)->next = new;
+		(*cmds)->next->prev = new;	
+		new->flags = split_flags((*cmds)->flags);
+		(*cmds)->flags = NULL;
+		new->type =	1;
 	}
 	else
-		curr->flags = give_flags(curr, cmds);
+		curr->flags = give_flags(curr, *cmds);
 }

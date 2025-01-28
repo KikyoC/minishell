@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/27 11:10:29 by xray             ###   ########.fr       */
+/*   Updated: 2025/01/28 15:13:01 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -36,6 +36,13 @@ typedef	struct s_duet
 	int	double_quote;
 }	t_duet;
 
+typedef enum e_type
+{
+	COMMAND = 1,
+	OUT = 2,
+	FI = 3,
+
+}	t_type;
 
 // functions
 
@@ -79,6 +86,10 @@ int		split_len(char **spl);
 
 char	**split_realloc(char **old, char **cpy, int	*index);
 
-void	modify_flags(t_list *cmds);
+void	modify_flags(t_list **cmds);
+
+void	print_split(char **split);
+
+
 
 #endif
