@@ -18,13 +18,13 @@ static int	parse(char *str, int *append_mode)
 		if (str[i] == '+' && str[i + 1] == '=')
 		{
 			*append_mode = 1;
-			return (str[i + 2] != '\0');
+			return (ft_isprint(str[i + 2]) > 0);
 		}
 		else if (str[i] == '=')
-			return (str[i + 1] != '\0');
+			return (ft_isprint(str[i + 1]) > 0);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 void	*destroy_little(t_env *node)
@@ -102,14 +102,15 @@ int	export(t_list *lst, t_env **env)
 	t_env	*node;
 	char	*s;
 
-	i = 0;
-	while (lst->flags[i])
+	i = -1;
+	while (lst->flags[++i])
 	{
 		if (!parse(lst->flags[i], &append_mode))
 		{
 			ft_putstr_fd("Minishell: ", 2);
 			ft_putstr_fd(lst->flags[i], 2);
 			ft_putstr_fd(" cannot be parsed\n", 2);
+			continue ;
 		}
 		node = new_env(lst->flags[i], append_mode, env);
 		if (!node)
@@ -117,7 +118,6 @@ int	export(t_list *lst, t_env **env)
 		s = ft_strdup(node->name);
 		add_back(env, node, append_mode);
 		print_env(s, env);
-		i++;
 	}
 	return (1);
 }
