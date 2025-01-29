@@ -44,7 +44,8 @@ t_env	*assign_node(char *str, int append_mode, t_env **node)
 	while (str[j])
 		j++;
 	(*node)->content = ft_substr(str, i, j);
-	if (!(*node)->name || (j != i && ((*node)->content == NULL || (*node)->content[0] == '\0')))
+	if (!(*node)->name || (j != i && ((*node)->content == NULL
+				|| (*node)->content[0] == '\0')))
 		return (destroy_node(*node));
 	return (*node);
 }

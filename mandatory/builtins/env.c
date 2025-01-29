@@ -7,7 +7,8 @@ int	aff_env(t_env **env)
 	node = *env;
 	while (node)
 	{
-		printf("%s=%s\n", node->name, node->content);
+		if (node->content && node->content[0])
+			printf("%s=%s\n", node->name, node->content);
 		node = node->next;
 	}
 	return (1);
