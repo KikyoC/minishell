@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/28 15:13:01 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/29 10:16:28 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -36,14 +36,18 @@ typedef	struct s_duet
 	int	double_quote;
 }	t_duet;
 
-typedef enum e_type
+typedef	struct s_iterate
 {
-	COMMAND = 1,
-	OUT = 2,
-	FI = 3,
+	int	i;
+	int	j;
+}	t_iterate;
 
-}	t_type;
-
+typedef struct s_texts
+{
+	char	*line;
+	char	*final;
+	char	**env;
+}	t_texts;
 // functions
 
 void	pwd(void);
@@ -74,7 +78,7 @@ void	remove_quote(char *line, t_list *cmds);
 
 t_list	*get_correct_commands(t_list *cmds);
 
-t_list	*get_commands(char *line);
+t_list	*get_commands(char *line, char **env);
 
 char	*cpy_without_quote(char *line);
 
@@ -90,6 +94,10 @@ void	modify_flags(t_list **cmds);
 
 void	print_split(char **split);
 
+void	cpy_text(char *to_cpy, char *final);
 
+void	fill_word(t_iterate *iter, char *final, char *word, char **env);
+
+int		replace_dollars(char **env, char *line, char *final);
 
 #endif

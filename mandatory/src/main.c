@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/28 09:46:04 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/29 16:34:11 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,17 @@ int main(int argc, char **argv, char **env)
 	char	*line;
 	t_list	*lst;
 	t_list	*curr;
-	int i = 0;
+	int		i;
 
 	(void)argc;
 	(void)argv;
 	while (1)
 	{
+		i = 0;
 		line = readline("\e[0;36m──(\e[0;33m \e[1;32mSegfault\e[0;36m)──\e[1;36m> ");
 		if (!line)
 			break ;
-		lst = get_commands(line);
+		lst = get_commands(line, env);
 		curr = lst;
 		while (curr)
 		{
@@ -75,7 +76,7 @@ int main(int argc, char **argv, char **env)
 		add_history(line);
 		free(line);
 	}
-
+	ft_lstclear(&lst, free);
 	rl_clear_history();
 	return (0);
 }

@@ -2,73 +2,95 @@
 #include "../h_files/minishell.h"
 #include <stdlib.h>
 
-int	get_word(char *line, char *to_fill, int *i)
+int	get_word(char *line, char *to_fill, t_iterate *iter)
 {
 	int	j;
 	int	k;
 	int	len;
 
 	k = 0;
-	j = *i;
+	j = iter->i;
 	len = 0;
 	while (ft_isalnum(line[++j]))
 	{
 		if (to_fill)
 			to_fill[k++] = line[j];
-		j++;
 		len++;
 	}
 	return (len);
 }
 
-char	*check_dollars(char *line, int *i, char *final)
+char	*check_dollars(char *line, t_iterate *iter)
 {
 	int		len;
 	char	*word;
 
-	if (line[(*i)] == '$')
+	word = NULL;
+	if (line[iter->i] == '$')
 	{
-		len = get_word(line, NULL, i);
+		len = get_word(line, NULL, iter);
 		if (!len)
 			return (NULL);
-		word = ft_calloc(len, sizeof(char));
+		word = ft_calloc(len + 1, sizeof(char));
 		if (!word)
 			return (NULL);
-		get_word(line, word, i);
+		get_word(line, word, iter);
 	}
 	return (word);
 }
 
-void	handle_quotes(char *line, int *i, int code, char *final)
+void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 {
 	char	*word;
-	char	*tmp;
 
-	while (line[++(*i)] != code)
+	(iter->i)++;
+	while (texts->line[iter->i] && texts->line[iter->i] != code )
 	{
-		word = check_dollars(line, i, final);
+		word = check_dollars(texts->line, iter);
 		if (word && code == '"')
+			fill_word(iter, texts->final, word, texts->env);
+		else
 		{
-			tmp = getenv(word);
-			free(word);
-			if (!tmp)
-				return ;
-			cpy_text(tmp, line, i);
+			if (texts->final)
+				texts->final[iter->j] = texts->line[iter->i];
+			(iter->i)++;
+			(iter->j)++;
 		}
 	}
 }
 
-int	replace_dollars(char **env, char *line, char	*final)
+int	replace_dollars(char **env, char *line, char *final)
 {
-	int		i;
+	t_iterate	iter;
+	char		*word;
+	t_texts		texts;
 
-	i = -1;
-	while (line[++i])
+	texts.line = line;
+	texts.final = final;
+	texts.env = env;
+	iter.i = -1;
+	iter.j = 0;
+	while (texts.line[++(iter.i)])
 	{
-		if (line[i] == '\'')
-			handle_quotes(line, &i, '\'', final);
+		printf("line : %c\n", texts.line[iter.i]);
+		if (texts.line[iter.i] == '\'')
+			handle_quotes(&texts, &iter, '\'');
+		else if (texts.line[iter.i] == '"')
+			handle_quotes(&texts, &iter, '"');
+		else
+		{
+			word = check_dollars(texts.line, &iter);
+			if (word)
+				fill_word(&iter, texts.final, word, texts.env);
+			else
+			{
+				if (texts.final)
+					texts.final[iter.j] = texts.line[(iter.i)];
+				(iter.j)++;
+			}
+		}
 	}
-	return (final);
+	return (iter.j);
 }
 
 // export lol=mdr
