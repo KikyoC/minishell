@@ -4,6 +4,9 @@ void	add_back(t_env **env, t_env *node, int append_mode);
 t_env	*sort_env(t_env **env);
 
 char	*parse_quotes(char *str, int multiple_args, t_env **env);
+int		print_export(t_env **env);
+void	*destroy_node(t_env *node);
+void	*destroy(t_env *env);
 
 static int	parse(char *str, int *append_mode)
 {
@@ -24,19 +27,7 @@ static int	parse(char *str, int *append_mode)
 			return (ft_isprint(str[i + 1]) > 0);
 		i++;
 	}
-	return (0);
-}
-
-void	*destroy_little(t_env *node)
-{
-	if (!node)
-		return (NULL);
-	if (node->name)
-		free(node->name);
-	if (node->content)
-		free(node->content);
-	free(node);
-	return (NULL);
+	return (1);
 }
 
 t_env	*assign_node(char *str, int append_mode, t_env **node)
@@ -45,15 +36,16 @@ t_env	*assign_node(char *str, int append_mode, t_env **node)
 	int		j;
 
 	i = 0;
-	while (str[i] != '=')
+	while (str[i] != '=' && str[i])
 		i++;
 	(*node)->name = ft_substr(str, 0, i - append_mode);
-	j = i + 1;
+	i += (str[i] != '\0');
+	j = i;
 	while (str[j])
 		j++;
-	(*node)->content = ft_substr(str, i + 1, j);
-	if (!(*node)->name || !(*node)->content || ! (*node)->content[0])
-		return (destroy_little((*node)));
+	(*node)->content = ft_substr(str, i, j);
+	if (!(*node)->name || (j != i && ((*node)->content == NULL || (*node)->content[0] == '\0')))
+		return (destroy_node(*node));
 	return (*node);
 }
 
@@ -67,32 +59,41 @@ t_env	*new_env(char *str, int append_mode, t_env **env)
 	res = ft_calloc(1, sizeof(t_env));
 	if (!res)
 		return (NULL);
-	while (str[i] != '=')
+	while (str[i] && str[i] != '=')
 		i++;
 	res = assign_node(str, append_mode, &res);
-	tmp = parse_quotes(res->content, 0, env);
-	if (!tmp)
-		return (res);
-	free(res->content);
-	res->content = tmp;
+	if (!res)
+		return (NULL);
+	if (res->content)
+	{
+		tmp = parse_quotes(res->content, 0, env);
+		if (!tmp)
+			return (res);
+		free(res->content);
+		res->content = tmp;
+	}
 	return (res);
 }
 
-static void	print_env(char *str, t_env **env)
+int	print_export(t_env **env)
 {
+	t_env	*sorted;
 	t_env	*node;
 
-	node = *env;
+	sorted = sort_env(env);
+	if (!sorted)
+		return (1);
+	node = sorted;
 	while (node)
 	{
-		if (ft_strncmp(node->name, str, ft_strlen(str)) == 0)
-		{
-			printf("%s=%s\n", node->name, node->content);
-			return ;
-		}
+		printf("declare -x %s", node->name);
+		if (node->content && node->content[0])
+			printf("=\"%s\"", node->content);
+		printf("\n");
 		node = node->next;
 	}
-	printf("NULL\n");
+	destroy(sorted);
+	return (0);
 }
 
 int	export(t_list *lst, t_env **env)
@@ -100,9 +101,10 @@ int	export(t_list *lst, t_env **env)
 	int		i;
 	int		append_mode;
 	t_env	*node;
-	char	*s;
 
 	i = -1;
+	if (lst->flags == NULL)
+		return (print_export(env));
 	while (lst->flags[++i])
 	{
 		if (!parse(lst->flags[i], &append_mode))
@@ -115,9 +117,7 @@ int	export(t_list *lst, t_env **env)
 		node = new_env(lst->flags[i], append_mode, env);
 		if (!node)
 			continue ;
-		s = ft_strdup(node->name);
 		add_back(env, node, append_mode);
-		print_env(s, env);
 	}
-	return (1);
+	return (0);
 }
