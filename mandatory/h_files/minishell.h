@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 17:47:59 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/22 13:38:45 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -30,7 +30,12 @@
 
 // structs
 
-
+typedef struct s_env {
+	char			*name;
+	char			*content;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
 
 // functions
 
