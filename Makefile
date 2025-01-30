@@ -24,7 +24,7 @@ UTILS_PATH = mandatory/utils/
 
 SRC = main.c create_env.c delete_env.c
 BUILTIN = pwd.c clear.c cd.c echo.c export.c unset.c env.c
-UTIL = strings.c commands.c sort_list.c transform_env.c env_replacer.c quotes_parser.c split.c
+UTIL = strings.c commands.c sort_list.c env_replacer.c quotes_parser.c transform_env.c 
 
 # SIGNAL = 
 # PARSING = 
