@@ -29,9 +29,7 @@ char	*get_home(t_env **env)
 	while (node)
 	{
 		if (ft_strncmp("HOME", node->name, 4) == 0 && node->content[0])
-		{
-			return (node->content);	
-		}
+			return (node->content);
 		node = node->next;
 	}
 	ft_putstr_fd("Minishell: HOME not set\n", 2);
@@ -46,7 +44,8 @@ int	cd(t_list *lst, t_env **env)
 		final = get_home(env);
 	else if (lst->flags[0] && lst->flags[1])
 	{
-		ft_putstr_fd("Minishell: Only 1 argument is supported with this function\n", 2);
+		ft_putstr_fd(
+			"Minishell: Only 1 argument is supported with this function\n", 2);
 		return (0);
 	}
 	else
