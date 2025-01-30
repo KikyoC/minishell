@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/29 10:16:28 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/01/30 17:12:57 by xray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -94,10 +94,12 @@ void	modify_flags(t_list **cmds);
 
 void	print_split(char **split);
 
-void	cpy_text(char *to_cpy, char *final);
+void	cpy_text(char *to_cpy, char *final, t_iterate *iter);
 
 void	fill_word(t_iterate *iter, char *final, char *word, char **env);
 
 int		replace_dollars(char **env, char *line, char *final);
+
+int		parse_quotes(char *line);
 
 #endif

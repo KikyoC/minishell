@@ -42,10 +42,13 @@ char	*check_dollars(char *line, t_iterate *iter)
 void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 {
 	char	*word;
+	int		count;
 
-	(iter->i)++;
-	while (texts->line[iter->i] && texts->line[iter->i] != code )
+	count = 2;
+	while (texts->line[iter->i] && count)
 	{
+		if (texts->line[iter->i] == code)
+			count--;
 		word = check_dollars(texts->line, iter);
 		if (word && code == '"')
 			fill_word(iter, texts->final, word, texts->env);
@@ -68,26 +71,23 @@ int	replace_dollars(char **env, char *line, char *final)
 	texts.line = line;
 	texts.final = final;
 	texts.env = env;
-	iter.i = -1;
+	iter.i = 0;
 	iter.j = 0;
-	while (texts.line[++(iter.i)])
+	while (texts.line[iter.i])
 	{
-		printf("line : %c\n", texts.line[iter.i]);
 		if (texts.line[iter.i] == '\'')
 			handle_quotes(&texts, &iter, '\'');
 		else if (texts.line[iter.i] == '"')
 			handle_quotes(&texts, &iter, '"');
-		else
+		word = check_dollars(texts.line, &iter);
+		if (word)
+			fill_word(&iter, texts.final, word, texts.env);
+		else if (!word && texts.line[iter.i])
 		{
-			word = check_dollars(texts.line, &iter);
-			if (word)
-				fill_word(&iter, texts.final, word, texts.env);
-			else
-			{
-				if (texts.final)
-					texts.final[iter.j] = texts.line[(iter.i)];
-				(iter.j)++;
-			}
+			if (texts.final)
+				texts.final[iter.j] = texts.line[(iter.i)];
+			(iter.j)++;
+			(iter.i)++;
 		}
 	}
 	return (iter.j);

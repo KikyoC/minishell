@@ -1,16 +1,17 @@
 
 #include "../h_files/minishell.h"
 
-void	cpy_text(char *to_cpy, char *final)
+void	cpy_text(char *to_cpy, char *final, t_iterate *iter)
 {
-	int	j;
+	int	i;
 
-	j = 0;
-	while (to_cpy[j])
+	i = 0;
+	while (to_cpy[i])
 	{
 		if (final)
-			final[j] = to_cpy[j];
-		j++;
+			final[iter->j] = to_cpy[i];
+		iter->j++;
+		i++;
 	}
 }
 
@@ -20,11 +21,9 @@ void	fill_word(t_iterate *iter, char *final, char *word, char **env)
 
 	(void)env;
 	tmp = getenv(word);
-	iter->i += ft_strlen(word);
+	iter->i += ft_strlen(word) + 1;
 	free(word);
 	if (!tmp)
 		return ;
-	if (final)
-		cpy_text(tmp, final);
-	iter->j += ft_strlen(tmp);
+	cpy_text(tmp, final, iter);
 }

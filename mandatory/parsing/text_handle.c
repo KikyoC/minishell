@@ -52,8 +52,12 @@ char	*cpy_without_quote(char *line)
 
 char	*quote_remover(char quote, char *line, char *command, int *i)
 {
-	while (line[++(*i)] && line[*i] != quote)
+	(*i)++;
+	while (line[*i] && line[*i] != quote)
+	{
 		command = ft_charjoin(command, line[*i]);
+		(*i)++;
+	}
 	return (command);
 }
 
