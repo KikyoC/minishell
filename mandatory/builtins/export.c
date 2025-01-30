@@ -104,7 +104,7 @@ int	export(t_list *lst, t_env **env)
 	t_env	*node;
 
 	i = -1;
-	if (lst->flags == NULL)
+	if (lst->flags == NULL || lst->flags[0] == NULL)
 		return (print_export(env));
 	while (lst->flags[++i])
 	{
