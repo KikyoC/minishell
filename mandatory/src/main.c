@@ -6,31 +6,44 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 14:11:39 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:57:21 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 
-int main(int argc, char **argv, char **env)
+t_env	*get_env(char **envp);
+
+char	*get_prompt(t_env **env)
+{
+	t_env	*node;
+
+	node = *env;
+	while (node)
+	{
+		
+		node = node->next;
+	}
+}
+
+int main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	char	**path;
+	t_env	*env;
 
-	path = get_paths(getenv("PATH"));
-	(void)argc;
-	(void)argv;
+	env = get_env(envp);
+	if (!env)
+	{
+		perror("Minishell: ");
+		return (1);
+	}
 	while (1)
 	{
 		line = readline("\e[0;36m──(\e[0;33m \e[1;32mSegfault\e[0;36m)──\e[1;36m> ");
 		if (!line)
 			break;
-		if (ft_strnstr("pwd", line, 3))
-			pwd();
-		else if (ft_strnstr("exit", line, 5))
-			return (0);
-		else if (ft_strnstr("c", line, 1))
-			clear(env);
+		
+		//TODO parsing and then execution
 		add_history(line);
 		free(line);
 	}
