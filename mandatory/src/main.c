@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/30 11:57:21 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:02:16 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ t_env	*get_env(char **envp);
 char	*get_prompt(t_env **env)
 {
 	t_env	*node;
+	char	*res;
 
 	node = *env;
+	line = "\e[0;36m──(\e[0;33m ";
 	while (node)
 	{
 		
