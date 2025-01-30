@@ -1,4 +1,3 @@
-
 #include "../h_files/minishell.h"
 
 void	*destroy_node(t_env *node)
@@ -27,4 +26,3 @@ void	*destroy(t_env *env)
 	}
 	return (NULL);
 }
-

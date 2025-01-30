@@ -1,5 +1,4 @@
 #include "../h_files/minishell.h"
-#include <string.h>
 
 void	*destroy_node(t_env *node);
 void	*destroy(t_env *env);
@@ -33,15 +32,24 @@ t_env	*create_node(char *str)
 	return (node);
 }
 
-void	free_it_good(t_env *node, t_env *content)
+void	free_it_good(t_env *node, t_env *content, int append_mode)
 {
-	free(node->content);
-	node->content = content->content;
+	char	*tmp;
+
+	tmp = node->content;
+	if (append_mode)
+	{
+		node->content = ft_strjoin(tmp, content->content);
+		free(content->content);
+	}
+	else
+		node->content = content->content;
+	free(tmp);
 	free(content->name);
 	free(content);
 }
 
-void	add_back(t_env **env, t_env *element)
+void	add_back(t_env **env, t_env *element, int append_mode)
 {
 	t_env	*node;
 	size_t	len;
@@ -52,15 +60,18 @@ void	add_back(t_env **env, t_env *element)
 	{
 		if (ft_strncmp(node->name, element->name, len) == 0)
 		{
-			free_it_good(node, element);
+			free_it_good(node, element, append_mode);
 			return ;
 		}
 		node = node->next;
 	}
 	if (ft_strncmp(node->name, element->name, len) == 0)
-		free_it_good(node, element);
+		free_it_good(node, element, append_mode);
 	else
+	{
 		node->next = element;
+		element->prev = node;
+	}
 }
 
 t_env	*get_env(char **envp)
@@ -79,7 +90,7 @@ t_env	*get_env(char **envp)
 		if (!res)
 			res = node;
 		else
-			add_back(&res, node);
+			add_back(&res, node, 0);
 		i++;
 	}
 	return (res);
