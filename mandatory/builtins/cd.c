@@ -1,52 +1,66 @@
 #include "../h_files/minishell.h"
+#include <errno.h>
+#include <stdio.h>
+#include <unistd.h>
 
-char	*parse(char *str)
+char	*parse_quotes(char *str, int multiple_args, t_env **env);
+
+char	*find(char *str, t_env **env)
 {
-	int	i;
+	t_env	*node;
+	size_t	len;
 
-	i = 2;
-	if (ft_strlen(str) == 2)
-		return (NULL);
-	while (str[i] == ' ')
-		i++;
-	if (!str[i])
-		return (NULL);
-	return (&str[i]);
-}
-
-int	args(char *str)
-{
-	int	i;
-	int	in_quote;
-
-	i = 0;
-	in_quote = -1;
-	while (str[i])
+	node = *env;
+	len = ft_strlen(str);
+	while (node)
 	{
-		if (str[i] == '"')
-			in_quote = -in_quote;
-		else if (str[i] == ' ' && in_quote == -1)
-			return 1;
-		i++;
+		if (ft_strncmp(str, node->name, len) == 0)
+			return (node->content);
+		node = node->next;
 	}
-	return 0;
+	return (NULL);
 }
 
-void	cd(char *str)
+char	*get_home(t_env **env)
+{
+	t_env	*node;
+
+	node = *env;
+	while (node)
+	{
+		if (ft_strncmp("HOME", node->name, 4) == 0 && node->content[0])
+		{
+			return (node->content);	
+		}
+		node = node->next;
+	}
+	ft_putstr_fd("Minishell: HOME not set\n", 2);
+	return (NULL);
+}
+
+int	cd(t_list *lst, t_env **env)
 {
 	char	*final;
-	final = parse(str);
-	if (args(final))
+
+	if (lst->flags == NULL || lst->flags[0] == NULL)
+		final = get_home(env);
+	else if (lst->flags[0] && lst->flags[1])
 	{
-		ft_putstr_fd("Minishell: too many arguments\n", 2);
-		return ;
+		ft_putstr_fd("Minishell: Only 1 argument is supported with this function\n", 2);
+		return (0);
 	}
+	else
+		final = parse_quotes(lst->flags[0], 1, env);
 	if (!final)
-	{
-		final = getenv("HOME");
-		if (final && chdir(final))
-			perror("Minishell");
-	}
+		return (1);
 	if (chdir(final))
-		perror("Minishell");
+	{
+		perror("Minishell: ");
+		if (lst->flags && lst->flags[0])
+			free(final);
+		return (errno);
+	}
+	if (lst->flags && lst->flags[0])
+		free(final);
+	return (0);
 }
