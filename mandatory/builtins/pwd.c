@@ -3,9 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: togauthi <togauthi@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 17:39:16 by togauthi          #+#    #+#             */
+/*   Created: 2025/01/16 14:53:08 by togauthi          #+#    #+#             */
+/*   Updated: 2025/01/30 10:35:36 by togauthi         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../h_files/minishell.h"
@@ -17,8 +19,7 @@ void	pwd(void)
 {
 	char	*location;
 
-	location = ft_calloc(PATH_MAX + 1, sizeof(char));
-	getcwd(location, PATH_MAX);
+	location = getcwd(NULL, PATH_MAX);
 	printf("%s\n", location);
+	free(location);
 }
-

@@ -12,6 +12,8 @@ RESET = \033[0m
 
 LIBFT_DIR = mandatory/includes/libft/
 LIBFT_FILE = libft.a
+GNL_DIR = mandatory/includes/gnl
+GNL_FILE = gnl.a
 
 OBJ_PATH = obj/
 SRC_PATH = mandatory/src/
@@ -20,9 +22,9 @@ BUILTIN_PATH = mandatory/builtins/
 UTILS_PATH = mandatory/utils/
 # PARSING_PATH = mandatory/parsing/
 
-SRC = main.c
-BUILTIN = pwd.c clear.c
-UTIL = strings.c commands.c
+SRC = main.c create_env.c delete_env.c
+BUILTIN = pwd.c clear.c cd.c echo.c export.c unset.c env.c
+UTIL = strings.c commands.c sort_list.c env_replacer.c quotes_parser.c transform_env.c 
 
 # SIGNAL = 
 # PARSING = 
