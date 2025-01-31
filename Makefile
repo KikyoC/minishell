@@ -23,7 +23,7 @@ UTILS_PATH = mandatory/utils/
 SRC = main.c
 BUILTIN = pwd.c clear.c
 UTIL = utils.c commands.c parsing_utils.c split_skip_quotes_utils.c split_utils.c dollars_utils.c
-PARSING = parsing.c text_handle.c clean_commands.c flags_handle.c dollars.c quote_parsing.c
+PARSING = parsing.c text_handle.c clean_commands.c flags_handle.c dollars.c quote_parsing.c add_quote_to_quote.c
 # SIGNAL = 
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))

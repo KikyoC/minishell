@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/30 17:12:57 by xray             ###   ########.fr       */
+/*   Updated: 2025/01/31 14:55:28 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -101,5 +101,7 @@ void	fill_word(t_iterate *iter, char *final, char *word, char **env);
 int		replace_dollars(char **env, char *line, char *final);
 
 int		parse_quotes(char *line);
+
+int		add_quote_to_quote(char *line, char *new_line);
 
 #endif

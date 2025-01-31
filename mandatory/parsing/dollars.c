@@ -42,13 +42,10 @@ char	*check_dollars(char *line, t_iterate *iter)
 void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 {
 	char	*word;
-	int		count;
 
-	count = 2;
-	while (texts->line[iter->i] && count)
+	(iter->i)++;
+	while (texts->line[iter->i] && texts->line[iter->i] != code)
 	{
-		if (texts->line[iter->i] == code)
-			count--;
 		word = check_dollars(texts->line, iter);
 		if (word && code == '"')
 			fill_word(iter, texts->final, word, texts->env);
@@ -60,6 +57,7 @@ void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 			(iter->j)++;
 		}
 	}
+	iter->i++;
 }
 
 int	replace_dollars(char **env, char *line, char *final)
