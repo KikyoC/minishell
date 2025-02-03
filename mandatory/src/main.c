@@ -6,14 +6,14 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/31 14:03:54 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:00:29 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 
 t_env	*get_env(char **envp);
-
+int		run(t_list **lst, t_env **env);
 void	*destroy(t_env *env);
 
 static char	*get_top(t_env **env)
@@ -85,21 +85,24 @@ char	*get_prompt(t_env **env)
 	if (wd)
 		free(wd);
 	if (!tmp)
-		return (ft_strdup("\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> "));
+		return (ft_strdup("\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"));
 	if (res)
 		free(res);
-	res = ft_strjoin(tmp, " \e[1;32mSegfault\e[0;36m)──\e[1;36m> ");
+	res = ft_strjoin(tmp, " \e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m");
 	free(tmp);
 	if (!res)
-		return (ft_strdup("\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> "));
+		return (ft_strdup("\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"));
 	return (res);
 }
+
+char	*parse_quotes(char *str, int multiple_args, t_env **env);
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	char	*prompt;
 	t_env	*env;
+	// int		state;
 
 	(void)argc;
 	(void)argv;
@@ -117,6 +120,16 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			break ;
 		//TODO parsing and then execution
+		t_list	*lst;
+		lst = ft_calloc(1, sizeof(t_list));
+		lst->flags = ft_calloc(4, sizeof(char *));
+		lst->flags[0] = ft_strdup("-l");
+		lst->flags[1] = ft_strdup("-a");
+		lst->command = ft_strdup("ls");
+		run(&lst, &env);
+		ft_free_split(lst->flags);
+		free(lst->command);
+		free(lst);
 		add_history(line);
 		free(line);
 	}
