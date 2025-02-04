@@ -1,5 +1,6 @@
 
 #include "../h_files/minishell.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 int	get_word(char *line, char *to_fill, t_iterate *iter)
@@ -42,10 +43,13 @@ char	*check_dollars(char *line, t_iterate *iter)
 void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 {
 	char	*word;
+	int		count;
 
-	(iter->i)++;
-	while (texts->line[iter->i] && texts->line[iter->i] != code)
+	count = 2;
+	while (texts->line[iter->i] && count)
 	{
+		if (texts->line[iter->i] == code)
+			count--;
 		word = check_dollars(texts->line, iter);
 		if (word && code == '"')
 			fill_word(iter, texts->final, word, texts->env);
@@ -57,7 +61,6 @@ void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 			(iter->j)++;
 		}
 	}
-	iter->i++;
 }
 
 int	replace_dollars(char **env, char *line, char *final)
@@ -73,13 +76,14 @@ int	replace_dollars(char **env, char *line, char *final)
 	iter.j = 0;
 	while (texts.line[iter.i])
 	{
-		if (texts.line[iter.i] == '\'')
-			handle_quotes(&texts, &iter, '\'');
-		else if (texts.line[iter.i] == '"')
-			handle_quotes(&texts, &iter, '"');
+		if (texts.line[iter.i] == '\'' || texts.line[iter.i] == '"')
+			handle_quotes(&texts, &iter, texts.line[iter.i]);
 		word = check_dollars(texts.line, &iter);
 		if (word)
-			fill_word(&iter, texts.final, word, texts.env);
+		{
+			printf("just to be sure\n");
+			fill_word_quote(&iter, texts.final, word, texts.env);
+		}
 		else if (!word && texts.line[iter.i])
 		{
 			if (texts.final)

@@ -1,13 +1,7 @@
 
 #include "../h_files/minishell.h"
 
-static char	reverse_quote(char quote)
-{
-	if (quote == '\'')
-		return ('"');
-	else
-		return ('\'');
-}
+
 
 void	put_quote(t_iterate *iter, char *new_line, char *line)
 {
@@ -34,6 +28,7 @@ int	add_quote_to_quote(char *line, char *new_line)
 		{
 			quote = line[iter.i];
 			put_quote(&iter, new_line, line);
+			printf("%s\n", new_line);
 		}
 		else
 		{

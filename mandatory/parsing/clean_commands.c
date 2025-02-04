@@ -25,8 +25,7 @@ t_list	*get_correct_commands(t_list *cmds)
 	{
 		if (curr->type != 1)
 			remove_quote(curr->content, curr);
-		if (!ft_strnstr(curr->command, "echo", 4))
-			clean_flags(curr->flags);
+		clean_flags(curr->flags);
 		if (curr->type == -1)
 			curr->type = 1;
 		if (curr->type == 3 && curr->flags)

@@ -13,19 +13,16 @@ t_list	*find_operator(int *i, char *line, char ch)
 	t_list	*node;
 	char	*str;
 	int		count;
-	int		little;
-	int		big;
+	char	code;
 
+	code = '\0';
 	count = 0;
-	little = 0;
-	big = 0;
-	while ((!is_operator(line[count], ch) || big % 2 != 0
-			|| little % 2 != 0) && line[count])
+	while ((!is_operator(line[count], ch) || code != '\0') && line[count])
 	{
-		if (line[count] == '\'' && big % 2 == 0)
-			little++;
-		else if (line[count] == '"' && little % 2 == 0)
-			big++;
+		if ((line[count] == '\'' || line[count] == '"') && code == '\0')
+			code = line[count];
+		else if (line[count] == code)
+			code = '\0';
 		count++;
 	}
 	str = ft_calloc(count + 1, sizeof(char));

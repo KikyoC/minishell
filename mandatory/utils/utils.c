@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:01:39 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/27 11:42:30 by xray             ###   ########.fr       */
+/*   Updated: 2025/02/03 10:59:15 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,12 @@ void	skip_spaces(char *line, int *i)
 {
 	while (line[*i + 1] == ' ' && line[*i + 1])
 		(*i)++;
+}
+
+char	reverse_quote(char quote)
+{
+	if (quote == '\'')
+		return ('"');
+	else
+		return ('\'');
 }

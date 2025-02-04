@@ -1,0 +1,19 @@
+changer pour split aux whitespaces
+
+segfault full espace (hihihi)
+
+"$EMPTY" = ""
+"" ou '' = \0 dans une case du split
+
+echo $c:
+command : echo
+
+suis 
+un
+test'"'
+
+a regler :
+absence de je
+'"'
+
+clean mes flags

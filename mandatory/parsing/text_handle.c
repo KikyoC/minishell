@@ -13,6 +13,8 @@ char	**get_flags(char *line, t_list *cmds)
 	while (line[i] == ' ')
 		i++;
 	lst = ft_split_skip_quotes(line + i, ' ');
+	printf("lst->content: %s\n", (char *)lst->content);
+
 	curr = lst;
 	size = ft_lstsize(lst);
 	flags = ft_calloc (size + 1, sizeof(char *));

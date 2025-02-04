@@ -17,11 +17,6 @@ t_list	*get_commands(char *line, char **env)
 	if (!new_line)
 		free(line);
 	replace_dollars(env, line, new_line);
-	len = add_quote_to_quote(new_line, NULL);
-	printf("%s\n", new_line);
-	line = ft_calloc(len, sizeof(char));
-	add_quote_to_quote(new_line, line);
-	printf("%s\n", line);
 	cmds = ft_split_skip_quotes(new_line, '\0');
 	free(new_line);
 	get_correct_commands(cmds);
