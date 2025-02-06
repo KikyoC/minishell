@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:22:13 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/31 10:21:12 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/02/06 10:18:06 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ typedef struct s_list
 	char			**flags;
 	char			*command;
 	int				been_quoted;
+	int				input;
+	int				output;
 }	t_list;
 
 t_list	*ft_lstnew(void *content);

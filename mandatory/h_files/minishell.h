@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/02/04 11:32:50 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:55:17 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -76,11 +76,11 @@ int		len_quotes(t_duet duet, char *line);
 
 void	remove_quote(char *line, t_list *cmds);
 
-t_list	*get_correct_commands(t_list *cmds);
+t_list	*get_correct_commands(t_list *cmds, char **env);
 
 t_list	*get_commands(char *line, char **env);
 
-char	*cpy_without_quote(char *line);
+int		cpy_without_quote(char *final, char *original);
 
 char	*ft_charjoin(char *str, char ch);
 
@@ -111,5 +111,7 @@ char	reverse_quote(char quote);
 void	cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
 
 void	cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
+
+char	*expand(char *line, char **env);
 
 #endif

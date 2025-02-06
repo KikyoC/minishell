@@ -1,24 +1,30 @@
 
 #include "../h_files/minishell.h"
+#include <stdio.h>
+
+char	*expand(char *line, char **env)
+{
+	int		len;
+	char	*new_line;
+
+	len = replace_dollars(env, line, NULL);
+	new_line = ft_calloc(len + 1, sizeof(char));
+	if (!new_line)
+		free(line);
+	replace_dollars(env, line, new_line);
+	return (new_line);
+}
 
 t_list	*get_commands(char *line, char **env)
 {
 	t_list	*cmds;
-	int		len;
-	char	*new_line;
 
 	if (parse_quotes(line))
 	{
 		perror("Segfault : unfinished quote");
 		return (NULL);
 	}
-	len = replace_dollars(env, line, NULL); 
-	new_line = ft_calloc(len + 1, sizeof(char));
-	if (!new_line)
-		free(line);
-	replace_dollars(env, line, new_line);
-	cmds = ft_split_skip_quotes(new_line, '\0');
-	free(new_line);
-	get_correct_commands(cmds);
+	cmds = ft_split_skip_quotes(line, '\0');
+	get_correct_commands(cmds, env);
 	return (cmds);
 }

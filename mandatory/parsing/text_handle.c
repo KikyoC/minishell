@@ -13,8 +13,6 @@ char	**get_flags(char *line, t_list *cmds)
 	while (line[i] == ' ')
 		i++;
 	lst = ft_split_skip_quotes(line + i, ' ');
-	printf("lst->content: %s\n", (char *)lst->content);
-
 	curr = lst;
 	size = ft_lstsize(lst);
 	flags = ft_calloc (size + 1, sizeof(char *));
@@ -32,24 +30,30 @@ char	**get_flags(char *line, t_list *cmds)
 	return (flags);
 }
 
-char	*cpy_without_quote(char *line)
+int cpy_without_quote(char *final, char *line)
 {
-	int		len;
 	int		i;
-	char	*cpy;
+	int		len;
+	char	quote;
 
-	len = ft_strlen(line);
-	cpy = ft_calloc(len - 1, sizeof(char));
-	if (!cpy)
-		return (NULL);
-	i = 1;
-	while ((line[i] != '\'' && line[i] != '"') && line[i])
+	i = 0;
+	len = 0;
+	quote = '\0';
+	while (line[i])
 	{
-		cpy[i - 1] = line[i];
+		if ((line[i] == '\'' || line[i] == '"') && quote == '\0')
+			quote = line[i];
+		else if (line[i] == quote)
+			quote = '\0';
+		else
+		{
+			if (final)
+				final[len] = line[i];
+			len++;
+		}
 		i++;
 	}
-	free(line);
-	return (cpy);
+	return (len);
 }
 
 char	*quote_remover(char quote, char *line, char *command, int *i)
@@ -89,5 +93,5 @@ void	remove_quote(char *line, t_list *cmds)
 			command = ft_charjoin(command, line[i]);
 	}
 	cmds->command = command;
-	get_flags(line + i, cmds);
+	cmds->flags = get_flags(line + i, cmds);
 }

@@ -4,13 +4,13 @@
 char	add_quotes(char quote, t_iterate *iter, char *final)
 {
 	if (final)
-		final[iter->j] = quote;
-	(iter->j)++;
-	if (final)
 		final[iter->j] = reverse_quote(quote);
 	(iter->j)++;
 	if (final)
 		final[iter->j] = quote;
+	(iter->j)++;
+	if (final)
+		final[iter->j] = reverse_quote(quote);
 	(iter->j)++;
 	if (quote != '\0')
 		return ('\0');
