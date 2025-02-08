@@ -77,14 +77,9 @@ void	remove_quote(char *line, t_list *cmds)
 	skip_spaces(line, &i);
 	while (line[++i])
 	{
-		if (line[i] == '\'')
+		if (line[i] == '\'' || line[i] == '"')
 		{
-			command = quote_remover('\'', line, command, &i);
-			cmds->been_quoted = 1;
-		}
-		else if (line[i] == '"')
-		{
-			command = quote_remover('"', line, command, &i);
+			command = quote_remover(line[i], line, command, &i);
 			cmds->been_quoted = 1;
 		}
 		else if (line[i] == ' ')
@@ -94,4 +89,6 @@ void	remove_quote(char *line, t_list *cmds)
 	}
 	cmds->command = command;
 	cmds->flags = get_flags(line + i, cmds);
+	// if (cmds->type == 3)
+		//pass
 }
