@@ -80,10 +80,7 @@ int	replace_dollars(char **env, char *line, char *final)
 			handle_quotes(&texts, &iter, texts.line[iter.i]);
 		word = check_dollars(texts.line, &iter);
 		if (word)
-		{
-			printf("just to be sure\n");
 			fill_word_quote(&iter, texts.final, word, texts.env);
-		}
 		else if (!word && texts.line[iter.i])
 		{
 			if (texts.final)
