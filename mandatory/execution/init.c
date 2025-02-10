@@ -1,5 +1,4 @@
 #include "../h_files/minishell.h"
-#include <stdlib.h>
 
 char	*find_env(char *name, t_env **env);
 int	(*get_builtin(t_list *lst))(t_list *lst, t_env **env);
@@ -10,6 +9,8 @@ void	good_flags(t_list *lst)
 	int		i;
 
 	i = 0;
+	if (!lst->flags)
+		return ;
 	while (lst->flags[i])
 		i++;
 	res = ft_calloc(i + 2, sizeof(char *));
@@ -55,7 +56,7 @@ void	good_command(t_list *lst, char **path)
 	lst->command = NULL;
 }
 
-void	init(t_list **lst, t_env **env)
+void	init(t_list *lst, t_env **env)
 {
 	t_list	*node;
 	char	**path;
@@ -63,10 +64,10 @@ void	init(t_list **lst, t_env **env)
 	path = NULL;
 	if (find_env("PATH", env) != NULL)
 		path = ft_split(find_env("PATH", env), ":");
-	node = *lst;
+	node = lst;
 	while (node)
 	{
-		if (get_builtin(node) == NULL)
+		if (1 && node->type == 1)
 		{
 			good_flags(node);
 			if (path)
@@ -90,8 +91,8 @@ int	*get_pid_list(t_list *lst)
 		lst = lst->next;
 	}
 	res = ft_calloc(i + 1, sizeof(int));
+	printf("There are %i elements\n", i + 1);
 	if (!res)
 		return (NULL);
-	ft_memset(res, -1, i + 2);
 	return (res);
 }

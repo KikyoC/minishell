@@ -1,7 +1,4 @@
 #include "../h_files/minishell.h"
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
 
 char	**get_envp(t_env **env);
 char	*find_env(char *name, t_env **env);
@@ -9,25 +6,21 @@ void	init(t_list **lst, t_env **env);
 int	(*get_builtin(t_list *lst))(t_list *lst, t_env **env);
 int	*get_pid_list(t_list *lst);
 int	wait_all(int *pids);
+int	open_file(t_list *node, int *infile, int *outfile, int *next);
+void	close_node(t_list *lst);
+void	add_pid_back(int *fds, int fd);
 
-int	builtin(t_list *cmd, t_env **env, int (execute)(t_list *lst, t_env **env))
+void	children(t_list *cmd, char **envp)
 {
-	pid_t	f;
-
-	f = fork();
-	if (f < 0)
-	{
-		perror("Minishell: ");
-		return (1);
-	}
-	if (f == 0)
-	{
-		//Child process
-		execute(cmd, env);
-		exit(0);
-	}
-	//Parent process
-	return (f);
+	printf("Infile is %i, outfile is %i, second flag is %s\n", cmd->input, cmd->output, cmd->flags[1]);
+	if (cmd->input > 2)
+		dup2(cmd->input, 0);
+	if (cmd->output > 2)
+		dup2(cmd->output, 1);
+	close_node(cmd);
+	execve(cmd->command, cmd->flags, envp);
+	perror("Execution error\n");
+	exit(1);
 }
 
 int	execute(t_list *cmd, char **env)
@@ -41,62 +34,13 @@ int	execute(t_list *cmd, char **env)
 		return (1);
 	}
 	if (f == 0)
-	{
-		//Child process
-		printf("Input is %i\n", cmd->input);
-		dup2(cmd->input, 0);
-		// close(cmd->input);
-		execve(cmd->command, cmd->flags, env);
-		perror("Execution error\n");
-	}
-	//Parent process
+		children(cmd, env);
+	close_node(cmd);
 	ft_free_split(env);
 	return (f);
 }
 
-// static void	add_back(int *lst, int to_add)
-// {
-// 	int	i;
-//
-// 	i = 0;
-// 	if (!lst)
-// 		return ;
-// 	while (lst[i] == -1)
-// 		i++;
-// 	lst[i] = to_add;
-// }
-
-// Actually it can handle < and >
-int	open_file(t_list *node, int *infile, int *outfile)
-{
-	if (ft_strncmp("<", node->prev->command, 2))
-	{
-		close(*infile);
-		*infile = open(node->command, O_RDONLY);
-		if (*infile < 0)
-		{
-			*infile = 0;
-			perror("Minishell: ");
-			return (1);
-		}
-		return (0);
-	}
-	if (ft_strncmp(">", node->prev->command, 2))
-	{
-		close(*outfile);
-		*outfile = open (node->command, O_WRONLY | O_TRUNC | O_CREAT);
-		if (*outfile < 0)
-		{
-			*outfile = 1;
-			perror("Minishell: ");
-			return (1);
-		}
-		return (0);
-	}
-	return (1);
-}
-
-t_list	*prepare_command(t_list	*node)
+t_list	*prepare_command(t_list	*node, int *next)
 {
 	int		infile;
 	int		outfile;
@@ -105,35 +49,47 @@ t_list	*prepare_command(t_list	*node)
 	infile = 0;
 	outfile = 1;
 	command = NULL;
+	if (next)
+	{
+		infile = *next;
+		*next = 0;
+	}
 	while (node)
 	{
-		// If it's a file
-		if (node->type == 4)
-		{
-			printf("It's a file\n");
-			open_file(node, &infile, &outfile);
-		}
+		if (node->type == 2 || node->type == 3)
+			open_file(node, &infile, &outfile, next);
 		else if (node->type == 1)
 			command = node;
+		if (node->type == 2)
+			break ;
 		node = node->next;
 	}
-	command->input = open("infile", O_RDONLY);
-	printf("Input is %i\n", command->input);
+	command->input = infile;
 	command->output = outfile;
 	return (command);
 }
 
-int	run(t_list **lst, t_env **env)
+int	*run(t_list **lst, t_env **env)
 {
 	t_list	*command;
 	char	**envp;
-	int		state;
+	int		next;
+	int		*pids;
 
-	command = prepare_command(*lst);
-	envp = get_envp(env);
-	(void)command;
-	(void)envp;
-	(void)state;
-	// waitpid(execute(command, envp), &state, 0);
-	return (1);
+	next = 0;
+	command = prepare_command(*lst, &next);
+	pids = get_pid_list(*lst);
+	next = 0;
+	if (!pids)
+		return (NULL);
+	while (command)
+	{
+		envp = get_envp(env);
+		add_pid_back(pids, execute(command, envp));
+		command = command->next;
+		while (command && (!command->prev || command->prev->type != 2))
+			command = command->next;
+		command = prepare_command(command, &next);
+	}
+	return (pids);
 }
