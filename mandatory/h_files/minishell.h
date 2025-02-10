@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/02/08 11:24:52 by xray             ###   ########.fr       */
+/*   Updated: 2025/02/10 16:21:47 by xray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -113,5 +113,7 @@ void	cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
 char	*expand(char *line, char **env);
 
 char	**split_flags(char **flags);
+
+void	file_flags(t_list **cmds);
 
 #endif

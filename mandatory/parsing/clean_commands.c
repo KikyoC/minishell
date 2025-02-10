@@ -36,6 +36,8 @@ t_list	*get_correct_commands(t_list *cmds, char **env)
 			curr->type = 1;
 		if (curr->type == 3 && curr->flags[0])
 			modify_flags(&curr);
+		if (curr->type == 6 && curr->flags[0])
+			file_flags(&curr);
 		if (ft_strnstr(">>", curr->command, 2)
 				|| ft_strnstr("<", curr->command, 1) || ft_strnstr(">", curr->command, 1))
 		{
@@ -43,7 +45,7 @@ t_list	*get_correct_commands(t_list *cmds, char **env)
 			if (curr->next)
 				curr->next->type = 3;
 		}
-		if (ft_strnstr("<<", curr->command, 2))
+		else if (ft_strnstr("<<", curr->command, 2))
 		{
 			curr->type = 4;
 			if (curr->next)

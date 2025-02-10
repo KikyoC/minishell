@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/02/05 09:38:17 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/02/10 16:34:21 by xray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,18 @@ int main(int argc, char **argv, char **env)
 		curr = lst;
 		while (curr)
 		{
-			printf("%d.\n\b\bcommand: %s\n", i, curr->command);
+			if (curr->type == 1)
+				printf("%d. command : %s\n", i, curr->command);
+			if (curr->type == 2)
+				printf("%d. pipe : %s\n", i, curr->command);
+			if (curr->type == 3)
+				printf("%d. file : %s\n", i, curr->command);
+			if (curr->type == 4)
+				printf("%d. heredoc : %s\n", i, curr->command);
+			if (curr->type == 5)
+				printf("%d. redirect : %s\n", i, curr->command);
+			if (curr->type == 6)
+				printf("%d. heredoc param : %s\n", i, curr->command);
 			if (curr->flags)
 				print_split(curr->flags);
 			curr = curr->next;

@@ -58,12 +58,16 @@ void	modify_flags(t_list **cmds)
 {
 	t_list	*curr;
 	t_list	*new;
+	t_list	*tmp;
 
 	curr = find_command(*cmds);
 	if (!curr)
 	{
 		new = ft_lstnew(ft_strdup((*cmds)->flags[0]));
-		new->next = (*cmds)->next;
+		tmp = (*cmds)->next;
+		(*cmds)->next->prev = new;
+		(*cmds)->next = new;
+		new->next = tmp;
 		new->prev = (*cmds);
 		new->command = strdup((*cmds)->flags[0]);
 		(*cmds)->next = new;
@@ -74,4 +78,23 @@ void	modify_flags(t_list **cmds)
 	}
 	else
 		curr->flags = give_flags(curr, *cmds);
+}
+
+void	file_flags(t_list **cmds)
+{
+	t_list	*new;
+	t_list	*tmp;
+
+	new = ft_lstnew(ft_strdup((*cmds)->flags[0]));
+	tmp = (*cmds)->next;
+	(*cmds)->next->prev = new;
+	(*cmds)->next = new;
+	new->next = tmp;
+	new->prev = (*cmds);
+	new->command = strdup((*cmds)->flags[0]);
+	(*cmds)->next = new;
+	(*cmds)->next->prev = new;	
+	new->flags = split_flags((*cmds)->flags);
+	(*cmds)->flags = NULL;
+	new->type =	1;
 }
