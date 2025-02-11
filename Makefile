@@ -18,40 +18,35 @@ GNL_FILE = gnl.a
 OBJ_PATH = obj/
 SRC_PATH = mandatory/src/
 BUILTIN_PATH = mandatory/builtins/
-# SIGNALS_PATH = mandatory/signals/
+PARSING_PATH = mandatory/parsing/
 UTILS_PATH = mandatory/utils/
-# PARSING_PATH = mandatory/parsing/
+# SIGNALS_PATH = mandatory/signals/
 
+PARSING = parsing.c text_handle.c clean_commands.c flags_handle.c dollars.c quote_parsing.c
 SRC = main.c create_env.c delete_env.c
 BUILTIN = pwd.c clear.c cd.c echo.c export.c unset.c env.c
-UTIL = strings.c commands.c sort_list.c env_replacer.c quotes_parser.c transform_env.c 
-
+UTIL = strings.c commands.c sort_list.c env_replacer.c quotes_parser.c transform_env.c utils.c parsing_utils.c split_skip_quotes_utils.c split_utils.c dollars_utils.c cpy_txt_utils.c
 # SIGNAL = 
-# PARSING = 
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 BUILTINS = $(addprefix $(BUILTIN_PATH), $(BUILTIN))
-
 UTILS = $(addprefix $(SRC_PATH), $(UTIL))
-
+PARSINGS = $(addprefix $(PARSING_PATH), $(PARSING))
 # SIGNALS = $(addprefix $(SRC_PATH), $(SIGNAL))
-# PARSINGS = $(addprefix $(PARSING_PATH), $(PARSING))
+
 
 OBJ_SRC = $(SRC:.c=.o)
 OBJ_BUILTIN = $(BUILTIN:.c=.o)
-
 OBJ_UTILS = $(UTIL:.c=.o)
-
+OBJ_PARSING = $(PARSING:.c=.o)
 # OBJ_SIGNALS = $(SIGNAL:.c=.o)
-# OBJ_PARSING = $(PARSING:.c=.o)
+
+
 
 OBJS_SRC = $(addprefix $(OBJ_PATH), $(OBJ_SRC))
 OBJS_BUILTIN = $(addprefix $(OBJ_PATH), $(OBJ_BUILTIN))
-
-
 OBJS_UTILS = $(addprefix $(OBJ_PATH), $(OBJ_UTILS))
-
-# OBJS_PARSING = $(addprefix $(OBJ_PATH), $(OBJ_PARSING))
+OBJS_PARSING = $(addprefix $(OBJ_PATH), $(OBJ_PARSING))
 # OBJS_SIGNALS = $(addprefix $(OBJ_PATH), $(OBJ_SIGNALS))
 
 LIBFT_LIB = $(addprefix $(LIBFT_DIR), $(LIBFT_FILE))
@@ -60,12 +55,12 @@ all: $(NAME)
 	@:	
 
 
-$(NAME): $(LIBFT_LIB) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS)
-	@$(CC) $(CFLAGS) -lreadline $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(LIBFT_LIB) -o $@
+$(NAME): $(LIBFT_LIB) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(OBJS_PARSING)
+	@$(CC) $(CFLAGS) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(OBJS_PARSING) $(LIBFT_LIB) -o $@ -lreadline
 	@echo "$(GREEN)>>>	MINISHELL COMPILED	<<<"
 
 $(LIBFT_LIB):
-	@make --no-print-directory -C $(LIBFT_DIR)
+	@make --no-print-directory -C $(LIBFT_DIR) bonus
 
 $(OBJ_PATH)%.o: $(PARSING_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
@@ -88,6 +83,10 @@ $(OBJ_PATH)%.o: $(BUILTIN_PATH)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_PATH)%.o: $(UTILS_PATH)%.c
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_PATH)%.o: $(PARSING_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CFLAGS) -c $< -o $@
 

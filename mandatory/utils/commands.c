@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:26:59 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 18:41:13 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/01/23 09:54:56 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,10 @@ char	**reformat_all(char **s)
 
 char	**get_paths(char *env)
 {
-	int		i;
 	char	**paths;
 
 	if (!env)
 		return (NULL);
-	i = 0;
 	paths = NULL;
 	paths = ft_split(env, ":");
 	if (!paths)

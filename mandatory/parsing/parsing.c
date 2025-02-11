@@ -1,11 +1,30 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/10 14:46:43 by cmorel            #+#    #+#             */
-/*   Updated: 2025/01/10 14:49:25 by cmorel           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+#include "../h_files/minishell.h"
+#include <stdio.h>
+
+char	*expand(char *line, char **env)
+{
+	int		len;
+	char	*new_line;
+
+	len = replace_dollars(env, line, NULL);
+	new_line = ft_calloc(len + 1, sizeof(char));
+	if (!new_line)
+		free(line);
+	replace_dollars(env, line, new_line);
+	return (new_line);
+}
+
+t_list	*get_commands(char *line, char **env)
+{
+	t_list	*cmds;
+
+	if (parse_quotes(line))
+	{
+		perror("Segfault : unfinished quote");
+		return (NULL);
+	}
+	cmds = ft_split_skip_quotes(line, '\0');
+	get_correct_commands(cmds, env);
+	return (cmds);
+}
