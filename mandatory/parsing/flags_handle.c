@@ -35,12 +35,12 @@ char	**split_flags(char **flags)
 	}
 	ft_free_split(flags);
 	return (cpy);
-}	
+}
 
 char	**give_flags(t_list *curr, t_list *cmds)
 {
-	int len;
-	int	index;
+	int		len;
+	int		index;
 	char	**new;
 
 	index = 0;
@@ -71,10 +71,10 @@ void	modify_flags(t_list **cmds)
 		new->prev = (*cmds);
 		new->command = strdup((*cmds)->flags[0]);
 		(*cmds)->next = new;
-		(*cmds)->next->prev = new;	
+		(*cmds)->next->prev = new;
 		new->flags = split_flags((*cmds)->flags);
 		(*cmds)->flags = NULL;
-		new->type =	1;
+		new->type = 1;
 	}
 	else
 		curr->flags = give_flags(curr, *cmds);
@@ -93,8 +93,8 @@ void	file_flags(t_list **cmds)
 	new->prev = (*cmds);
 	new->command = strdup((*cmds)->flags[0]);
 	(*cmds)->next = new;
-	(*cmds)->next->prev = new;	
+	(*cmds)->next->prev = new;
 	new->flags = split_flags((*cmds)->flags);
 	(*cmds)->flags = NULL;
-	new->type =	1;
+	new->type = 1;
 }

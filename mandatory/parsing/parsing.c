@@ -2,7 +2,7 @@
 #include "../h_files/minishell.h"
 #include <stdio.h>
 
-char	*expand(char *line, char **env)
+char	*expand(char *line, t_env *env)
 {
 	int		len;
 	char	*new_line;
@@ -15,16 +15,19 @@ char	*expand(char *line, char **env)
 	return (new_line);
 }
 
-t_list	*get_commands(char *line, char **env)
+t_list	*get_commands(char *line, t_env *env)
 {
 	t_list	*cmds;
 
+	cmds = NULL;
 	if (parse_quote(line))
 	{
 		perror("Segfault : unfinished quote");
 		return (NULL);
 	}
 	cmds = ft_split_skip_quotes(line, '\0');
+	if (!cmds)
+		return (NULL);
 	get_correct_commands(cmds, env);
 	return (cmds);
 }

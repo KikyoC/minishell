@@ -1,10 +1,10 @@
 
 #include "../h_files/minishell.h"
 
-t_env    *get_env(char **envp);
-int        *run(t_list **lst, t_env **env);
-int        wait_all(int *pids);
-void    *destroy(t_env *env);
+t_env	*get_env(char **envp);
+int		*run(t_list **lst, t_env **env);
+int		wait_all(int *pids);
+void	*destroy(t_env *env);
 
 static char    *get_top(t_env **env)
 {
@@ -90,8 +90,9 @@ int    main(int argc, char **argv, char **envp)
 {
     char    *line;
     char    *prompt;
-    t_env    *env;
-    int        state;
+    t_env	*env;
+    int		state;
+	t_list	*cmds;
 
     (void)argc;
     (void)argv;
@@ -106,10 +107,11 @@ int    main(int argc, char **argv, char **envp)
     {
         prompt = get_prompt(&env);
         line = readline(prompt);
-        free(prompt);
+		free(prompt);
         if (!line)
-            break ;
-        //TODO parsing and then execution
+			break ;
+		cmds = get_commands(line, env);
+		ft_lstclear(&cmds, free);
         add_history(line);
         free(line);
     }

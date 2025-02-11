@@ -2,4 +2,4 @@ changer pour split aux whitespaces
 
 segfault full espace (hihihi)
 
-les < > ne fonctionne pas, je dois check si il y a la presence d'un flags de type "-" avat de deplacer mes flags sinon je les laisse juste trkl
+j'ai des leaks faut que je les patchs !

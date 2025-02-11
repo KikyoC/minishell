@@ -30,7 +30,7 @@ char	**get_flags(char *line, t_list *cmds)
 	return (flags);
 }
 
-int cpy_without_quote(char *final, char *line)
+int	cpy_without_quote(char *final, char *line)
 {
 	int		i;
 	int		len;
@@ -89,6 +89,4 @@ void	remove_quote(char *line, t_list *cmds)
 	}
 	cmds->command = command;
 	cmds->flags = get_flags(line + i, cmds);
-	// if (cmds->type == 3)
-		//pass
 }
