@@ -85,8 +85,6 @@ char    *get_prompt(t_env **env)
     return (res);
 }
 
-char    *parse_quotes(char *str, int multiple_args, t_env **env);
-
 
 int    main(int argc, char **argv, char **envp)
 {
@@ -94,7 +92,6 @@ int    main(int argc, char **argv, char **envp)
     char    *prompt;
     t_env    *env;
     int        state;
-    int        *pids;
 
     (void)argc;
     (void)argv;

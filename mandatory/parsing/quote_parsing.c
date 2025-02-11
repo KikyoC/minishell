@@ -1,7 +1,7 @@
 
 #include "../h_files/minishell.h"
 
-int parse_quotes(char *line)
+int parse_quote(char *line)
 {
 	char	quote;
 	int	i;

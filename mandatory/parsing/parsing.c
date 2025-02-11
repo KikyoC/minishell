@@ -19,7 +19,7 @@ t_list	*get_commands(char *line, char **env)
 {
 	t_list	*cmds;
 
-	if (parse_quotes(line))
+	if (parse_quote(line))
 	{
 		perror("Segfault : unfinished quote");
 		return (NULL);
