@@ -16,6 +16,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "../includes/libft/libft.h"
+# include "../includes/libft/get_next_line_bonus.h"
 
 
 // structs
@@ -97,7 +98,7 @@ void	fill_word(t_iterate *iter, char *final, char *word, char **env);
 
 int		replace_dollars(char **env, char *line, char *final);
 
-int		parse_quotes(char *line);
+int		parse_quote(char *line);
 
 void	fill_word_quote(t_iterate *iter, char *final, char *word, char **env);
 

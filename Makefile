@@ -25,7 +25,8 @@ UTILS_PATH = mandatory/utils/
 PARSING = parsing.c text_handle.c clean_commands.c flags_handle.c dollars.c quote_parsing.c
 SRC = main.c create_env.c delete_env.c
 BUILTIN = pwd.c clear.c cd.c echo.c export.c unset.c env.c
-UTIL = strings.c commands.c sort_list.c env_replacer.c quotes_parser.c transform_env.c utils.c parsing_utils.c split_skip_quotes_utils.c split_utils.c dollars_utils.c cpy_txt_utils.c
+UTIL = commands.c sort_list.c env_replacer.c transform_env.c utils.c parsing_utils.c \
+	   split_skip_quotes_utils.c split_utils.c dollars_utils.c cpy_txt_utils.c quotes_parser.c
 # SIGNAL = 
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))

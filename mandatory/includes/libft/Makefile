@@ -33,7 +33,8 @@ SRC = ft_bzero.c \
 	  ft_putnbr_fd.c \
 	  ft_strdup.c \
 	  ft_substr.c \
-	  ft_free_split.c
+	  ft_free_split.c \
+	  get_next_line_bonus.c
 
 BONUS = ft_lstnew_bonus.c \
 		ft_lstadd_front_bonus.c \
