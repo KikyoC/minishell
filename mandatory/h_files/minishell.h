@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 17:36:35 by cmorel            #+#    #+#             */
-/*   Updated: 2025/02/10 16:21:47 by xray             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -41,6 +31,13 @@ typedef	struct s_iterate
 	int	i;
 	int	j;
 }	t_iterate;
+
+typedef struct s_env {
+	char			*name;
+	char			*content;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
 
 typedef struct s_texts
 {
