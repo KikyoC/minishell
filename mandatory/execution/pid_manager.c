@@ -9,7 +9,6 @@ int	wait_all(int *pids)
 	i = 0;
 	while (pids[i] && i < 10)
 	{
-		printf("I = %i\n", pids[i]);
 		waitpid(pids[i], &state, 0);
 		i++;
 	}

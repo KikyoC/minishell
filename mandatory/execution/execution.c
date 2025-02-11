@@ -10,20 +10,22 @@ int	open_file(t_list *node, int *infile, int *outfile, int *next);
 void	close_node(t_list *lst);
 void	add_pid_back(int *fds, int fd);
 
-void	children(t_list *cmd, char **envp)
+void	children(t_list *cmd, char **envp, int next)
 {
 	printf("Infile is %i, outfile is %i, second flag is %s\n", cmd->input, cmd->output, cmd->flags[1]);
 	if (cmd->input > 2)
 		dup2(cmd->input, 0);
 	if (cmd->output > 2)
 		dup2(cmd->output, 1);
+	if (next > 2)
+		close(next);
 	close_node(cmd);
 	execve(cmd->command, cmd->flags, envp);
 	perror("Execution error\n");
 	exit(1);
 }
 
-int	execute(t_list *cmd, char **env)
+int	execute(t_list *cmd, char **env, int next)
 {
 	pid_t	f;
 
@@ -34,7 +36,7 @@ int	execute(t_list *cmd, char **env)
 		return (1);
 	}
 	if (f == 0)
-		children(cmd, env);
+		children(cmd, env, next);
 	close_node(cmd);
 	ft_free_split(env);
 	return (f);
@@ -46,14 +48,10 @@ t_list	*prepare_command(t_list	*node, int *next)
 	int		outfile;
 	t_list	*command;
 
-	infile = 0;
+	infile = *next;
 	outfile = 1;
 	command = NULL;
-	if (next)
-	{
-		infile = *next;
-		*next = 0;
-	}
+	*next = 0;
 	while (node)
 	{
 		if (node->type == 2 || node->type == 3)
@@ -64,6 +62,8 @@ t_list	*prepare_command(t_list	*node, int *next)
 			break ;
 		node = node->next;
 	}
+	if (!command)
+		return (NULL);
 	command->input = infile;
 	command->output = outfile;
 	return (command);
@@ -79,15 +79,14 @@ int	*run(t_list **lst, t_env **env)
 	next = 0;
 	command = prepare_command(*lst, &next);
 	pids = get_pid_list(*lst);
-	next = 0;
 	if (!pids)
 		return (NULL);
 	while (command)
 	{
 		envp = get_envp(env);
-		add_pid_back(pids, execute(command, envp));
+		add_pid_back(pids, execute(command, envp, next));
 		command = command->next;
-		while (command && (!command->prev || command->prev->type != 2))
+		while (command && command->prev->type != 2)
 			command = command->next;
 		command = prepare_command(command, &next);
 	}

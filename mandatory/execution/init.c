@@ -91,7 +91,6 @@ int	*get_pid_list(t_list *lst)
 		lst = lst->next;
 	}
 	res = ft_calloc(i + 1, sizeof(int));
-	printf("There are %i elements\n", i + 1);
 	if (!res)
 		return (NULL);
 	return (res);
