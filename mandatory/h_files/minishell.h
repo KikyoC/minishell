@@ -119,4 +119,6 @@ char	**split_flags(char **flags);
 
 void	file_flags(t_list **cmds);
 
+char	**ft_realloc(char **split, char *to_add);
+
 #endif
