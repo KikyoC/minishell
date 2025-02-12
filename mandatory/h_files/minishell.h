@@ -18,23 +18,26 @@
 # include "../includes/libft/libft.h"
 # include "../includes/libft/get_next_line_bonus.h"
 
+// define
+
+# define PROMPT "\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"
 
 // structs
 
-typedef	struct s_duet
+typedef struct s_duet
 {
 	int	single_quote;
 	int	double_quote;
 }	t_duet;
 
-typedef	struct s_iterate
+typedef struct s_iterate
 {
 	int	i;
 	int	j;
 }	t_iterate;
 
-
-typedef struct s_env {
+typedef struct s_env
+{
 	char			*name;
 	char			*content;
 	struct s_env	*next;

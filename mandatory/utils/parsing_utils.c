@@ -5,7 +5,12 @@ int	is_operator(char ch, char c)
 {
 	if (c == ' ')
 	{
-		if (ch == '\b' || ch == '\t' || ch == '\n' || ch == '\v' || ch == '\f' || ch == '\r')
+		if (ch == '\b'
+			|| ch == '\t'
+			|| ch == '\n'
+			|| ch == '\v'
+			|| ch == '\f'
+			|| ch == '\r')
 			return (1);
 	}
 	if (ch == '>' || ch == '<' || ch == '|' || ch == c)

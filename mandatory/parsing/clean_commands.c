@@ -26,14 +26,14 @@ void	give_types(t_list **curr, int nbr, int code)
 	if (code == 1)
 	{
 		(*curr)->type = nbr;
-			if ((*curr)->next)
-				(*curr)->next->type = nbr - 2;
+		if ((*curr)->next)
+			(*curr)->next->type = nbr - 2;
 	}
 	else
 	{
 		(*curr)->type = nbr;
-			if ((*curr)->next)
-				(*curr)->next->type = nbr + 2;
+		if ((*curr)->next)
+			(*curr)->next->type = nbr + 2;
 	}
 }
 
@@ -45,6 +45,7 @@ int	check_redirect(char *command)
 		return (1);
 	return (0);
 }
+
 t_list	*get_correct_commands(t_list *cmds, t_env *env)
 {
 	t_list	*curr;

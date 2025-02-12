@@ -1,10 +1,10 @@
 
 #include "../h_files/minishell.h"
 
-int parse_quote(char *line)
+int	parse_quote(char *line)
 {
 	char	quote;
-	int	i;
+	int		i;
 
 	i = 0;
 	quote = '\0';

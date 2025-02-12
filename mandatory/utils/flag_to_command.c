@@ -1,5 +1,4 @@
 
-
 #include "../h_files/minishell.h"
 
 void	flag_to_comand(t_list **cmds)
@@ -11,8 +10,8 @@ void	flag_to_comand(t_list **cmds)
 	new->prev = (*cmds);
 	new->command = strdup((*cmds)->flags[0]);
 	(*cmds)->next = new;
-	(*cmds)->next->prev = new;	
+	(*cmds)->next->prev = new;
 	new->flags = split_flags((*cmds)->flags);
 	(*cmds)->flags = NULL;
-	new->type =	1;
-}	
+	new->type = 1;
+}
