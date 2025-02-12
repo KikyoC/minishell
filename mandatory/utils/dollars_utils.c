@@ -8,7 +8,7 @@ char	choose_quote(char *line)
 	return ('"');
 }
 
-void	fill_word_quote(t_iterate *iter, char *final, char *word, char **env)
+void	fill_word_quote(t_iterate *iter, char *final, char *word, t_env *env)
 {
 	char	*tmp;
 
@@ -21,7 +21,7 @@ void	fill_word_quote(t_iterate *iter, char *final, char *word, char **env)
 	cpy_text_add_quote(tmp, final, iter);
 }
 
-void	fill_word(t_iterate *iter, char *final, char *word, char **env)
+void	fill_word(t_iterate *iter, char *final, char *word, t_env *env)
 {
 	char	*tmp;
 

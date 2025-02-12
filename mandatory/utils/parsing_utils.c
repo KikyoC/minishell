@@ -3,6 +3,16 @@
 
 int	is_operator(char ch, char c)
 {
+	if (c == ' ')
+	{
+		if (ch == '\b'
+			|| ch == '\t'
+			|| ch == '\n'
+			|| ch == '\v'
+			|| ch == '\f'
+			|| ch == '\r')
+			return (1);
+	}
 	if (ch == '>' || ch == '<' || ch == '|' || ch == c)
 		return (1);
 	return (0);
@@ -12,8 +22,8 @@ t_list	*find_operator(int *i, char *line, char ch)
 {
 	t_list	*node;
 	char	*str;
-	int		count;
 	char	code;
+	int		count;
 
 	code = '\0';
 	count = 0;

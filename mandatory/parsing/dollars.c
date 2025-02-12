@@ -63,7 +63,7 @@ void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 	}
 }
 
-int	replace_dollars(char **env, char *line, char *final)
+int	replace_dollars(t_env *env, char *line, char *final)
 {
 	t_iterate	iter;
 	char		*word;
@@ -91,7 +91,3 @@ int	replace_dollars(char **env, char *line, char *final)
 	}
 	return (iter.j);
 }
-
-// export lol=mdr
-
-// echo $lol $loli $ '$lol' "$lol" '"$lol"' "'$lol'" $"lol" $'lol' "$"lol '$'lol $EMPTY $$ $lol.lol
