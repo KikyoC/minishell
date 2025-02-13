@@ -1,19 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 13:41:44 by cmorel            #+#    #+#             */
-/*   Updated: 2025/02/03 18:00:29 by togauthi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../h_files/minishell.h"
 
 t_env	*get_env(char **envp);
-int		run(t_list **lst, t_env **env);
+
+int		*run(t_list **lst, t_env **env);
+int		wait_all(int *pids);
 void	*destroy(t_env *env);
 
 static char	*get_top(t_env **env)
@@ -103,9 +93,12 @@ int	main(int argc, char **argv, char **envp)
 	char	*prompt;
 	t_env	*env;
 	// int		state;
+	int		state;
+	t_list	*cmds;
 
 	(void)argc;
 	(void)argv;
+	state = 0;
 	env = get_env(envp);
 	if (!env)
 	{
@@ -119,21 +112,13 @@ int	main(int argc, char **argv, char **envp)
 		free(prompt);
 		if (!line)
 			break ;
-		//TODO parsing and then execution
-		t_list	*lst;
-		lst = ft_calloc(1, sizeof(t_list));
-		lst->flags = ft_calloc(4, sizeof(char *));
-		lst->flags[0] = ft_strdup("-l");
-		lst->flags[1] = ft_strdup("-a");
-		lst->command = ft_strdup("ls");
-		run(&lst, &env);
-		ft_free_split(lst->flags);
-		free(lst->command);
-		free(lst);
+		cmds = get_commands(line, env);
+		ft_lstclear(&cmds, free);
 		add_history(line);
 		free(line);
 	}
 	destroy(env);
 	rl_clear_history();
-	return (0);
+	printf("Exit\n");
+	return (state);
 }

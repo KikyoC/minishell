@@ -1,3 +1,4 @@
+
 #include "../h_files/minishell.h"
 
 t_env	*switch_nodes(t_env *node1, t_env *node2)
