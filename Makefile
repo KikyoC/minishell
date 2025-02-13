@@ -26,7 +26,7 @@ UTILS_PATH = mandatory/utils/
 SRC = main.c create_env.c delete_env.c
 BUILTIN = pwd.c clear.c cd.c echo.c export.c unset.c env.c
 UTIL = strings.c commands.c sort_list.c env_replacer.c transform_env.c quotes_parser.c
-EXECUTION = execution.c flags.c builtins.c init.c end.c
+EXECUTION = execution.c init.c end.c open.c pid_manager.c fd_manager.c builtins.c
 # SIGNAL = 
 # PARSING = 
 
@@ -60,7 +60,7 @@ all: $(NAME)
 
 
 $(NAME): $(LIBFT_LIB) $(OBJS_SRC) $(OBJS_EXECUTIONS) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS)
-	@$(CC) $(CFLAGS) -lreadline $(OBJS_SRC) $(OBJS_EXECUTIONS) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(LIBFT_LIB) -o $@
+	@$(CC) $(CFLAGS) $(OBJS_SRC) $(OBJS_EXECUTIONS) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(LIBFT_LIB) -lreadline -o $@
 	@echo "$(GREEN)>>>	MINISHELL COMPILED	<<<"
 
 $(LIBFT_LIB):

@@ -1,11 +1,6 @@
 #include "../h_files/minishell.h"
-#include <errno.h>
-#include <stdio.h>
-#include <unistd.h>
 
-char	*parse_quotes(char *str, int multiple_args, t_env **env);
-
-char	*find(char *str, t_env **env)
+static t_env	*find(char *str, t_env **env)
 {
 	t_env	*node;
 	size_t	len;
@@ -15,7 +10,7 @@ char	*find(char *str, t_env **env)
 	while (node)
 	{
 		if (ft_strncmp(str, node->name, len) == 0)
-			return (node->content);
+			return (node);
 		node = node->next;
 	}
 	return (NULL);
@@ -36,6 +31,24 @@ char	*get_home(t_env **env)
 	return (NULL);
 }
 
+void	switch_pwd(t_env **env)
+{
+	t_env	*old;
+	t_env	*current;
+	char	*current_path;
+
+	current_path = getcwd(NULL, PATH_MAX);
+	if (!current_path)
+		return ;
+	old = find("OLDPWD", env);
+	current = find("PWD", env);
+	if (!old || !current)
+		return ;
+	free(old->content);
+	old->content = current->content;
+	current->content = current_path;
+}
+
 int	cd(t_list *lst, t_env **env)
 {
 	char	*final;
@@ -49,17 +62,16 @@ int	cd(t_list *lst, t_env **env)
 		return (0);
 	}
 	else
-		final = parse_quotes(lst->flags[0], 1, env);
+		final = lst->flags[1];
 	if (!final)
 		return (1);
 	if (chdir(final))
 	{
-		perror("Minishell: ");
+		perror("Minishell");
 		if (lst->flags && lst->flags[0])
 			free(final);
 		return (errno);
 	}
-	if (lst->flags && lst->flags[0])
-		free(final);
+	switch_pwd(env);
 	return (0);
 }
