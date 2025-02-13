@@ -1,5 +1,4 @@
 #include "../h_files/minishell.h"
-#include <stdio.h>
 
 static int	set_fd(t_list *node, int *fd, int flags, int perms)
 {
