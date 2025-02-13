@@ -85,6 +85,17 @@ char	*get_prompt(t_env **env)
 	return (res);
 }
 
+void	print_split(char **split)
+{
+	int	i = 0;
+
+	while (split[i])
+	{
+		printf("  %s\n", split[i]);
+		i++;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -92,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	t_env	*env;
 	int		state;
 	t_list	*cmds;
+	t_list	*curr;
 
 	(void)argc;
 	(void)argv;
@@ -110,6 +122,14 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			break ;
 		cmds = get_commands(line, env);
+		curr = cmds;
+		while (curr)
+		{
+			printf("command : %s\n", curr->command);
+			if (curr->flags)
+				print_split(curr->flags);
+			curr = curr->next;
+		}
 		ft_lstclear(&cmds, free);
 		add_history(line);
 		free(line);
@@ -118,4 +138,5 @@ int	main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	printf("Exit\n");
 	return (state);
+
 }

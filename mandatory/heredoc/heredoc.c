@@ -9,9 +9,17 @@ char	**heredoc(char *final)
 	
 	len = ft_strlen(final);
 	line = NULL;
-	while (ft_strnstr(final, line, len))
+	tab = NULL;
+	signal(SIGINT, inthandler);
+	while (!ft_strnstr(final, line, len))
 	{
-		
+		if (line)
+		{
+			free(line);
+			line = NULL;
+		}
+		line = readline(">");
+		tab = ft_realloc(tab, line);
 	}
-	return (NULL);
+	return (tab);
 }

@@ -21,7 +21,7 @@ UTILS_PATH = mandatory/utils/
 BUILTIN_PATH = mandatory/builtins/
 PARSING_PATH = mandatory/parsing/
 HEREDOC_PATH= mandatory/heredoc/
-# SIGNALS_PATH = mandatory/signals/
+SIGNALS_PATH = mandatory/signals/
 
 SRC = main.c create_env.c delete_env.c
 UTIL = commands.c sort_list.c env_replacer.c transform_env.c utils.c parsing_utils.c \
@@ -29,14 +29,14 @@ UTIL = commands.c sort_list.c env_replacer.c transform_env.c utils.c parsing_uti
 BUILTIN = pwd.c cd.c echo.c export.c unset.c env.c
 HEREDOC = heredoc.c
 PARSING = parsing.c text_handle.c clean_commands.c flags_handle.c dollars.c quote_parsing.c
-# SIGNAL = 
+SIGNAL = heredoc_signals.c 
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 UTILS = $(addprefix $(SRC_PATH), $(UTIL))
 BUILTINS = $(addprefix $(BUILTIN_PATH), $(BUILTIN))
 PARSINGS = $(addprefix $(PARSING_PATH), $(PARSING))
 HEREDOCS = $(addprefix $(HEREDOC_PATH), $(HEREDOC))
-# SIGNALS = $(addprefix $(SRC_PATH), $(SIGNAL))
+SIGNALS = $(addprefix $(SRC_PATH), $(SIGNAL))
 
 
 OBJ_SRC = $(SRC:.c=.o)
@@ -44,25 +44,23 @@ OBJ_UTILS = $(UTIL:.c=.o)
 OBJ_BUILTIN = $(BUILTIN:.c=.o)
 OBJ_PARSING = $(PARSING:.c=.o)
 OBJ_HEREDOC = $(HEREDOC:.c=.o)
-# OBJ_SIGNALS = $(SIGNAL:.c=.o)
-
+OBJ_SIGNALS = $(SIGNAL:.c=.o)
 
 
 OBJS_SRC = $(addprefix $(OBJ_PATH), $(OBJ_SRC))
-OBJS_BUILTIN = $(addprefix $(OBJ_PATH), $(OBJ_BUILTIN))
-OBJS_UTILS = $(addprefix $(OBJ_PATH), $(OBJ_UTILS))
-OBJS_PARSING = $(addprefix $(OBJ_PATH), $(OBJ_PARSING))
-OBJS_HEREDOC = $(addprefix $(OBJ_PATH), (OBJ_HERDOC))
-# OBJS_SIGNALS = $(addprefix $(OBJ_PATH), $(OBJ_SIGNALS))
-
 LIBFT_LIB = $(addprefix $(LIBFT_DIR), $(LIBFT_FILE))
+OBJS_UTILS = $(addprefix $(OBJ_PATH), $(OBJ_UTILS))
+OBJS_BUILTIN = $(addprefix $(OBJ_PATH), $(OBJ_BUILTIN))
+OBJS_PARSING = $(addprefix $(OBJ_PATH), $(OBJ_PARSING))
+OBJS_HEREDOC = $(addprefix $(OBJ_PATH), $(OBJ_HEREDOC))
+OBJS_SIGNALS = $(addprefix $(OBJ_PATH), $(OBJ_SIGNALS))
 
 all: $(NAME)
 	@:	
 
 
-$(NAME): $(LIBFT_LIB) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(OBJS_PARSING)
-	@$(CC) $(CFLAGS) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(OBJS_PARSING) $(LIBFT_LIB) -o $@ -lreadline
+$(NAME): $(LIBFT_LIB) $(OBJS_SIGNALS) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(OBJS_PARSING) $(OBJS_HEREDOC) 
+	@$(CC) $(CFLAGS) $(OBJS_SIGNALS) $(OBJS_SRC) $(OBJS_BUILTIN) $(OBJS_GNL) $(OBJS_UTILS) $(OBJS_PARSING) $(OBJS_HEREDOC) $(LIBFT_LIB) -o $@ -lreadline
 	@echo "$(GREEN)>>>	MINISHELL COMPILED	<<<"
 
 $(LIBFT_LIB):
@@ -80,7 +78,7 @@ $(OBJ_PATH)%.o: $(HEREDOC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_PATH)%.o: $(SIGNAL_PATH)%.c
+$(OBJ_PATH)%.o: $(SIGNALS_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CFLAGS) -c $< -o $@
 

@@ -18,6 +18,7 @@ char	*expand(char *line, t_env *env)
 t_list	*get_commands(char *line, t_env *env)
 {
 	t_list	*cmds;
+	t_list	*curr;
 
 	cmds = NULL;
 	if (parse_quote(line))
@@ -29,5 +30,13 @@ t_list	*get_commands(char *line, t_env *env)
 	if (!cmds)
 		return (NULL);
 	get_correct_commands(cmds, env);
+	curr = cmds;
+	while (curr)
+	{
+		if (curr->type == 6)
+			curr->flags = heredoc(curr->command);
+
+		curr = curr->next;
+	}
 	return (cmds);
 }

@@ -121,4 +121,8 @@ void	file_flags(t_list **cmds);
 
 char	**ft_realloc(char **split, char *to_add);
 
+void	inthandler(int sig);
+
+char	**heredoc(char *final);
+
 #endif

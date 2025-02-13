@@ -21,19 +21,19 @@ void	clean_flags(char **flags)
 	}
 }
 
-void	give_types(t_list **curr, int nbr, int code)
+void	give_types(t_list **curr, int code)
 {
-	if (code == 1)
+	if (!code)
 	{
-		(*curr)->type = nbr;
+		(*curr)->type = 5;
 		if ((*curr)->next)
-			(*curr)->next->type = nbr - 2;
+			(*curr)->next->type = 3;
 	}
 	else
 	{
-		(*curr)->type = nbr;
+		(*curr)->type = 4;
 		if ((*curr)->next)
-			(*curr)->next->type = nbr + 2;
+			(*curr)->next->type = 6;
 	}
 }
 
@@ -53,7 +53,8 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 	curr = cmds;
 	while (curr)
 	{
-		curr->content = expand((char *)curr->content, env);
+		if (curr->type != 6)
+			curr->content = expand((char *)curr->content, env);
 		if (curr->type != 1)
 			remove_quote(curr->content, curr);
 		clean_flags(curr->flags);
@@ -64,9 +65,11 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 		if (curr->type == 6 && curr->flags[0])
 			file_flags(&curr);
 		if (check_redirect(curr->command))
-			give_types(&curr, 5, 0);
+		{
+			give_types(&curr, 0);
+		}
 		else if (ft_strnstr("<<", curr->command, 2))
-			give_types(&curr, 6, 1);
+			give_types(&curr, 1);
 		if (ft_strnstr("|", curr->command, 1))
 			curr->type = 2;
 		curr = curr->next;
