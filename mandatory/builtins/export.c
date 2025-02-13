@@ -1,13 +1,5 @@
 #include "../h_files/minishell.h"
 
-void	add_back(t_env **env, t_env *node, int append_mode);
-t_env	*sort_env(t_env **env);
-
-char	*parse_quotes(char *str, int multiple_args, t_env **env);
-int		print_export(t_env **env);
-void	*destroy_node(t_env *node);
-void	*destroy(t_env *env);
-
 static int	parse(char *str, int *append_mode)
 {
 	int	i;
@@ -50,51 +42,46 @@ t_env	*assign_node(char *str, int append_mode, t_env **node)
 	return (*node);
 }
 
-t_env	*new_env(char *str, int append_mode, t_env **env)
+t_env	*new_env(char *str, int append_mode)
 {
 	t_env	*res;
-	int		i;
-	char	*tmp;
 
-	i = 0;
 	res = ft_calloc(1, sizeof(t_env));
 	if (!res)
 		return (NULL);
-	while (str[i] && str[i] != '=')
-		i++;
 	res = assign_node(str, append_mode, &res);
 	if (!res)
 		return (NULL);
-	if (res->content)
-	{
-		tmp = parse_quotes(res->content, 0, env);
-		if (!tmp)
-			return (res);
-		free(res->content);
-		res->content = tmp;
-	}
 	return (res);
 }
 
-int	print_export(t_env **env)
+void	add_if_required(t_env *element, t_env **env)
 {
-	t_env	*sorted;
 	t_env	*node;
 
-	sorted = sort_env(env);
-	if (!sorted)
-		return (1);
-	node = sorted;
-	while (node)
+	node = NULL;
+	if (!element)
+		return ;
+	if (ft_strncmp("PWD", element->name, 4) == 0 && !find_env("OLDPWD", env))
 	{
-		printf("declare -x %s", node->name);
-		if (node->content && node->content[0])
-			printf("=\"%s\"", node->content);
-		printf("\n");
-		node = node->next;
+		node = ft_calloc(1, sizeof(t_env));
+		if (!node)
+			return ;
+		node->name = ft_strdup("OLDPWD");
+		node->content = ft_strdup(element->content);
 	}
-	destroy(sorted);
-	return (0);
+	else if (ft_strncmp("OLDPWD", element->name, 7) == 0 && !find_env("PWD", env))
+	{
+		node = ft_calloc(1, sizeof(t_env));
+		if (!node)
+			return ;
+		node->name = ft_strdup("PWD");
+		node->content = ft_strdup(element->content);
+	}
+	if (node && node->name && node->content)
+		add_back(env, node, 0);
+	else
+		destroy_node(node);
 }
 
 int	export(t_list *lst, t_env **env)
@@ -105,7 +92,7 @@ int	export(t_list *lst, t_env **env)
 
 	i = -1;
 	if (lst->flags == NULL || lst->flags[0] == NULL)
-		return (print_export(env));
+		return (0);
 	while (lst->flags[++i])
 	{
 		if (!parse(lst->flags[i], &append_mode))
@@ -115,9 +102,10 @@ int	export(t_list *lst, t_env **env)
 			ft_putstr_fd(" cannot be parsed\n", 2);
 			continue ;
 		}
-		node = new_env(lst->flags[i], append_mode, env);
+		node = new_env(lst->flags[i], append_mode);
 		if (!node)
 			continue ;
+		add_if_required(node, env);
 		add_back(env, node, append_mode);
 	}
 	return (0);

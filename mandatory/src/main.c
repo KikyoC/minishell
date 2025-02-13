@@ -1,7 +1,7 @@
-
 #include "../h_files/minishell.h"
 
 t_env	*get_env(char **envp);
+
 int		*run(t_list **lst, t_env **env);
 int		wait_all(int *pids);
 void	*destroy(t_env *env);
@@ -75,21 +75,24 @@ char	*get_prompt(t_env **env)
 	if (wd)
 		free(wd);
 	if (!tmp)
-		return (ft_strdup(PROMPT));
+		return (ft_strdup("\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"));
 	if (res)
 		free(res);
 	res = ft_strjoin(tmp, " \e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m");
 	free(tmp);
 	if (!res)
-		return (ft_strdup(PROMPT));
+		return (ft_strdup("\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"));
 	return (res);
 }
+
+char	*parse_quotes(char *str, int multiple_args, t_env **env);
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	char	*prompt;
 	t_env	*env;
+	// int		state;
 	int		state;
 	t_list	*cmds;
 
