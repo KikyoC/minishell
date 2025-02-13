@@ -35,6 +35,11 @@ char	**get_envp(t_env **env)
 	size_t	i;
 
 	res = ft_calloc(env_size(env) + 1, sizeof(char *));
+	if (!res)
+	{
+		perror("Minishell: ");
+		return (NULL);
+	}
 	node = *env;
 	i = 0;
 	while (node)
