@@ -1,8 +1,5 @@
 #include "../h_files/minishell.h"
 
-char	*find_env(char *name, t_env **env);
-int	(*get_builtin(t_list *lst))(t_list *lst, t_env **env);
-
 void	good_flags(t_list *lst)
 {
 	char	**res;
@@ -56,24 +53,25 @@ void	good_command(t_list *lst, char **path)
 	lst->command = NULL;
 }
 
-void	init(t_list *lst, t_env **env)
+void	init_node(t_list *lst, t_env **env)
 {
-	t_list	*node;
 	char	**path;
 
 	path = NULL;
 	if (find_env("PATH", env) != NULL)
 		path = ft_split(find_env("PATH", env), ":");
-	node = lst;
-	while (node)
+	if (get_builtin(lst) == NULL && lst->type == 1)
 	{
-		if (1 && node->type == 1)
+		good_flags(lst);
+		printf("Flags for command %s\n", lst->command);
+		int i = 0;
+		while (lst->flags[i])
 		{
-			good_flags(node);
-			if (path)
-				good_command(node, path);
+			printf("%s\n", lst->flags[i]);
+			i++;
 		}
-		node = node->next;
+		if (path)
+			good_command(lst, path);
 	}
 	if (path)
 		ft_free_split(path);

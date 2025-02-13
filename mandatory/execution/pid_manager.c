@@ -19,6 +19,8 @@ void	add_pid_back(int *pids, int pid)
 {
 	int	i;
 
+	if (pid <= 0)
+		return ;
 	i = 0;
 	while (pids[i])
 		i++;
