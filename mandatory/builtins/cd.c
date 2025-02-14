@@ -62,9 +62,12 @@ int	cd(t_list *lst, t_env **env)
 		return (0);
 	}
 	else
-		final = lst->flags[1];
+		final = lst->flags[0];
 	if (!final)
+	{
+		printf("Bruh\n");
 		return (1);
+	}
 	if (chdir(final))
 	{
 		perror("Minishell");
