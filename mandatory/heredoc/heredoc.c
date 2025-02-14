@@ -6,10 +6,12 @@ char	**heredoc(char *final)
 	int		len;
 	char	*line;
 	char	**tab;
-	
+	int		fd;
+
 	len = ft_strlen(final);
 	line = NULL;
 	tab = NULL;
+	fd = dup(0);
 	signal(SIGINT, inthandler);
 	while (!ft_strnstr(final, line, len))
 	{
@@ -19,7 +21,13 @@ char	**heredoc(char *final)
 			line = NULL;
 		}
 		line = readline(">");
+		if (!line)
+			break ;
 		tab = ft_realloc(tab, line);
 	}
+	if (tab)
+		ft_free_split(tab);
+	free(line);
+	dup2(fd, 0);
 	return (tab);
 }

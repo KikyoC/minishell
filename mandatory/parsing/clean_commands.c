@@ -25,15 +25,15 @@ void	give_types(t_list **curr, int code)
 {
 	if (!code)
 	{
-		(*curr)->type = 5;
+		(*curr)->type = REDIRECT;
 		if ((*curr)->next)
-			(*curr)->next->type = 3;
+			(*curr)->next->type = FILE;
 	}
 	else
 	{
-		(*curr)->type = 4;
+		(*curr)->type = HERE;
 		if ((*curr)->next)
-			(*curr)->next->type = 6;
+			(*curr)->next->type = HEREDOC;
 	}
 }
 
@@ -53,25 +53,23 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 	curr = cmds;
 	while (curr)
 	{
-		if (curr->type != 6)
+		if (curr->type != HERE)
 			curr->content = expand((char *)curr->content, env);
-		if (curr->type != 1)
+		if (curr->type != COMMAND)
 			remove_quote(curr->content, curr);
 		clean_flags(curr->flags);
 		if (curr->type == -1)
-			curr->type = 1;
-		if (curr->type == 3 && curr->flags[0])
+			curr->type = COMMAND;
+		if (curr->type == FILE && curr->flags[0])
 			modify_flags(&curr);
-		if (curr->type == 6 && curr->flags[0])
+		if (curr->type == HERE && curr->flags[0])
 			file_flags(&curr);
 		if (check_redirect(curr->command))
-		{
 			give_types(&curr, 0);
-		}
 		else if (ft_strnstr("<<", curr->command, 2))
 			give_types(&curr, 1);
 		if (ft_strnstr("|", curr->command, 1))
-			curr->type = 2;
+			curr->type = PIPE;
 		curr = curr->next;
 	}
 	return (cmds);

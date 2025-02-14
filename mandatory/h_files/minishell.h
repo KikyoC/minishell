@@ -21,6 +21,12 @@
 // define
 
 # define PROMPT "\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"
+# define HEREDOC 4
+# define HERE 6
+# define FILE 3
+# define REDIRECT 5
+# define COMMAND 1
+# define PIPE 2
 
 // structs
 
@@ -124,5 +130,9 @@ char	**ft_realloc(char **split, char *to_add);
 void	inthandler(int sig);
 
 char	**heredoc(char *final);
+
+char	*check_dollars(char *line, t_iterate *iter);
+
+void	heredoc_expand(char **flags, t_env *env);
 
 #endif
