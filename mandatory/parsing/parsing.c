@@ -33,9 +33,12 @@ t_list	*get_commands(char *line, t_env *env)
 	curr = cmds;
 	while (curr)
 	{
-		if (curr->type == HERE)
+		if (curr->type ==  HEREDOC)
+		{
 			curr->flags = heredoc(curr->command);
-		heredoc_expand(curr->flags, env);
+			if (curr->flags)
+				heredoc_expand(curr->flags, env);
+		}
 		curr = curr->next;
 	}
 	return (cmds);

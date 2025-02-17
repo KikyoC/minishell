@@ -1,9 +1,3 @@
-j'ai des leaks faut que je les patchs !
-
 il faut que je nettoie mon .h pour que les fonctions soit misent selon la partie a laquelle elles appartiennent !
 
-lier les expand aver les les imports de Tom
-
-boucle infinnie dans le code de Tom a cause de mon modify flags
-
-< makefile echo coucou
+je dois maintenant renvoyer les quotes vide quand c'est necessaire

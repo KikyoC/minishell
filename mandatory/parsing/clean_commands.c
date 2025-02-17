@@ -46,6 +46,8 @@ int	check_redirect(char *command)
 	return (0);
 }
 
+void	print_split(char **split);
+
 t_list	*get_correct_commands(t_list *cmds, t_env *env)
 {
 	t_list	*curr;
@@ -62,7 +64,7 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 			curr->type = COMMAND;
 		if (curr->type == FILE && curr->flags[0])
 			modify_flags(&curr);
-		if (curr->type == HERE && curr->flags[0])
+		if (curr->type == HEREDOC && curr->flags[0])
 			file_flags(&curr);
 		if (check_redirect(curr->command))
 			give_types(&curr, 0);

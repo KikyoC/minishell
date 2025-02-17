@@ -63,7 +63,6 @@ void	modify_flags(t_list **cmds)
 	curr = find_command(*cmds);
 	if (!curr)
 	{
-		printf("passage\n");
 		new = ft_lstnew(ft_strdup((*cmds)->flags[0]));
 		tmp = (*cmds)->next;
 		if ((*cmds)->next)

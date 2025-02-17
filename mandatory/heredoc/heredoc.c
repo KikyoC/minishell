@@ -25,8 +25,6 @@ char	**heredoc(char *final)
 			break ;
 		tab = ft_realloc(tab, line);
 	}
-	if (tab)
-		ft_free_split(tab);
 	free(line);
 	dup2(fd, 0);
 	return (tab);

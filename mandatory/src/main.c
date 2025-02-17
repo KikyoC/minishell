@@ -125,7 +125,7 @@ int	main(int argc, char **argv, char **envp)
 		curr = cmds;
 		while (curr)
 		{
-			printf("token : %d, command : %s\n", curr->type , curr->command);
+			printf("been_quoted : %d, command : %s\n", curr->been_quoted, curr->command);
 			if (curr->flags)
 				print_split(curr->flags);
 			curr = curr->next;

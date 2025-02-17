@@ -117,8 +117,6 @@ char	reverse_quote(char quote);
 
 void	cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
 
-void	cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
-
 char	*expand(char *line, t_env *env);
 
 char	**split_flags(char **flags);
