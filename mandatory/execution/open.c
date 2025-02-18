@@ -42,7 +42,7 @@ int	open_file(t_list *node, int *infile, int *outfile, int *next)
 		return (set_fd(node, outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644));
 	if (ft_strncmp("|", node->command, 2) == 0)
 		return (set_pipe(outfile, next));
-	if (ft_strncmp(">>", node->command, 3) == 0
+	if (ft_strncmp(">>", node->prev->command, 3) == 0
 		&& infile >= 0 && outfile >= 0)
 		return (set_fd(node, outfile, O_WRONLY | O_CREAT | O_APPEND, 0644));
 	return (1);
