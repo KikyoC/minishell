@@ -13,7 +13,7 @@ char	**heredoc(char *final)
 	tab = NULL;
 	fd = dup(0);
 	signal(SIGINT, inthandler);
-	while (!ft_strnstr(final, line, len))
+	while (!ft_strncmp(final, line, len))
 	{
 		if (line)
 		{

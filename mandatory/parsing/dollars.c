@@ -52,7 +52,7 @@ void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 			count--;
 		word = check_dollars(texts->line, iter);
 		if (word && code == '"')
-			fill_word(iter, texts->final, word, texts->env);
+			fill_word(iter, texts, word, texts->env);
 		else
 		{
 			if (texts->final)

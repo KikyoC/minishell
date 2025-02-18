@@ -55,7 +55,7 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 	curr = cmds;
 	while (curr)
 	{
-		if (curr->type != HERE)
+		if (curr->type != HEREDOC)
 			curr->content = expand((char *)curr->content, env);
 		if (curr->type != COMMAND)
 			remove_quote(curr->content, curr);
