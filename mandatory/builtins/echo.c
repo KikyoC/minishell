@@ -20,6 +20,8 @@ int	echo(t_list *lst, t_env **env)
 
 	new_line = 1;
 	(void)env;
+	if (!lst->flags || !lst->flags[0])
+		return (0);
 	if (ft_strncmp(lst->flags[0], "-n", 2) == 0)
 		new_line = 0;
 	if (new_line)
