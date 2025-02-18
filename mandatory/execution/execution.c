@@ -2,9 +2,13 @@
 
 void	children(t_list *cmd, t_env **env, char **envp, int next)
 {
+	if (next > 2)
+		close(next);
 	if (get_builtin(cmd) != NULL)
 	{
 		ft_free_split(envp);
+		if (cmd->input > 2)
+			close(cmd->input);
 		exec_builtin(cmd, get_builtin(cmd), next, env);
 		return ;
 	}
@@ -12,8 +16,6 @@ void	children(t_list *cmd, t_env **env, char **envp, int next)
 		dup2(cmd->input, 0);
 	if (cmd->output > 2)
 		dup2(cmd->output, 1);
-	if (next > 2)
-		close(next);
 	close_node(cmd);
 	execve(cmd->command, cmd->flags, envp);
 	ft_free_split(envp);
@@ -31,7 +33,7 @@ int	execute(t_list *cmd, char **envp, t_env **env, int next)
 	{
 		ft_free_split(envp);
 		close_node(cmd);
-		return (-1);
+		return ((-1) - (ft_strncmp(cmd->command, "exit", 5) == 0));
 	}
 	f = fork();
 	if (f < 0)
@@ -76,6 +78,8 @@ t_list	*prepare_command(t_list	*node, int *next, t_env **env)
 	outfile = 1;
 	command = NULL;
 	*next = 0;
+	if (!node || !node->command)
+		return (NULL);
 	while (node)
 	{
 		if (node->type == 2 || node->type == 3)
@@ -91,29 +95,29 @@ t_list	*prepare_command(t_list	*node, int *next, t_env **env)
 
 int	run(t_list **lst, t_env **env, int **pids)
 {
-	t_list	*command;
+	t_list	*cmd;
 	int		next;
-	int		execution;
+	int		exec;
 
 	next = 0;
-	command = prepare_command(*lst, &next, env);
+	cmd = prepare_command(*lst, &next, env);
 	*pids = get_pid_list(*lst);
 	if (!pids)
 		return (12);
-	while (command)
+	while (cmd)
 	{
-		execution = execute(command, get_envp(env), env, next);
-		if (execution > 0 || execution == -1)
-			add_pid_back(*pids, execution);
+		exec = execute(cmd, get_envp(env), env, next);
+		if ((exec > 1 || exec == -1))
+			add_pid_back(*pids, exec);
 		else
 		{
 			free(*pids);
-			return (execution);
+			return (exec);
 		}
-		command = command->next;
-		while (command && command->prev->type != 2)
-			command = command->next;
-		command = prepare_command(command, &next, env);
+		cmd = cmd->next;
+		while (cmd && cmd->prev->type != 2)
+			cmd = cmd->next;
+		cmd = prepare_command(cmd, &next, env);
 	}
 	return (1);
 }

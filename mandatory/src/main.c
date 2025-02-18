@@ -1,9 +1,11 @@
 #include "../h_files/minishell.h"
+#include <readline/readline.h>
+#include <stdio.h>
+#include <unistd.h>
 
 t_env	*get_env(char **envp);
 
-int		*run(t_list **lst, t_env **env);
-int		wait_all(int *pids);
+int		run(t_list **lst, t_env **env, int **pids);
 void	*destroy(t_env *env);
 
 static char	*get_top(t_env **env)
@@ -75,7 +77,7 @@ char	*get_prompt(t_env **env)
 	if (wd)
 		free(wd);
 	if (!tmp)
-		return (ft_strdup("\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"));
+		return (ft_strdup("\e[0;36m──(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"));
 	if (res)
 		free(res);
 	res = ft_strjoin(tmp, " \e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m");
@@ -85,16 +87,40 @@ char	*get_prompt(t_env **env)
 	return (res);
 }
 
-char	*parse_quotes(char *str, int multiple_args, t_env **env);
+int	core(t_env **env)
+{
+	char	*prompt;
+	char	*line;
+	t_list	*cmds;
+	int		state;
+	int		*pids;
+
+	if (isatty(STDIN_FILENO))
+	{
+		prompt = get_prompt(env);
+		line = readline(prompt);
+		free(prompt);
+	}
+	else
+		line = readline(NULL);
+	if (!line)
+		return (ENOMEM);
+	cmds = get_commands(line, *env);
+	state = run(&cmds, env, &pids);
+	ft_lstclear(&cmds, free);
+	if (state < 0)
+		return (state);
+	if (state == 0)
+		return (-1);
+	wait_all(pids, line, env);
+	return (0);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
-	char	*prompt;
 	t_env	*env;
-	// int		state;
 	int		state;
-	t_list	*cmds;
+	int		exit_code;
 
 	(void)argc;
 	(void)argv;
@@ -102,23 +128,17 @@ int	main(int argc, char **argv, char **envp)
 	env = get_env(envp);
 	if (!env)
 	{
-		perror("Minishell: ");
+		perror("Minishell");
 		return (1);
 	}
-	while (1)
-	{
-		prompt = get_prompt(&env);
-		line = readline(prompt);
-		free(prompt);
-		if (!line)
-			break ;
-		cmds = get_commands(line, env);
-		ft_lstclear(&cmds, free);
-		add_history(line);
-		free(line);
-	}
-	destroy(env);
+	rl_outstream = stderr;
+	while (!state)
+		state = core(&env);
 	rl_clear_history();
-	printf("Exit\n");
-	return (state);
+	exit_code = ft_atoi(find_env("?", &env));
+	destroy(env);
+	if ((state > 0 || state == -2) && isatty(STDIN_FILENO))
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+	if (state == -2 && exit_code)
+		return (exit_code);
 }
