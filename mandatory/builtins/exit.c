@@ -25,7 +25,6 @@ int	exit_builtin(t_list *cmd, t_env **env)
 		if (!parse_end(code, cmd->flags[0]))
 			code = 2;
 	}
-	// destroy_all(cmd, env);
 	node = ft_calloc(1, sizeof(t_env));
 	if (!node)
 		return (-2);
