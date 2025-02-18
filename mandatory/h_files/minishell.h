@@ -69,7 +69,7 @@ int (*get_builtin(t_list	*lst))(t_list *lst, t_env **env);
 
 int		*get_pid_list(t_list *lst);
 
-int		wait_all(int *pids);
+int		wait_all(int *pids, char *line, t_env **env);
 
 int		open_file(t_list *node, int *infile, int *outfile, int *next);
 
@@ -104,7 +104,6 @@ void	*destroy(t_env *env);
 void	add_back(t_env **env, t_env *node, int append_mode);
 
 t_env	*sort_env(t_env **env);
-
 
 int		quote_parsing(char *command);
 
@@ -161,5 +160,9 @@ char	*expand(char *line, t_env *env);
 char	**split_flags(char **flags);
 
 void	file_flags(t_list **cmds);
+
+int		exit_builtin(t_list *cmd, t_env **env);
+
+void	update_code(int code, t_env	**env);
 
 #endif
