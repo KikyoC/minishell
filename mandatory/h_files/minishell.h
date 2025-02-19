@@ -133,4 +133,6 @@ char	*check_dollars(char *line, t_iterate *iter);
 
 void	heredoc_expand(char **flags, t_env *env);
 
+void	make_heredoc(t_list **cmds, t_env *env);
+
 #endif

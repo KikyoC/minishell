@@ -18,7 +18,6 @@ char	*expand(char *line, t_env *env)
 t_list	*get_commands(char *line, t_env *env)
 {
 	t_list	*cmds;
-	t_list	*curr;
 
 	cmds = NULL;
 	if (parse_quote(line))
@@ -30,16 +29,6 @@ t_list	*get_commands(char *line, t_env *env)
 	if (!cmds)
 		return (NULL);
 	get_correct_commands(cmds, env);
-	curr = cmds;
-	while (curr)
-	{
-		if (curr->type ==  HEREDOC)
-		{
-			curr->flags = heredoc(curr->command);
-			if (curr->flags)
-				heredoc_expand(curr->flags, env);
-		}
-		curr = curr->next;
-	}
+	make_heredoc(&cmds, env);
 	return (cmds);
 }

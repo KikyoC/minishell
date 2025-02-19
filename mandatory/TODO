@@ -1,3 +1,5 @@
 il faut que je nettoie mon .h pour que les fonctions soit misent selon la partie a laquelle elles appartiennent !
 
 je dois maintenant renvoyer les quotes vide quand c'est necessaire
+
+leak, sur le export a="coucou" export b='$a'
