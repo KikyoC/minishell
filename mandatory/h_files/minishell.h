@@ -21,6 +21,12 @@
 // define
 
 # define PROMPT "\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"
+# define HEREDOC 4
+# define HERE 6
+# define FILE 3
+# define REDIRECT 5
+# define COMMAND 1
+# define PIPE 2
 
 // structs
 
@@ -154,12 +160,22 @@ char	reverse_quote(char quote);
 
 void	cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
 
-void	cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
-
 char	*expand(char *line, t_env *env);
 
 char	**split_flags(char **flags);
 
 void	file_flags(t_list **cmds);
+
+char	**ft_realloc(char **split, char *to_add);
+
+void	inthandler(int sig);
+
+char	**heredoc(char *final);
+
+char	*check_dollars(char *line, t_iterate *iter);
+
+void	heredoc_expand(char **flags, t_env *env);
+
+void	make_heredoc(t_list **cmds, t_env *env);
 
 #endif

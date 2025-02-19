@@ -21,19 +21,19 @@ void	clean_flags(char **flags)
 	}
 }
 
-void	give_types(t_list **curr, int nbr, int code)
+void	give_types(t_list **curr, int code)
 {
-	if (code == 1)
+	if (!code)
 	{
-		(*curr)->type = nbr;
+		(*curr)->type = REDIRECT;
 		if ((*curr)->next)
-			(*curr)->next->type = nbr - 2;
+			(*curr)->next->type = FILE;
 	}
 	else
 	{
-		(*curr)->type = nbr;
+		(*curr)->type = HERE;
 		if ((*curr)->next)
-			(*curr)->next->type = nbr + 2;
+			(*curr)->next->type = HEREDOC;
 	}
 }
 
@@ -46,6 +46,8 @@ int	check_redirect(char *command)
 	return (0);
 }
 
+void	print_split(char **split);
+
 t_list	*get_correct_commands(t_list *cmds, t_env *env)
 {
 	t_list	*curr;
@@ -53,22 +55,23 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 	curr = cmds;
 	while (curr)
 	{
-		curr->content = expand((char *)curr->content, env);
-		if (curr->type != 1)
+		if (curr->type != HEREDOC)
+			curr->content = expand((char *)curr->content, env);
+		if (curr->type != COMMAND)
 			remove_quote(curr->content, curr);
 		clean_flags(curr->flags);
 		if (curr->type == -1)
-			curr->type = 1;
-		if (curr->type == 3 && curr->flags[0])
+			curr->type = COMMAND;
+		if (curr->type == FILE && curr->flags[0])
 			modify_flags(&curr);
-		if (curr->type == 6 && curr->flags[0])
+		if (curr->type == HEREDOC && curr->flags[0])
 			file_flags(&curr);
 		if (check_redirect(curr->command))
-			give_types(&curr, 5, 0);
+			give_types(&curr, 0);
 		else if (ft_strnstr("<<", curr->command, 2))
-			give_types(&curr, 6, 1);
+			give_types(&curr, 1);
 		if (ft_strnstr("|", curr->command, 1))
-			curr->type = 2;
+			curr->type = PIPE;
 		curr = curr->next;
 	}
 	return (cmds);

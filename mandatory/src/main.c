@@ -95,6 +95,7 @@ int	main(int argc, char **argv, char **envp)
 	// int		state;
 	int		state;
 	t_list	*cmds;
+	t_list	*curr;
 
 	(void)argc;
 	(void)argv;
@@ -113,6 +114,14 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			break ;
 		cmds = get_commands(line, env);
+		curr = cmds;
+		while (curr)
+		{
+			printf("been_quoted : %d, command : %s\n", curr->been_quoted, curr->command);
+			if (curr->flags)
+				print_split(curr->flags);
+			curr = curr->next;
+		}
 		ft_lstclear(&cmds, free);
 		add_history(line);
 		free(line);
@@ -121,4 +130,5 @@ int	main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	printf("Exit\n");
 	return (state);
+
 }

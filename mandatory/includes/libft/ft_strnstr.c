@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:29:29 by cmorel            #+#    #+#             */
-/*   Updated: 2025/02/11 14:47:27 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/02/19 10:40:29 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -18,7 +18,7 @@ char	*ft_strnstr(const char *str, const char *to_find, size_t size)
 
 	itf = 0;
 	i = 0;
-	if (!to_find || !str)
+	if ((!to_find || !str) || (!to_find[0]))
 		return (NULL);
 	if ((size == 0 && !str) || (size == 0 && !to_find))
 		return (NULL);

@@ -1,7 +1,5 @@
 
 #include "../h_files/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int	get_word(char *line, char *to_fill, t_iterate *iter)
 {
@@ -59,6 +57,8 @@ void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 				texts->final[iter->j] = texts->line[iter->i];
 			(iter->i)++;
 			(iter->j)++;
+			if (word)
+				free(word);
 		}
 	}
 }
@@ -72,8 +72,7 @@ int	replace_dollars(t_env *env, char *line, char *final)
 	texts.line = line;
 	texts.final = final;
 	texts.env = env;
-	iter.i = 0;
-	iter.j = 0;
+	ft_bzero(&iter, sizeof(t_iterate));
 	while (texts.line[iter.i])
 	{
 		if (texts.line[iter.i] == '\'' || texts.line[iter.i] == '"')

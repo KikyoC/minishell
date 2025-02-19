@@ -29,5 +29,6 @@ t_list	*get_commands(char *line, t_env *env)
 	if (!cmds)
 		return (NULL);
 	get_correct_commands(cmds, env);
+	make_heredoc(&cmds, env);
 	return (cmds);
 }

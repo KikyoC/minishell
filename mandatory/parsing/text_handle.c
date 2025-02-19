@@ -1,5 +1,6 @@
 
 #include "../h_files/minishell.h"
+#include <stdio.h>
 
 char	**get_flags(char *line, t_list *cmds)
 {
@@ -64,6 +65,8 @@ char	*quote_remover(char quote, char *line, char *command, int *i)
 		command = ft_charjoin(command, line[*i]);
 		(*i)++;
 	}
+	if (!command)
+		command = ft_charjoin(command, '\0');
 	return (command);
 }
 
