@@ -1,6 +1,6 @@
 #include "../h_files/minishell.h"
 
-int	aff_env(t_env **env)
+int	aff_env(t_list *lst, t_env **env)
 {
 	t_env	*node;
 
@@ -8,7 +8,12 @@ int	aff_env(t_env **env)
 	while (node)
 	{
 		if (node->content && node->content[0])
-			printf("%s=%s\n", node->name, node->content);
+		{
+			ft_putstr_fd(node->name, lst->output);
+			ft_putchar_fd('=', lst->output);
+			ft_putstr_fd(node->content, lst->output);
+			ft_putchar_fd('\n', lst->output);
+		}
 		node = node->next;
 	}
 	return (1);

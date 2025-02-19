@@ -3,6 +3,23 @@
 void	*destroy_node(t_env *node);
 void	*destroy(t_env *env);
 
+char	*find_env(char *name, t_env **env)
+{
+	t_env	*current;
+	size_t	len;
+
+	len = ft_strlen(name);
+	current = *env;
+	len = ft_strlen(name);
+	while (current)
+	{
+		if (ft_strncmp(name, current->name, len) == 0 && current->content[0])
+			return (current->content);
+		current = current->next;
+	}
+	return (NULL);
+}
+
 t_env	*create_node(char *str)
 {
 	int		i;
