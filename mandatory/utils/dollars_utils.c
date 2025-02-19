@@ -12,8 +12,7 @@ void	fill_word_quote(t_iterate *iter, char *final, char *word, t_env *env)
 {
 	char	*tmp;
 
-	(void)env;
-	tmp = getenv(word);
+	tmp = find_env(word, &env);
 	iter->i += ft_strlen(word) + 1;
 	free(word);
 	if (!tmp)
@@ -25,8 +24,7 @@ void	fill_word(t_iterate *iter, char *final, char *word, t_env *env)
 {
 	char	*tmp;
 
-	(void)env;
-	tmp = getenv(word);
+	tmp = find_env(word, &env);
 	iter->i += ft_strlen(word) + 1;
 	free(word);
 	if (!tmp)

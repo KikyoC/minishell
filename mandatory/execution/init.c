@@ -49,8 +49,8 @@ void	good_command(t_list *lst, char **path)
 		free(join);
 	}
 	free(tmp);
-	free(lst->command);
-	lst->command = NULL;
+	// free(lst->command);
+	// lst->command = NULL;
 }
 
 void	init_node(t_list *lst, t_env **env)
@@ -63,13 +63,6 @@ void	init_node(t_list *lst, t_env **env)
 	if (get_builtin(lst) == NULL && lst->type == 1)
 	{
 		good_flags(lst);
-		printf("Flags for command %s\n", lst->command);
-		int i = 0;
-		while (lst->flags[i])
-		{
-			printf("%s\n", lst->flags[i]);
-			i++;
-		}
 		if (path)
 			good_command(lst, path);
 	}

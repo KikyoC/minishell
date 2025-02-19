@@ -62,14 +62,12 @@ int	cd(t_list *lst, t_env **env)
 		return (0);
 	}
 	else
-		final = lst->flags[1];
+		final = lst->flags[0];
 	if (!final)
 		return (1);
 	if (chdir(final))
 	{
 		perror("Minishell");
-		if (lst->flags && lst->flags[0])
-			free(final);
 		return (errno);
 	}
 	switch_pwd(env);

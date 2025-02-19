@@ -10,6 +10,8 @@ static int	parse(char *str, int *append_mode)
 	*append_mode = 0;
 	while (str[i])
 	{
+		if (str[i] != '+' && str[i] != '=' && !ft_isalnum(str[i]))
+			return (0);
 		if (str[i] == '+' && str[i + 1] == '=')
 		{
 			*append_mode = 1;
@@ -17,6 +19,9 @@ static int	parse(char *str, int *append_mode)
 		}
 		else if (str[i] == '=')
 			return (ft_isprint(str[i + 1]) > 0);
+		else if (str[i] == '+') {
+			return (0);
+		}
 		i++;
 	}
 	return (1);
