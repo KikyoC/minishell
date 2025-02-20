@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:56:12 by cmorel            #+#    #+#             */
-/*   Updated: 2024/10/29 15:26:53 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/02/20 12:28:48 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_atoi(const char *nptr)
 	i = 0;
 	sign = 1;
 	nbr = 0;
+	if (!nptr)
+		return (0);
 	while ((nptr[i] >= '\t' && nptr[i] <= '\r') || nptr[i] == ' ')
 		i++;
 	if (nptr[i] == '-' || nptr[i] == '+')
