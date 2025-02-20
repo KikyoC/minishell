@@ -115,7 +115,7 @@ int		quote_parsing(char *command);
 
 int		is_operator(char ch, char c);
 
-t_list	*check_until(char *line, int *j, char ch);
+t_list	*check_until(char *line, int *j, char ch, char op);
 
 t_list	*ft_split_skip_quotes(char *line, char ch);
 
@@ -180,5 +180,7 @@ char	*check_dollars(char *line, t_iterate *iter);
 void	heredoc_expand(char **flags, t_env *env);
 
 void	make_heredoc(t_list **cmds, t_env *env);
+
+void	error_handler(int code, int sub, char *command);
 
 #endif
