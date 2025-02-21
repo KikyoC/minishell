@@ -1,5 +1,4 @@
 #include "../h_files/minishell.h"
-#include <fcntl.h>
 
 static int	set_fd(t_list *node, int *fd, int flags, int perms)
 {
@@ -32,19 +31,43 @@ static int	set_pipe(int *outfile, int *next)
 	return (0);
 }
 
+int set_heredoc(t_list *cmd, int *infile)
+{
+	int	p[2];
+	int	i;
+
+	if (*infile > 2)
+		close(*infile);
+	if (pipe(p))
+		return (1);
+	printf("Opened %i and %i\n", p[0], p[1]);
+	i = -1;
+	while (cmd->flags && cmd->flags[++i])
+	{
+		ft_putstr_fd(cmd->flags[i], p[1]);
+		ft_putchar_fd('\n', p[1]);
+	}
+	close(p[1]);
+	*infile = p[0];
+	return (0);
+}
+
 int	open_file(t_list *node, int *infile, int *outfile, int *next)
 {
-	if (ft_strncmp("<", node->prev->command, 2) == 0
+	if (node->prev && ft_strncmp("<", node->prev->command, 2) == 0
 		&& infile >= 0 && outfile >= 0)
 		return (set_fd(node, infile, O_RDONLY, 0000));
-	if (ft_strncmp(">", node->prev->command, 2) == 0
+	if (node->prev && ft_strncmp(">", node->prev->command, 2) == 0
 		&& infile >= 0 && outfile >= 0)
 		return (set_fd(node, outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644));
 	if (ft_strncmp("|", node->command, 2) == 0)
 		return (set_pipe(outfile, next));
-	if (ft_strncmp(">>", node->prev->command, 3) == 0
+	if (node->prev && ft_strncmp(">>", node->prev->command, 3) == 0
 		&& infile >= 0 && outfile >= 0)
 		return (set_fd(node, outfile, O_WRONLY | O_CREAT | O_APPEND, 0644));
+	if (ft_strncmp("<<", node->prev->command, 3) == 0
+		&& infile >= 0 && outfile >= 0)
+		return (set_heredoc(node, infile));
 	return (1);
 }
 

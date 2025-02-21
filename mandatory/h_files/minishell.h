@@ -173,7 +173,7 @@ char	**ft_realloc(char **split, char *to_add);
 
 void	inthandler(int sig);
 
-char	**heredoc(char *final);
+char	**heredoc(char *final, int len);
 
 char	*check_dollars(char *line, t_iterate *iter);
 

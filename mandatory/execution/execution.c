@@ -82,7 +82,7 @@ t_list	*prepare_command(t_list	*node, int *next, t_env **env)
 		return (NULL);
 	while (node)
 	{
-		if (node->type == 2 || node->type == 3)
+		if (node->type == 2 || node->type == 3 || node->type == HEREDOC)
 			open_file(node, &infile, &outfile, next);
 		else if (node->type == 1)
 			command = node;
