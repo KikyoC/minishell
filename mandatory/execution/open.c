@@ -31,7 +31,7 @@ static int	set_pipe(int *outfile, int *next)
 	return (0);
 }
 
-int set_heredoc(t_list *cmd, int *infile)
+int	set_heredoc(t_list *cmd, int *infile)
 {
 	int	p[2];
 	int	i;

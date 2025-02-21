@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!env)
 	{
 		perror("Minishell");
-		return (1); 
+		return (1);
 	}
 	rl_outstream = stderr;
 	while (!state)

@@ -19,7 +19,6 @@
 # include "../includes/libft/get_next_line_bonus.h"
 
 // define
-
 # define PROMPT "\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"
 # define HEREDOC 4
 # define HERE 6
@@ -36,9 +35,7 @@
 # define MAGENTA "\001\033[35m\002"
 # define CYAN    "\001\033[36m\002"
 
-
 // structs
-
 typedef struct s_duet
 {
 	int	single_quote;
@@ -80,7 +77,7 @@ char	*find_env(char *name, t_env **env);
 
 void	init(t_list **lst, t_env **env);
 
-int (*get_builtin(t_list	*lst))(t_list *lst, t_env **env);
+int (*get_builtin(t_list	*lst))(t_list *, t_env **);
 
 int		*get_pid_list(t_list *lst);
 
@@ -92,7 +89,8 @@ void	close_node(t_list *lst);
 
 void	add_pid_back(int *fds, int fd);
 
-int	exec_builtin(t_list *c, int (*exe)(t_list *l, t_env **e), int n, t_env **e);
+int		exec_builtin(t_list *c, int (*exe)
+			(t_list *l, t_env **e), int n, t_env **e);
 
 int		is_pipe(t_list *cmd);
 

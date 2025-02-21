@@ -54,7 +54,7 @@ char	*get_second_line(t_env **env)
 	working_dir = get_working_directory(env);
 	if (!working_dir)
 		working_dir = ft_strdup("Not found");
-	tmp = ft_strjoin(BOLD BLUE "|---" CYAN "[" GREEN, working_dir );
+	tmp = ft_strjoin(BOLD BLUE "|---" CYAN "[" GREEN, working_dir);
 	res = ft_strjoin(tmp, CYAN "]\n");
 	if (tmp)
 		free(tmp);
@@ -83,12 +83,12 @@ char	*get_prompt(t_env **env)
 
 	first_line = get_first_line(env);
 	second_line = get_second_line(env);
-	third_line = ft_strdup(BOLD BLUE "`---" CYAN "[" GREEN "Segfault" CYAN "]" BLUE "-> " RESET);
+	third_line = ft_strdup(BOLD BLUE "`---" CYAN "[" GREEN
+			"Segfault" CYAN "]" BLUE "-> " RESET);
 	tmp = ft_strjoin(first_line, second_line);
 	res = ft_strjoin(tmp, third_line);
 	if (tmp)
 		free(tmp);
 	free_all(first_line, second_line, third_line);
 	return (res);
-
 }
