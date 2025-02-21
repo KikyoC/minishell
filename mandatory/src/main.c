@@ -1,7 +1,6 @@
 #include "../h_files/minishell.h"
 
 int	core(t_env **env)
-
 {
 	char	*prompt;
 	char	*line;
@@ -39,6 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	state = 0;
+	signal(SIGQUIT, SIG_IGN);
 	env = get_env(envp);
 	if (!env)
 	{

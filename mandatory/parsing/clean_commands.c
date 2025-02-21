@@ -47,13 +47,21 @@ void	give_types(t_list **curr, int code)
 	}
 }
 
-int	check_redirect(char *command)
+static int	check_redirect(char *command)
 {
 	if (ft_strnstr(">>", command, 2)
 		|| ft_strnstr("<", command, 1)
 		|| ft_strnstr(">", command, 1))
 		return (1);
 	return (0);
+}
+
+static void	pipe_handle_parsing(t_list *curr)
+{
+	if (ft_strnstr("|", curr->command, 1) && !curr->been_quoted)
+		curr->type = PIPE;
+	else if (ft_strnstr("|", curr->command, 1) && curr->been_quoted)
+		curr->type = COMMAND;
 }
 
 t_list	*get_correct_commands(t_list *cmds, t_env *env)
@@ -78,10 +86,7 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 			give_types(&curr, 0);
 		else if (ft_strnstr("<<", curr->command, 2))
 			give_types(&curr, 1);
-		if (ft_strnstr("|", curr->command, 1) && !curr->been_quoted)
-			curr->type = PIPE;
-		else if (ft_strnstr("|", curr->command, 1) && curr->been_quoted)
-			curr->type = COMMAND;
+		pipe_handle_parsing(curr);
 		curr = curr->next;
 	}
 	return (cmds);

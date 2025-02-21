@@ -20,7 +20,7 @@
 
 // global
 
-extern int g_signals_c;
+extern int g_signal_c;
 
 // define
 # define PROMPT "\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"
