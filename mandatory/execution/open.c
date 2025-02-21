@@ -40,7 +40,6 @@ int set_heredoc(t_list *cmd, int *infile)
 		close(*infile);
 	if (pipe(p))
 		return (1);
-	printf("Opened %i and %i\n", p[0], p[1]);
 	i = -1;
 	while (cmd->flags && cmd->flags[++i])
 	{
