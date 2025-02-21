@@ -57,7 +57,7 @@ t_list	*ft_split_skip_quotes(char *line, char ch)
 		if (!is_operator(line[i], ch))
 			ft_lstadd_back(&lst, find_operator(&i, line + i, ch));
 		else
-			ft_lstadd_back(&lst, check_until(line + i, &i, ch));
+			ft_lstadd_back(&lst, check_until(line + i, &i, line[i], ch));
 	}
 	return (lst);
 }

@@ -15,7 +15,26 @@ char	*expand(char *line, t_env *env)
 	return (new_line);
 }
 
-static int	check_commands(t_list *cmds)
+int	exit_code(int code, t_env **env, int sub, t_list *cmd)
+{
+	t_env	*node;
+
+	node = ft_calloc(1, sizeof(t_env));
+	if (!node)
+		return (-2);
+	node->name = ft_strdup("?");
+	node->content = ft_itoa(code);
+	if (!node->name || !node->content)
+	{
+		destroy_node(node);
+		return (-2);
+	}
+	add_back(env, node, 0);
+	error_handler(code, sub, cmd->command);
+	return (0);
+}
+
+static int	check_commands(t_list *cmds, t_env **env)
 {
 	t_list	*node;
 	int		cmd_found;
@@ -24,17 +43,25 @@ static int	check_commands(t_list *cmds)
 	cmd_found = 0;
 	while (node)
 	{
-		if (node->type == 5 && (!node->next || node->next->type != 3))
-			return (0);
-		else if (node->type == 3 && (!node->prev || node->prev->type != 5))
-			return (0);	
-		else if (node->type == 2 && (!cmd_found || !node->next))
-			return (0);
-		else if (node->type == 1 && cmd_found)
-			return (0);
-		else if (node->type == 1)
-			cmd_found ++;
-		else if(node->type == 2)
+		printf("node->type : %d, node->command : %s\n", node->type, node->command);
+		if ((node->type == HERE || node->type == REDIRECT
+			|| node->type == PIPE) && !get_next(node))
+			return (exit_code(2 , env, 2, node));
+		else if (node->type == REDIRECT && (!get_next(node)
+				|| get_next(node)->type != FILE))
+			return (exit_code(2, env, 1, node));
+		else if (node->type == PIPE &&
+				(!cmd_found || !get_next(node)))
+			return (exit_code(2, env, 1, node));
+		else if (node->type == HERE && (!get_next(node)
+				|| get_next(node)->type != HEREDOC))
+		   return (exit_code(2, env, 2, node));
+		else if ((node->type == PIPE || node->type == HERE
+				|| node->type == REDIRECT) && node->been_quoted)
+			return (exit_code(2, env, 3, node));
+		else if (node->type == COMMAND)
+			cmd_found++;
+		else if(node->type == PIPE)
 			cmd_found = 0;
 		node = node->next;
 	}
@@ -48,17 +75,16 @@ t_list	*get_commands(char *line, t_env *env)
 	cmds = NULL;
 	if (parse_quote(line))
 	{
-		ft_putstr_fd("Segfault : unfinished quote", 2);
+		exit_code(2, &env, 4, NULL);
 		return (NULL);
 	}
 	cmds = ft_split_skip_quotes(line, '\0');
 	if (!cmds)
 		return (NULL);
 	get_correct_commands(cmds, env);
-  make_heredoc(&cmds, env);
-	if (check_commands(cmds))
+	make_heredoc(&cmds, env);
+	if (check_commands(cmds, &env))
 		return (cmds);
-	ft_putstr_fd("Invalid line\n", 2);
 	ft_lstclear(&cmds, free);
 	return (NULL);
 }
