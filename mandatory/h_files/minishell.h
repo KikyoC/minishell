@@ -18,6 +18,10 @@
 # include "../includes/libft/libft.h"
 # include "../includes/libft/get_next_line_bonus.h"
 
+// global
+
+extern int g_signals_c;
+
 // define
 # define PROMPT "\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"
 # define HEREDOC 4
@@ -65,6 +69,8 @@ typedef struct s_texts
 
 // functions
 
+typedef int	(*t_builtin)(t_list *, t_env **);
+
 int		strings(char *input, char *command);
 
 char	**get_paths(char *env);
@@ -77,7 +83,7 @@ char	*find_env(char *name, t_env **env);
 
 void	init(t_list **lst, t_env **env);
 
-int (*get_builtin(t_list	*lst))(t_list *, t_env **);
+t_builtin	get_builtin(t_list *lst);
 
 int		*get_pid_list(t_list *lst);
 
@@ -197,5 +203,7 @@ char	*get_prompt(t_env **env);
 int		run(t_list **lst, t_env **env, int **pids);
 
 t_env	*get_env(char **envp);
+
+void	handle_sigint(int sig);
 
 #endif
