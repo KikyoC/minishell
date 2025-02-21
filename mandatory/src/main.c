@@ -1,5 +1,7 @@
 #include "../h_files/minishell.h"
 
+int g_signal_c = 0;
+
 int	core(t_env **env)
 {
 	char	*prompt;
