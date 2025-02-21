@@ -12,7 +12,7 @@ void	make_heredoc(t_list **cmds, t_env *env)
 		{
 			if (curr->flags)
 				ft_free_split(curr->flags);
-			curr->flags = heredoc(curr->command);
+			curr->flags = heredoc(curr->command, ft_strlen(curr->command));
 			if (curr->flags && curr->been_quoted == 0)
 				heredoc_expand(curr->flags, env);
 		}
@@ -35,14 +35,12 @@ void	handle_eof(char *line, char *final, int fd)
 	dup2(fd, 0);
 }
 
-char	**heredoc(char *final)
+char	**heredoc(char *final, int len)
 {
-	int		len;
+	int		fd;
 	char	*line;
 	char	**tab;
-	int		fd;
 
-	len = ft_strlen(final);
 	line = NULL;
 	tab = NULL;
 	fd = dup(0);

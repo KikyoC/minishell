@@ -23,7 +23,6 @@
 extern int g_signal_c;
 
 // define
-
 # define PROMPT "\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"
 # define HEREDOC 4
 # define HERE 6
@@ -31,9 +30,16 @@ extern int g_signal_c;
 # define REDIRECT 5
 # define COMMAND 1
 # define PIPE 2
+# define RESET   "\001\033[0m\002"
+# define BOLD    "\001\033[1m\002"
+# define RED     "\001\033[31m\002"
+# define GREEN   "\001\033[32m\002"
+# define YELLOW  "\001\033[33m\002"
+# define BLUE    "\001\033[34m\002"
+# define MAGENTA "\001\033[35m\002"
+# define CYAN    "\001\033[36m\002"
 
 // structs
-
 typedef struct s_duet
 {
 	int	single_quote;
@@ -75,7 +81,7 @@ char	*find_env(char *name, t_env **env);
 
 void	init(t_list **lst, t_env **env);
 
-int (*get_builtin(t_list	*lst))(t_list *lst, t_env **env);
+int (*get_builtin(t_list	*lst))(t_list *, t_env **);
 
 int		*get_pid_list(t_list *lst);
 
@@ -87,7 +93,8 @@ void	close_node(t_list *lst);
 
 void	add_pid_back(int *fds, int fd);
 
-int	exec_builtin(t_list *c, int (*exe)(t_list *l, t_env **e), int n, t_env **e);
+int		exec_builtin(t_list *c, int (*exe)
+			(t_list *l, t_env **e), int n, t_env **e);
 
 int		is_pipe(t_list *cmd);
 
@@ -177,7 +184,7 @@ char	**ft_realloc(char **split, char *to_add);
 
 void	inthandler(int sig);
 
-char	**heredoc(char *final);
+char	**heredoc(char *final, int len);
 
 char	*check_dollars(char *line, t_iterate *iter);
 
@@ -188,5 +195,11 @@ void	make_heredoc(t_list **cmds, t_env *env);
 void	error_handler(int code, int sub, char *command);
 
 t_list	*get_next(t_list *cmds);
+
+char	*get_prompt(t_env **env);
+
+int		run(t_list **lst, t_env **env, int **pids);
+
+t_env	*get_env(char **envp);
 
 #endif

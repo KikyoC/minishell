@@ -2,7 +2,7 @@
 
 void	update_code(int code, t_env	**env)
 {
-	t_env *node;
+	t_env	*node;
 
 	node = ft_calloc(1, sizeof(t_env));
 	if (!node)
