@@ -30,7 +30,8 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 		return (-2);
 	}
 	add_back(env, node, 0);
-	error_handler(code, sub, cmd->command);
+	if (cmd)
+		error_handler(code, sub, cmd->command);
 	return (0);
 }
 
@@ -83,9 +84,12 @@ t_list	*get_commands(char *line, t_env *env)
 	if (!cmds)
 		return (NULL);
 	get_correct_commands(cmds, env);
+	g_signal_c = 0;
 	make_heredoc(&cmds, env);
-	if (check_commands(cmds, &env))
+	exit_code(g_signal_c, &env, 0, NULL);
+	if (!g_signal_c && check_commands(cmds, &env))
 		return (cmds);
 	ft_lstclear(&cmds, free);
+	exit_code(g_signal_c, &env, 0, NULL);
 	return (NULL);
 }

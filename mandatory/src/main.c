@@ -4,9 +4,9 @@
 #include <unistd.h>
 
 t_env	*get_env(char **envp);
-
 int		run(t_list **lst, t_env **env, int **pids);
 void	*destroy(t_env *env);
+int		g_signal_c = 0;
 
 static char	*get_top(t_env **env)
 {
@@ -125,6 +125,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	state = 0;
+	signal(SIGQUIT, SIG_IGN);
 	env = get_env(envp);
 	if (!env)
 	{

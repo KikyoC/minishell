@@ -86,6 +86,7 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 			give_types(&curr, 0);
 		else if (ft_strnstr("<<", curr->command, 2))
 			give_types(&curr, 1);
+		pipe_handle_parsing(curr);
 		curr = curr->next;
 	}
 	return (cmds);
