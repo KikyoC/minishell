@@ -19,9 +19,8 @@ static int	parse(char *str, int *append_mode)
 		}
 		else if (str[i] == '=')
 			return (ft_isprint(str[i + 1]) > 0);
-		else if (str[i] == '+') {
+		else if (str[i] == '+')
 			return (0);
-		}
 		i++;
 	}
 	return (1);
@@ -60,28 +59,28 @@ t_env	*new_env(char *str, int append_mode)
 	return (res);
 }
 
-void	add_if_required(t_env *element, t_env **env)
+void	add_if_required(t_env *e, t_env **env)
 {
 	t_env	*node;
 
 	node = NULL;
-	if (!element)
+	if (!e)
 		return ;
-	if (ft_strncmp("PWD", element->name, 4) == 0 && !find_env("OLDPWD", env))
+	if (ft_strncmp("PWD", e->name, 4) == 0 && !find_env("OLDPWD", env))
 	{
 		node = ft_calloc(1, sizeof(t_env));
 		if (!node)
 			return ;
 		node->name = ft_strdup("OLDPWD");
-		node->content = ft_strdup(element->content);
+		node->content = ft_strdup(e->content);
 	}
-	else if (ft_strncmp("OLDPWD", element->name, 7) == 0 && !find_env("PWD", env))
+	else if (ft_strncmp("OLDPWD", e->name, 7) == 0 && !find_env("PWD", env))
 	{
 		node = ft_calloc(1, sizeof(t_env));
 		if (!node)
 			return ;
 		node->name = ft_strdup("PWD");
-		node->content = ft_strdup(element->content);
+		node->content = ft_strdup(e->content);
 	}
 	if (node && node->name && node->content)
 		add_back(env, node, 0);

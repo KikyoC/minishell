@@ -49,8 +49,6 @@ void	good_command(t_list *lst, char **path)
 		free(join);
 	}
 	free(tmp);
-	// free(lst->command);
-	// lst->command = NULL;
 }
 
 void	init_node(t_list *lst, t_env **env)
