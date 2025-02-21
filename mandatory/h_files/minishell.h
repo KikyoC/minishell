@@ -27,6 +27,15 @@
 # define REDIRECT 5
 # define COMMAND 1
 # define PIPE 2
+# define RESET   "\001\033[0m\002"
+# define BOLD    "\001\033[1m\002"
+# define RED     "\001\033[31m\002"
+# define GREEN   "\001\033[32m\002"
+# define YELLOW  "\001\033[33m\002"
+# define BLUE    "\001\033[34m\002"
+# define MAGENTA "\001\033[35m\002"
+# define CYAN    "\001\033[36m\002"
+
 
 // structs
 
@@ -180,5 +189,11 @@ char	*check_dollars(char *line, t_iterate *iter);
 void	heredoc_expand(char **flags, t_env *env);
 
 void	make_heredoc(t_list **cmds, t_env *env);
+
+char	*get_prompt(t_env **env);
+
+int		run(t_list **lst, t_env **env, int **pids);
+
+t_env	*get_env(char **envp);
 
 #endif
