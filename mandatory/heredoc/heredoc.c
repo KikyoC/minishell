@@ -8,7 +8,7 @@ void	make_heredoc(t_list **cmds, t_env *env)
 	curr = *cmds;
 	while (curr)
 	{
-		if (curr->type ==  HEREDOC)
+		if (curr->type == HEREDOC && g_signal_c != 130)
 		{
 			if (curr->flags)
 				ft_free_split(curr->flags);
@@ -18,6 +18,21 @@ void	make_heredoc(t_list **cmds, t_env *env)
 		}
 		curr = curr->next;
 	}
+}
+
+void	handle_eof(char *line, char *final, int fd)
+{
+	if (line)
+		free(line);
+	else if (g_signal_c != 130 && !line)
+	{
+		ft_putstr_fd("Minishell: warning: NULL used as ", 2);
+		ft_putstr_fd("end-of-file (wanted `", 2);
+		ft_putstr_fd(final, 2);
+		ft_putstr_fd("')\n", 2);
+		free(line);
+	}
+	dup2(fd, 0);
 }
 
 char	**heredoc(char *final, int len)
@@ -42,8 +57,6 @@ char	**heredoc(char *final, int len)
 			break ;
 		tab = ft_realloc(tab, line);
 	}
-	free(line);
-	dup2(fd, 0);
-	close(fd);
+	handle_eof(line, final, fd);
 	return (tab);
 }

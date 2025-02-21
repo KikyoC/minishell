@@ -1,11 +1,14 @@
 
 #include "../h_files/minishell.h"
-#include <unistd.h>
 
 void	inthandler(int sig)
 {
-	
-	(void)sig;
-	close(0);
-	printf("^C\n");
+	if (sig == SIGINT)
+	{
+		close(0);
+		printf("^C\n");
+		g_signal_c = 130;
+	}
+	else if (sig == SIGQUIT)
+		return ;
 }

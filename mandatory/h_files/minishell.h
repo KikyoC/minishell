@@ -18,6 +18,10 @@
 # include "../includes/libft/libft.h"
 # include "../includes/libft/get_next_line_bonus.h"
 
+// global
+
+extern int g_signal_c;
+
 // define
 # define PROMPT "\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"
 # define HEREDOC 4
