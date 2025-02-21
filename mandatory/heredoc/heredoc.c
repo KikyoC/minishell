@@ -8,7 +8,7 @@ void	make_heredoc(t_list **cmds, t_env *env)
 	curr = *cmds;
 	while (curr)
 	{
-		if (curr->type ==  HEREDOC)
+		if (curr->type == HEREDOC)
 		{
 			if (curr->flags)
 				ft_free_split(curr->flags);
