@@ -20,6 +20,7 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 	t_env	*node;
 
 	printf("code : %d, sub : %d, command : %s\n", code, sub, cmd->command);
+	printf("type->next : %d, command->next : %s\n", get_next(cmd)->type, get_next(cmd)->command);
 	node = ft_calloc(1, sizeof(t_env));
 	if (!node)
 		return (-2);
@@ -44,16 +45,22 @@ static int	check_commands(t_list *cmds, t_env **env)
 	cmd_found = 0;
 	while (node)
 	{
-		printf("check_command command : %s\n", (char *)node->content);
+		printf("node->type : %d, node->command : %s\n", node->type, node->command);
 		if ((node->type == HERE || node->type == REDIRECT
-			|| node->type == PIPE) && !node->next)
-			return (exit_code(2, env, 2, node));
-		else if (node->type == REDIRECT && (!node->next || node->next->type != FILE))
+			|| node->type == PIPE) && !get_next(node))
+			return (exit_code(2 , env, 2, node));
+		else if (node->type == REDIRECT && (!get_next(node)
+				|| get_next(node)->type != FILE))
 			return (exit_code(2, env, 1, node));
-		else if (node->type == PIPE && (!cmd_found || !node->next))
+		else if (node->type == PIPE &&
+				(!cmd_found || !get_next(node)))
 			return (exit_code(2, env, 1, node));
-		else if (node->type == HERE && (!node->next || node->next->type != HEREDOC))
-		   return (exit_code(2, env, 3, node));
+		else if (node->type == HERE && (!get_next(node)
+				|| get_next(node)->type != HEREDOC))
+		   return (exit_code(2, env, 2, node));
+		else if ((node->type == PIPE || node->type == HERE
+				|| node->type == REDIRECT) && node->been_quoted)
+			return (exit_code(2, env, 3, node));
 		else if (node->type == COMMAND)
 			cmd_found++;
 		else if(node->type == PIPE)

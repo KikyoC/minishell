@@ -20,3 +20,17 @@ void	error_handler(int code, int sub, char *command)
 	else 
 		printf("not handled for the moment ;(");
 }
+
+t_list	*get_next(t_list *cmds)
+{
+	t_list	*curr;
+
+	curr = cmds->next;
+	while (curr)
+	{
+		if (curr->command)
+			return (curr);
+		curr = curr->next;
+	}
+	return (NULL);
+}

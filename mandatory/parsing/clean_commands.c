@@ -25,15 +25,25 @@ void	give_types(t_list **curr, int code)
 {
 	if (!code)
 	{
-		(*curr)->type = REDIRECT;
-		if ((*curr)->next)
-			(*curr)->next->type = FILE;
+		if (!(*curr)->been_quoted)
+		{
+			(*curr)->type = REDIRECT;
+			if ((*curr)->next)
+				(*curr)->next->type = FILE;
+		}
+		else
+			(*curr)->type = COMMAND;
 	}
 	else
 	{
-		(*curr)->type = HERE;
-		if ((*curr)->next)
-			(*curr)->next->type = HEREDOC;
+		if (!(*curr)->been_quoted)
+		{
+			(*curr)->type = HERE;
+			if ((*curr)->next)
+				(*curr)->next->type = HEREDOC;
+		}
+		else
+			(*curr)->type = COMMAND;
 	}
 }
 
@@ -45,8 +55,6 @@ int	check_redirect(char *command)
 		return (1);
 	return (0);
 }
-
-void	print_split(char **split);
 
 t_list	*get_correct_commands(t_list *cmds, t_env *env)
 {
@@ -70,8 +78,10 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 			give_types(&curr, 0);
 		else if (ft_strnstr("<<", curr->command, 2))
 			give_types(&curr, 1);
-		if (ft_strnstr("|", curr->command, 1))
+		if (ft_strnstr("|", curr->command, 1) && !curr->been_quoted)
 			curr->type = PIPE;
+		else if (ft_strnstr("|", curr->command, 1) && curr->been_quoted)
+			curr->type = COMMAND;
 		curr = curr->next;
 	}
 	return (cmds);

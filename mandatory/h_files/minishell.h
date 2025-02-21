@@ -183,4 +183,6 @@ void	make_heredoc(t_list **cmds, t_env *env);
 
 void	error_handler(int code, int sub, char *command);
 
+t_list	*get_next(t_list *cmds);
+
 #endif
