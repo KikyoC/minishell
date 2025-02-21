@@ -19,8 +19,6 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 {
 	t_env	*node;
 
-	printf("code : %d, sub : %d, command : %s\n", code, sub, cmd->command);
-	printf("type->next : %d, command->next : %s\n", get_next(cmd)->type, get_next(cmd)->command);
 	node = ft_calloc(1, sizeof(t_env));
 	if (!node)
 		return (-2);

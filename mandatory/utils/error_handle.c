@@ -17,6 +17,8 @@ void	error_handler(int code, int sub, char *command)
 {
 	if (code == 2)
 		print_error_parsing(sub, command);
+	else if (code == 0)
+		return ;
 	else 
 		printf("not handled for the moment ;(");
 }
