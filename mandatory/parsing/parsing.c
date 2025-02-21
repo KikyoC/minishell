@@ -30,7 +30,8 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 		return (-2);
 	}
 	add_back(env, node, 0);
-	error_handler(code, sub, cmd->command);
+	if (cmd)
+		error_handler(code, sub, cmd->command);
 	return (0);
 }
 
@@ -43,7 +44,6 @@ static int	check_commands(t_list *cmds, t_env **env)
 	cmd_found = 0;
 	while (node)
 	{
-		printf("node->type : %d, node->command : %s\n", node->type, node->command);
 		if ((node->type == HERE || node->type == REDIRECT
 			|| node->type == PIPE) && !get_next(node))
 			return (exit_code(2 , env, 2, node));
@@ -82,6 +82,7 @@ t_list	*get_commands(char *line, t_env *env)
 	if (!cmds)
 		return (NULL);
 	get_correct_commands(cmds, env);
+	g_signals_c = 0;
 	make_heredoc(&cmds, env);
 	if (check_commands(cmds, &env))
 		return (cmds);

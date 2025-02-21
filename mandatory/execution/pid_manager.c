@@ -29,7 +29,8 @@ int	wait_all(int *pids, char *line, t_env **env)
 		i++;
 	}
 	free(pids);
-	update_code(state, env);
+	update_code(state, env);	
+	signal(SIGINT, handle_sigint);
 	return (state);
 }
 

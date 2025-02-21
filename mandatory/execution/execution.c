@@ -2,6 +2,8 @@
 
 void	children(t_list *cmd, t_env **env, char **envp, int next)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (next > 2)
 		close(next);
 	if (get_builtin(cmd) != NULL)
@@ -20,6 +22,17 @@ void	children(t_list *cmd, t_env **env, char **envp, int next)
 	execve(cmd->command, cmd->flags, envp);
 	ft_free_split(envp);
 	perror("Execution error");
+}
+
+void	signal_children()
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);	
+}
+
+void	signal_parent()
+{
+	signal(SIGINT, SIG_IGN);
 }
 
 int	execute(t_list *cmd, char **envp, t_env **env, int next)
@@ -90,6 +103,7 @@ t_list	*prepare_command(t_list	*node, int *next, t_env **env)
 			break ;
 		node = node->next;
 	}
+	signal(SIGINT, SIG_IGN);
 	return (assign_command(command, infile, outfile, env));
 }
 
