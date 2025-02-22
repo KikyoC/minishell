@@ -3,10 +3,8 @@
 static int	parse(char *str, int *append_mode)
 {
 	int	i;
-	int	part;
 
 	i = 0;
-	part = 0;
 	*append_mode = 0;
 	while (str[i])
 	{

@@ -10,7 +10,7 @@ static int	parse_end(int code, char *code_origin)
 		return (0);
 	res = ft_strncmp(str, code_origin, ft_strlen(code_origin)) == 0;
 	free(str);
-	return (1);
+	return (res);
 }
 
 int	exit_builtin(t_list *cmd, t_env **env)
