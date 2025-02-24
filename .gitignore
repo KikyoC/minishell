@@ -4,3 +4,6 @@ obj/**.o
 **\
 mandatory/includes/libft/o_files/*.o
 mandatory/includes/libft/libft.a
+.nfs*
+out
+here
