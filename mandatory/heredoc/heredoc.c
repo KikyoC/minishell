@@ -1,4 +1,3 @@
-
 #include "../h_files/minishell.h"
 
 void	make_heredoc(t_list **cmds, t_env *env)
