@@ -52,7 +52,7 @@ static int	check_commands(t_list *cmds, t_env **env)
 	cmd_found = 0;
 	while (node)
 	{
-		printf("code : %d here is the command : %s\n", node->type , node->command);
+		// printf("code : %d here is the command : %s\n", node->type , node->command);
 		if ((node->type == HERE || node->type == REDIRECT
 				|| node->type == PIPE) && !get_next(node))
 			return (exit_code(2, env, 2, node));
