@@ -58,5 +58,6 @@ char	**heredoc(char *final, int len)
 		tab = ft_realloc(tab, line);
 	}
 	handle_eof(line, final, fd);
+	close(fd);
 	return (tab);
 }
