@@ -41,6 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	state = 0;
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_sigint);
 	env = get_env(envp);
 	if (!env)
 	{
