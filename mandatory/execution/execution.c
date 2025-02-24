@@ -24,17 +24,6 @@ void	children(t_list *cmd, t_env **env, char **envp, int next)
 	perror("Execution error");
 }
 
-void	signal_children()
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);	
-}
-
-void	signal_parent()
-{
-	signal(SIGINT, SIG_IGN);
-}
-
 int	execute(t_list *cmd, char **envp, t_env **env, int next)
 {
 	pid_t	f;

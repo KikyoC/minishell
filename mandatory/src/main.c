@@ -1,5 +1,7 @@
 #include "../h_files/minishell.h"
 
+int g_signal_c = 0;
+
 int	core(t_env **env)
 {
 	char	*prompt;
@@ -39,6 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	state = 0;
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_sigint);
 	env = get_env(envp);
 	if (!env)
 	{

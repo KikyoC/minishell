@@ -38,9 +38,9 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 void	cmd_found_handle(int *cmd_found, t_list *node)
 {
 	if (node->type == COMMAND)
-		cmd_found++;
+		(*cmd_found)++;
 	else if (node->type == PIPE)
-		cmd_found = 0;
+		(*cmd_found) = 0;
 }
 
 static int	check_commands(t_list *cmds, t_env **env)
@@ -52,15 +52,18 @@ static int	check_commands(t_list *cmds, t_env **env)
 	cmd_found = 0;
 	while (node)
 	{
+		printf("code : %d here is the command : %s\n", node->type , node->command);
 		if ((node->type == HERE || node->type == REDIRECT
 				|| node->type == PIPE) && !get_next(node))
 			return (exit_code(2, env, 2, node));
-		else if ((node->type == REDIRECT || node->type == PIPE)
+		else if ((node->type == REDIRECT)
 			&& (!get_next(node) || get_next(node)->type != FILE))
 			return (exit_code(2, env, 1, node));
 		else if (node->type == HERE && (!get_next(node)
 				|| get_next(node)->type != HEREDOC))
 			return (exit_code(2, env, 2, node));
+		else if (node->type == PIPE && (!get_next(node)|| !cmd_found))
+				return (exit_code(2, env, 1, node));
 		else if ((node->type == PIPE || node->type == HERE
 				|| node->type == REDIRECT) && node->been_quoted)
 			return (exit_code(2, env, 3, node));
