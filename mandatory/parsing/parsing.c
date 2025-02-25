@@ -1,7 +1,6 @@
-
 #include "../h_files/minishell.h"
 
-char	*expand(char *line, t_env *env)
+char	*expand(char *line, t_env *env, t_list **cmd)
 {
 	int		len;
 	char	*new_line;
@@ -11,6 +10,8 @@ char	*expand(char *line, t_env *env)
 	if (!new_line)
 		free(line);
 	replace_dollars(env, line, new_line);
+	if (len != (int)ft_strlen((line)))
+		(*cmd)->been_expanded = 1;
 	free(line);
 	return (new_line);
 }
@@ -30,8 +31,10 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 		return (-2);
 	}
 	add_back(env, node, 0);
-	if (cmd)
+	if (cmd && code != 1)
 		error_handler(code, sub, cmd->command);
+	else if (cmd && code == 1)
+		error_handler(code, sub, (char *)cmd->content);
 	return (0);
 }
 
@@ -52,7 +55,6 @@ static int	check_commands(t_list *cmds, t_env **env)
 	cmd_found = 0;
 	while (node)
 	{
-		printf("code : %d here is the command : %s\n", node->type , node->command);
 		if ((node->type == HERE || node->type == REDIRECT
 				|| node->type == PIPE) && !get_next(node))
 			return (exit_code(2, env, 2, node));
@@ -89,8 +91,7 @@ t_list	*get_commands(char *line, t_env *env)
 	get_correct_commands(cmds, env);
 	g_signal_c = 0;
 	make_heredoc(&cmds, env);
-	exit_code(g_signal_c, &env, 0, NULL);
-	if (!g_signal_c && check_commands(cmds, &env))
+	if (!g_signal_c && handle_ambigous(env, &cmds) && check_commands(cmds, &env) )
 		return (cmds);
 	ft_lstclear(&cmds, free);
 	exit_code(g_signal_c, &env, 0, NULL);

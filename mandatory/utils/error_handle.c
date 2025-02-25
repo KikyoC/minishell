@@ -14,10 +14,18 @@ void	print_error_parsing(int sub, char *command)
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
 }
 
+void	print_error_ambigous(void)
+{
+	ft_putstr_fd("Minishell: ", 2);
+	ft_putstr_fd("ambigous redirect\n", 2);
+}
+
 void	error_handler(int code, int sub, char *command)
 {
 	if (code == 2)
 		print_error_parsing(sub, command);
+	else if (code == 1)
+		print_error_ambigous();
 	else if (code == 0)
 		return ;
 	else
