@@ -172,7 +172,7 @@ char	reverse_quote(char quote);
 
 void	cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
 
-char	*expand(char *line, t_env *env);
+char	*expand(char *line, t_env *env, t_list **cmd);
 
 char	**split_flags(char **flags);
 
@@ -205,5 +205,9 @@ int		run(t_list **lst, t_env **env, int **pids);
 t_env	*get_env(char **envp);
 
 void	handle_sigint(int sig);
+
+int		exit_code(int code, t_env **env, int sub, t_list *cmd);
+
+int		handle_ambigous(t_env *env, t_list **cmds);
 
 #endif

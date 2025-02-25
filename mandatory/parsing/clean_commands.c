@@ -72,7 +72,7 @@ t_list	*get_correct_commands(t_list *cmds, t_env *env)
 	while (curr)
 	{
 		if (curr->type != HEREDOC)
-			curr->content = expand((char *)curr->content, env);
+			curr->content = expand((char *)curr->content, env, &curr);
 		if (curr->type != COMMAND)
 			remove_quote(curr->content, curr);
 		clean_flags(curr->flags);
