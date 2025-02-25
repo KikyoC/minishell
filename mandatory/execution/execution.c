@@ -29,7 +29,7 @@ int	execute(t_list *cmd, char **envp, t_env **env, int next)
 	pid_t	f;
 
 	if (get_builtin(cmd) != NULL && !is_pipe(cmd))
-		exec_builtin(cmd, get_builtin(cmd), 0, env);
+		exit_code(exec_builtin(cmd, get_builtin(cmd), 0, env), env, 0, cmd);
 	if (cmd->input < 0 || cmd->output < 0
 		|| (get_builtin(cmd) && !is_pipe(cmd)))
 	{
