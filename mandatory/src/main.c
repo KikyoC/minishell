@@ -2,6 +2,14 @@
 
 int g_signal_c = 0;
 
+void	setup(t_env **env)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_sigint);
+  rl_outstream = stderr;
+	exit_code(0, env, 0, NULL);
+}
+
 int	core(t_env **env)
 {
 	char	*prompt;
