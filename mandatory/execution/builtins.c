@@ -29,6 +29,5 @@ int	exec_builtin(t_list *c, int (*exe)(t_list *l, t_env **e), int n, t_env **e)
 		close(n);
 	state = exe(c, e);
 	close_node(c);
-	update_code(state, e);
 	return (state);
 }

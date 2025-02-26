@@ -6,6 +6,7 @@ void	setup(t_env **env)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
+  rl_outstream = stderr;
 	exit_code(0, env, 0, NULL);
 }
 
@@ -38,11 +39,19 @@ int	core(t_env **env)
 	return (0);
 }
 
+static void setup(t_env **env)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_sigint);
+	rl_outstream = stderr;
+	exit_code(0, env, 0, NULL);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
 	int		state;
-	int		exit_code;
+	int		exit_c;
 
 	(void)argc;
 	(void)argv;
@@ -54,14 +63,13 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	setup(&env);
-	rl_outstream = stderr;
 	while (!state)
 		state = core(&env);
 	rl_clear_history();
-	exit_code = ft_atoi(find_env("?", &env));
+	exit_c = ft_atoi(find_env("?", &env));
 	destroy(env);
 	if ((state > 0 || state == -2) && isatty(STDIN_FILENO))
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-	if (state == -2 && exit_code)
-		return (exit_code);
+	if (state == -2 && exit_c)
+		return (exit_c);
 }
