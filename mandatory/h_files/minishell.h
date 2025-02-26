@@ -87,7 +87,7 @@ t_builtin	get_builtin(t_list *lst);
 
 int		*get_pid_list(t_list *lst);
 
-int		wait_all(int *pids, char *line, t_env **env);
+void	wait_all(int *pids, char *line, t_env **env);
 
 int		open_file(t_list *node, int *infile, int *outfile, int *next);
 

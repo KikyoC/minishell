@@ -1,20 +1,8 @@
 #include "../h_files/minishell.h"
+#include <stdlib.h>
+#include <sys/wait.h>
 
-void	update_code(int code, t_env	**env)
-{
-	t_env	*node;
-
-	node = ft_calloc(1, sizeof(t_env));
-	if (!node)
-		return ;
-	node->name = ft_strdup("?");
-	node->content = ft_itoa(code);
-	if (!node->name || !node->content)
-		destroy_node(node);
-	add_back(env, node, 0);
-}
-
-int	wait_all(int *pids, char *line, t_env **env)
+void	wait_all(int *pids, char *line, t_env **env)
 {
 	int	state;
 	int	i;
@@ -29,9 +17,17 @@ int	wait_all(int *pids, char *line, t_env **env)
 		i++;
 	}
 	free(pids);
-	update_code(state, env);	
+	if (WIFEXITED(state))
+		exit_code(WEXITSTATUS(state), env, 0, NULL);
+	else if (WIFSIGNALED(state))
+	{
+		if (WCOREDUMP(state))
+			exit_code(WTERMSIG(state), env, 0, NULL);
+		else
+			exit_code(128 + WTERMSIG(state), env, 0, NULL);
+	}
+	
 	signal(SIGINT, handle_sigint);
-	return (state);
 }
 
 void	add_pid_back(int *pids, int pid)
