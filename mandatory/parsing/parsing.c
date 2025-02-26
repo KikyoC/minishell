@@ -30,7 +30,7 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 		destroy_node(node);
 		return (-2);
 	}
-	add_back(env, node, 0);
+	add_back(env, node, code);
 	if (cmd && code != 1)
 		error_handler(code, sub, cmd->command);
 	else if (cmd && code == 1)

@@ -2,6 +2,13 @@
 
 int g_signal_c = 0;
 
+void	setup(t_env **env)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_sigint);
+	exit_code(0, env, 0, NULL);
+}
+
 int	core(t_env **env)
 {
 	char	*prompt;
@@ -40,14 +47,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	state = 0;
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handle_sigint);
 	env = get_env(envp);
 	if (!env)
 	{
 		perror("Minishell");
 		return (1);
 	}
+	setup(&env);
 	rl_outstream = stderr;
 	while (!state)
 		state = core(&env);
