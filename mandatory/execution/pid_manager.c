@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-int	wait_all(int *pids, char *line, t_env **env)
+void	wait_all(int *pids, char *line, t_env **env)
 {
 	int	state;
 	int	i;
@@ -28,7 +28,6 @@ int	wait_all(int *pids, char *line, t_env **env)
 	}
 	
 	signal(SIGINT, handle_sigint);
-	return (WEXITSTATUS(state));
 }
 
 void	add_pid_back(int *pids, int pid)
