@@ -8,9 +8,12 @@ static int	parse(char *str, int *append_mode)
 	i = 0;
 	part = 0;
 	*append_mode = 0;
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (0);
 	while (str[i])
 	{
-		if (str[i] != '+' && str[i] != '=' && !ft_isalnum(str[i]))
+		if (str[i] != '+' && str[i] != '=' && !ft_isalnum(str[i])
+			&& str[i] != '_')
 			return (0);
 		if (str[i] == '+' && str[i + 1] == '=')
 		{
