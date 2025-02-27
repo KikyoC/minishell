@@ -59,7 +59,6 @@ int	main(int argc, char **argv, char **envp)
 	env = get_env(envp);
 	if (!env)
 		return (12);
-	printf("Second we are here\n");
 	setup(&env);
 	while (!state)
 		state = core(&env);
