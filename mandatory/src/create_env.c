@@ -1,8 +1,5 @@
 #include "../h_files/minishell.h"
 
-void	*destroy_node(t_env *node);
-void	*destroy(t_env *env);
-
 char	*find_env(char *name, t_env **env)
 {
 	t_env	*current;
@@ -99,6 +96,13 @@ t_env	*get_env(char **envp)
 
 	i = 0;
 	res = NULL;
+	if (!envp || !envp[0])
+	{
+		res = ft_calloc(1, sizeof(t_env));
+		res->name = ft_strdup("");
+		res->content = ft_strdup("");
+		return (res);
+	}
 	while (envp[i])
 	{
 		node = create_node(envp[i]);

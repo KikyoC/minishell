@@ -2,21 +2,10 @@
 
 int g_signal_c = 0;
 
-void	setup(t_env **env)
+char	*ask_user(t_env **env)
 {
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handle_sigint);
-  rl_outstream = stderr;
-	exit_code(0, env, 0, NULL);
-}
-
-int	core(t_env **env)
-{
-	char	*prompt;
 	char	*line;
-	t_list	*cmds;
-	int		state;
-	int		*pids;
+	char	*prompt;
 
 	if (isatty(STDIN_FILENO))
 	{
@@ -26,6 +15,17 @@ int	core(t_env **env)
 	}
 	else
 		line = readline(NULL);
+	return (line);
+}
+
+int	core(t_env **env)
+{
+	char	*line;
+	t_list	*cmds;
+	int		state;
+	int		*pids;
+
+	line = ask_user(env);
 	if (!line)
 		return (ENOMEM);
 	cmds = get_commands(line, *env);
@@ -58,10 +58,8 @@ int	main(int argc, char **argv, char **envp)
 	state = 0;
 	env = get_env(envp);
 	if (!env)
-	{
-		perror("Minishell");
-		return (1);
-	}
+		return (12);
+	printf("Second we are here\n");
 	setup(&env);
 	while (!state)
 		state = core(&env);
