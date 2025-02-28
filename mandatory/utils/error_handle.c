@@ -26,10 +26,6 @@ void	error_handler(int code, int sub, char *command)
 		print_error_parsing(sub, command);
 	else if (code == 1)
 		print_error_ambigous();
-	else if (code == 0)
-		return ;
-	else
-		printf("not handled for the moment ;(");
 }
 
 t_list	*get_next(t_list *cmds)

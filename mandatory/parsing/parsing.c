@@ -20,6 +20,8 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 {
 	t_env	*node;
 
+	if (code < 0)
+		return (0);
 	node = ft_calloc(1, sizeof(t_env));
 	if (!node)
 		return (-2);
@@ -30,7 +32,7 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 		destroy_node(node);
 		return (-2);
 	}
-	add_back(env, node, code);
+	add_back(env, node, 0);
 	if (cmd && code != 1)
 		error_handler(code, sub, cmd->command);
 	else if (cmd && code == 1)
@@ -94,6 +96,5 @@ t_list	*get_commands(char *line, t_env *env)
 	if (!g_signal_c && handle_ambigous(env, &cmds) && check_commands(cmds, &env) )
 		return (cmds);
 	ft_lstclear(&cmds, free);
-	exit_code(g_signal_c, &env, 0, NULL);
 	return (NULL);
 }

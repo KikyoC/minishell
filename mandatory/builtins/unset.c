@@ -24,14 +24,6 @@ void	remove_env(char *str, t_env **env)
 	}
 }
 
-void	remove_pwd(char *str, t_env **env)
-{
-	if (ft_strncmp(str, "PWD", 4) == 0)
-		remove_env("OLDPWD", env);
-	else if (ft_strncmp(str, "OLDPWD", 7) == 0)
-		remove_env("PWD", env);
-}
-
 int	unset(t_list *lst, t_env **env)
 {
 	int	i;
@@ -40,7 +32,6 @@ int	unset(t_list *lst, t_env **env)
 	while (lst->flags[i])
 	{
 		remove_env(lst->flags[i], env);
-		remove_pwd(lst->flags[i], env);
 		i++;
 	}
 	return (0);

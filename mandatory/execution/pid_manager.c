@@ -1,6 +1,4 @@
 #include "../h_files/minishell.h"
-#include <stdlib.h>
-#include <sys/wait.h>
 
 void	wait_all(int *pids, char *line, t_env **env)
 {
@@ -11,22 +9,21 @@ void	wait_all(int *pids, char *line, t_env **env)
 	i = 0;
 	add_history(line);
 	free(line);
-	while (pids[i] && i < 10)
+	while (pids[i])
 	{
 		waitpid(pids[i], &state, 0);
 		i++;
 	}
 	free(pids);
-	if (WIFEXITED(state))
+	if (i && WIFEXITED(state))
 		exit_code(WEXITSTATUS(state), env, 0, NULL);
-	else if (WIFSIGNALED(state))
+	else if (i && WIFSIGNALED(state))
 	{
 		if (WCOREDUMP(state))
 			exit_code(WTERMSIG(state), env, 0, NULL);
 		else
 			exit_code(128 + WTERMSIG(state), env, 0, NULL);
 	}
-	
 	signal(SIGINT, handle_sigint);
 }
 

@@ -27,7 +27,7 @@ int	core(t_env **env)
 
 	line = ask_user(env);
 	if (!line)
-		return (ENOMEM);
+		return (-2);
 	cmds = get_commands(line, *env);
 	state = run(&cmds, env, &pids);
 	ft_lstclear(&cmds, free);

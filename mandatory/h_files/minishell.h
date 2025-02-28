@@ -210,4 +210,8 @@ int		exit_code(int code, t_env **env, int sub, t_list *cmd);
 
 int		handle_ambigous(t_env *env, t_list **cmds);
 
+int		pre_execute(t_list *cmd, char **envp, t_env **env);
+
+void	handle_sigquit(int sig);
+
 #endif
