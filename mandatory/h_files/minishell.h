@@ -210,4 +210,6 @@ int		exit_code(int code, t_env **env, int sub, t_list *cmd);
 
 int		handle_ambigous(t_env *env, t_list **cmds);
 
+int		triple(t_list *cmds, t_env **env);
+
 #endif

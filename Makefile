@@ -30,7 +30,7 @@ UTIL = commands.c sort_list.c env_replacer.c transform_env.c utils.c parsing_uti
 	   split_skip_quotes_utils.c split_utils.c dollars_utils.c cpy_txt_utils.c quotes_parser.c ft_realloc.c error_handle.c
 BUILTIN = pwd.c cd.c echo.c export.c unset.c env.c exit.c
 HEREDOC = heredoc.c heredoc_expand.c
-PARSING = parsing.c text_handle.c clean_commands.c flags_handle.c dollars.c quote_parsing.c ambigous.c
+PARSING = parsing.c text_handle.c clean_commands.c flags_handle.c dollars.c quote_parsing.c ambigous.c triple.c
 SIGNAL = heredoc_signals.c signals.c
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
