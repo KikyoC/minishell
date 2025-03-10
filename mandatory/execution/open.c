@@ -9,7 +9,6 @@ static int	set_fd(t_list *node, int *fd, int flags, int perms)
 	{
 		*fd = -1;
 		perror("Minishell");
-		return (1);
 	}
 	return (0);
 }

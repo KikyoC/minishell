@@ -5,6 +5,8 @@ int	pre_execute(t_list *cmd, char **envp, t_env **env)
 	int	state;
 
 	state = 0;
+	if (cmd->input < 0|| cmd->output < 0)
+		exit_code(127, env, 0, NULL);
 	if (get_builtin(cmd) != NULL && !is_pipe(cmd)
 		&& cmd->input >= 0 && cmd->output >= 0)
 	{
