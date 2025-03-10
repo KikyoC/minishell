@@ -96,8 +96,10 @@ int	export(t_list *lst, t_env **env)
 	int		i;
 	int		append_mode;
 	t_env	*node;
+	int		error;
 
 	i = -1;
+	error = 0;
 	if (lst->flags == NULL || lst->flags[0] == NULL)
 		return (0);
 	while (lst->flags[++i])
@@ -107,6 +109,7 @@ int	export(t_list *lst, t_env **env)
 			ft_putstr_fd("Minishell: ", 2);
 			ft_putstr_fd(lst->flags[i], 2);
 			ft_putstr_fd(" cannot be parsed\n", 2);
+			error = 1;
 			continue ;
 		}
 		node = new_env(lst->flags[i], append_mode);
@@ -115,5 +118,5 @@ int	export(t_list *lst, t_env **env)
 		add_if_required(node, env);
 		add_back(env, node, append_mode);
 	}
-	return (0);
+	return (error);
 }
