@@ -18,10 +18,10 @@ static int	parse(char *str, int *append_mode)
 		if (str[i] == '+' && str[i + 1] == '=')
 		{
 			*append_mode = 1;
-			return (ft_isprint(str[i + 2]) > 0);
+			return (1);
 		}
 		else if (str[i] == '=')
-			return (ft_isprint(str[i + 1]) > 0);
+			return (1);
 		else if (str[i] == '+')
 			return (0);
 		i++;
@@ -42,9 +42,13 @@ t_env	*assign_node(char *str, int append_mode, t_env **node)
 	j = i;
 	while (str[j])
 		j++;
-	(*node)->content = ft_substr(str, i, j);
-	if (!(*node)->name || (j != i && ((*node)->content == NULL
-				|| (*node)->content[0] == '\0')))
+	if (i == j && str[i - 1] == '=')
+		(*node)->content = ft_calloc(1, sizeof(char));
+	else if (i == j)
+		return (destroy_node(*node));
+	else
+		(*node)->content = ft_substr(str, i, j);
+	if (!(*node)->name || (*node)->content == NULL)
 		return (destroy_node(*node));
 	return (*node);
 }
