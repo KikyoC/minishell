@@ -2,8 +2,9 @@
 
 int g_signal_c = 0;
 
-char	*ask_user(t_env **env)
+int	core(t_env **env)
 {
+	char	*prompt;
 	char	*line;
 	char	*prompt;
 

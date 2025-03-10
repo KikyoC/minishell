@@ -94,7 +94,8 @@ t_list	*get_commands(char *line, t_env *env)
 	get_correct_commands(cmds, env);
 	g_signal_c = 0;
 	make_heredoc(&cmds, env);
-	if (!g_signal_c && handle_ambigous(env, &cmds) && check_commands(cmds, &env) )
+	if (!g_signal_c && handle_ambigous(env, &cmds) &&
+		check_commands(cmds, &env) && triple(cmds, &env))
 		return (cmds);
 	ft_lstclear(&cmds, free);
 	return (NULL);

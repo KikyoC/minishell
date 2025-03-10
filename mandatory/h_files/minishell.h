@@ -214,4 +214,6 @@ int		pre_execute(t_list *cmd, char **envp, t_env **env);
 
 void	handle_sigquit(int sig);
 
+int		triple(t_list *cmds, t_env **env);
+
 #endif
