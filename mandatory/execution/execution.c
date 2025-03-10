@@ -36,6 +36,7 @@ int	execute(t_list *cmd, char **envp, t_env **env, int next)
 	if (!cmd->command)
 	{
 		ft_putstr_fd("Minishell: Command not found\n", 2);
+		exit_code(127, env, 0, NULL);
 		close_node(cmd);
 		ft_free_split(envp);
 		return (-1);

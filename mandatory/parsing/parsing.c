@@ -22,7 +22,6 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 
 	if (code < 0)
 		return (0);
-	printf("Called with code %i\n", code);
 	node = ft_calloc(1, sizeof(t_env));
 	if (!node)
 		return (-2);
