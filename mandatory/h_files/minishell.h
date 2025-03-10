@@ -126,13 +126,13 @@ t_env	*sort_env(t_env **env);
 
 int		quote_parsing(char *command);
 
-int		is_operator(char ch, char c);
+int		is_operator(char ch, char c, int mode);
 
 t_list	*check_until(char *line, int *j, char ch, char op);
 
-t_list	*ft_split_skip_quotes(char *line, char ch);
+t_list	*ft_split_skip_quotes(char *line, char ch, int mode);
 
-t_list	*find_operator(int *i, char *line, char ch);
+t_list	*find_operator(int *i, char *line, char ch, int mode);
 
 int		quote_parsing(char *command);
 

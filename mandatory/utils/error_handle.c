@@ -12,6 +12,8 @@ void	print_error_parsing(int sub, char *command)
 	}
 	else if (sub == 2)
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+	else if (sub == 4)
+		ft_putstr_fd("Unfinished quote\n", 2);
 }
 
 void	print_error_ambigous(void)
