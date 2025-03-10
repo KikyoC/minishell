@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:51:06 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/10 13:51:06 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:19:27 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ char	*check_dollars(char *line, t_iterate *iter)
 	word = NULL;
 	if (line[iter->i] == '$')
 	{
+		if (line[iter->i + 1] == '"')
+		{
+			iter->i++;
+			return (NULL);
+		}
 		len = get_word(line, NULL, iter);
 		if (!len)
 			return (NULL);
