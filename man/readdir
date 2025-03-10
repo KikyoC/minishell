@@ -1,9 +1,0 @@
-=========
-readdir
-=========
-#include <dirent.h>
-
-int readdir(DIR *dir, struct dirent *entry, struct dirent **result);
-
-allows to read each fule present in a dir
-Consider reading the "dirent" file for more infos

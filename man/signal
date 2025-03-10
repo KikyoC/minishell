@@ -1,6 +1,0 @@
-=============
-SIGNAL
-=============
-Don't use it. Use sigaction instead
-
-
