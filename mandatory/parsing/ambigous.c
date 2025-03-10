@@ -1,6 +1,25 @@
 
 #include "../h_files/minishell.h"
 
+int	ambigous(char *content, int i)
+{
+	int	count;
+
+	count = 0;
+	if (content[0] == '\0')
+		return (1);
+	while (content[i])
+	{
+		if (is_operator(content[i], ' '))
+			count = 1;
+		else
+			if (count)
+				return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	handle_ambigous(t_env *env, t_list **cmds)
 {
 	t_list	*curr;
@@ -18,10 +37,8 @@ int	handle_ambigous(t_env *env, t_list **cmds)
 				word = (char *)curr->next->content;
 				while (is_operator(word[i], ' '))
 					i++;
-				if (((char *)curr->next->content)[i] == '\0')
-				{
+				if (ambigous((char *)curr->next->content, i))
 					return (exit_code(1, &env, 1, curr->next));
-				}
 			}
 		}
 		curr = curr->next;
