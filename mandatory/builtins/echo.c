@@ -19,37 +19,38 @@ int	is_good_skip_line(char *str)
 	int	i;
 
 	if (!str || !str[0] || !str[1] || str[0] != '-')
-		return (1);
+		return (0);
 	i = 1;
 	if (str[0] != '-')
 		return (1);
 	while (str[i])
 	{
 		if (str[i] != 'n')
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	echo(t_list *lst, t_env **env)
 {
 	int	new_line;
 
-	new_line = 1;
+	new_line = 0;
 	(void)env;
 	if (!lst->flags || !lst->flags[0])
 	{
 		ft_putchar_fd('\n', lst->output);
 		return (0);
 	}
-	new_line = is_good_skip_line(lst->flags[0]);
-	if (new_line)
+	while (is_good_skip_line(lst->flags[new_line]))
+		new_line++;
+	if (!new_line)
 	{
 		write_echo(lst->flags, lst);
 		ft_putchar_fd('\n', lst->output);
 	}
 	else
-		write_echo(&lst->flags[1], lst);
+		write_echo(&lst->flags[new_line], lst);
 	return (0);
 }

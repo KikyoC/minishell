@@ -37,18 +37,24 @@ void	switch_pwd(char *old_path, t_env **env)
 	t_env	*current;
 	char	*current_path;
 
-	current_path = getcwd(NULL, PATH_MAX);
-	if (!current_path)
-		return ;
 	old = find("OLDPWD", env);
 	current = find("PWD", env);
+	if (current)
+		current_path = getcwd(NULL, PATH_MAX);
 	if (old)
 	{
 		free(old->content);
 		old->content = old_path;
 	}
+	else
+		free(old_path);
 	if (current)
+	{
+		if (!current_path)
+			return ;
+		free(current->content);
 		current->content = current_path;
+	}
 }
 
 int	cd(t_list *lst, t_env **env)

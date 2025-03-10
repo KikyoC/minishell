@@ -2,8 +2,17 @@
 
 static int	set_fd(t_list *node, int *fd, int flags, int perms)
 {
+	struct stat	path_stat;
+
+	stat(node->command, &path_stat);
 	if (*fd > 2)
 		close(*fd);
+	if (S_ISDIR(path_stat.st_mode))
+	{
+		ft_putstr_fd("Minishell: It's a dirrectory\n", 2);
+		*fd = -1;
+		return (0);
+	}
 	*fd = open(node->command, flags, perms);
 	if (*fd < 0)
 	{
@@ -78,9 +87,7 @@ int	is_pipe(t_list *cmd)
 	while (cmd)
 	{
 		if (cmd->type == 2)
-		{
 			return (1);
-		}
 		cmd = cmd->next;
 	}
 	return (0);

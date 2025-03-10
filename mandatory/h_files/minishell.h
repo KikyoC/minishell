@@ -216,4 +216,6 @@ void	handle_sigquit(int sig);
 
 int		triple(t_list *cmds, t_env **env);
 
+int		parse_exit_code(unsigned long long *res, char *str);
+
 #endif

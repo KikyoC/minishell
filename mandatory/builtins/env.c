@@ -14,11 +14,12 @@ int	aff_env(t_list *lst, t_env **env)
 	node = *env;
 	while (node)
 	{
-		if (node->content && node->content[0] && print_this(node))
+		if (print_this(node))
 		{
 			ft_putstr_fd(node->name, lst->output);
 			ft_putchar_fd('=', lst->output);
-			ft_putstr_fd(node->content, lst->output);
+			if (node->content)
+				ft_putstr_fd(node->content, lst->output);
 			ft_putchar_fd('\n', lst->output);
 		}
 		node = node->next;
