@@ -2,7 +2,9 @@
 
 int	(*get_builtin(t_list *lst))(t_list *lst, t_env **env)
 {
-	if (ft_strncmp("export", lst->command, 7) == 0)
+	if (!lst->command)
+		return (NULL);
+	else if (ft_strncmp("export", lst->command, 7) == 0)
 		return (export);
 	else if (ft_strncmp("unset", lst->command, 6) == 0)
 		return (unset);

@@ -6,9 +6,7 @@ int	core(t_env **env)
 {
 	char	*prompt;
 	char	*line;
-	t_list	*cmds;
-	int		state;
-	int		*pids;
+	char	*prompt;
 
 	if (isatty(STDIN_FILENO))
 	{
@@ -18,8 +16,19 @@ int	core(t_env **env)
 	}
 	else
 		line = readline(NULL);
+	return (line);
+}
+
+int	core(t_env **env)
+{
+	char	*line;
+	t_list	*cmds;
+	int		state;
+	int		*pids;
+
+	line = ask_user(env);
 	if (!line)
-		return (ENOMEM);
+		return (-2);
 	cmds = get_commands(line, *env);
 	state = run(&cmds, env, &pids);
 	ft_lstclear(&cmds, free);
@@ -50,10 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	state = 0;
 	env = get_env(envp);
 	if (!env)
-	{
-		perror("Minishell");
-		return (1);
-	}
+		return (12);
 	setup(&env);
 	while (!state)
 		state = core(&env);

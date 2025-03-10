@@ -24,31 +24,33 @@ void	good_flags(t_list *lst)
 	lst->flags = res;
 }
 
-void	good_command(t_list *lst, char **path)
+int	good_command(t_list *lst, char **path)
 {
 	char	*tmp;
 	int		i;
 	char	*join;
 
-	if (access(lst->command, X_OK) == 0 && access(lst->command, F_OK) == 0)
-		return ;
+	if (!access(lst->command, X_OK) && (!path || ft_strchr(lst->command, '/')))
+		return (1);
 	tmp = ft_strjoin("/", lst->command);
 	if (!tmp)
-		return ;
+		return (0);
 	i = -1;
 	while (path[++i])
 	{
 		join = ft_strjoin(path[i], tmp);
-		if (access(join, X_OK) == 0)
+		if (join && access(join, X_OK) == 0)
 		{
 			free(tmp);
 			free(lst->command);
 			lst->command = join;
-			return ;
+			return (1);
 		}
-		free(join);
+		if (join)
+			free(join);
 	}
 	free(tmp);
+	return (0);
 }
 
 void	init_node(t_list *lst, t_env **env)
@@ -61,8 +63,11 @@ void	init_node(t_list *lst, t_env **env)
 	if (get_builtin(lst) == NULL && lst->type == 1)
 	{
 		good_flags(lst);
-		if (path)
-			good_command(lst, path);
+		if (!good_command(lst, path))
+		{
+			free(lst->command);
+			lst->command = NULL;
+		}
 	}
 	if (path)
 		ft_free_split(path);

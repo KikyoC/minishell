@@ -1,9 +1,9 @@
 #include "../h_files/minishell.h"
 
-void	children(t_list *cmd, t_env **env, char **envp, int next)
+int	children(t_list *cmd, t_env **env, char **envp, int next)
 {
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, handle_sigquit);
 	if (next > 2)
 		close(next);
 	if (get_builtin(cmd) != NULL)
@@ -12,7 +12,7 @@ void	children(t_list *cmd, t_env **env, char **envp, int next)
 		if (cmd->input > 2)
 			close(cmd->input);
 		exec_builtin(cmd, get_builtin(cmd), next, env);
-		return ;
+		return (0);
 	}
 	if (cmd->input > 2)
 		dup2(cmd->input, 0);
@@ -22,20 +22,23 @@ void	children(t_list *cmd, t_env **env, char **envp, int next)
 	execve(cmd->command, cmd->flags, envp);
 	ft_free_split(envp);
 	perror("Execution error");
+	return (0);
 }
 
 int	execute(t_list *cmd, char **envp, t_env **env, int next)
 {
 	pid_t	f;
+	int		state;
 
-	if (get_builtin(cmd) != NULL && !is_pipe(cmd))
-		exit_code(exec_builtin(cmd, get_builtin(cmd), 0, env), env, 0, cmd);
-	if (cmd->input < 0 || cmd->output < 0
-		|| (get_builtin(cmd) && !is_pipe(cmd)))
+	state = pre_execute(cmd, envp, env);
+	if (state < 0)
+		return (state);
+	if (!cmd->command)
 	{
-		ft_free_split(envp);
+		ft_putstr_fd("Minishell: Command not found\n", 2);
 		close_node(cmd);
-		return ((-1) - (ft_strncmp(cmd->command, "exit", 5) == 0));
+		ft_free_split(envp);
+		return (-1);
 	}
 	f = fork();
 	if (f < 0)
@@ -44,10 +47,7 @@ int	execute(t_list *cmd, char **envp, t_env **env, int next)
 		return (1);
 	}
 	if (f == 0)
-	{
-		children(cmd, env, envp, next);
-		return (0);
-	}
+		return (children(cmd, env, envp, next));
 	close_node(cmd);
 	ft_free_split(envp);
 	return (f);
@@ -110,9 +110,9 @@ int	run(t_list **lst, t_env **env, int **pids)
 	while (cmd)
 	{
 		exec = execute(cmd, get_envp(env), env, next);
-		if ((exec > 1 || exec == -1))
+		if (exec > 1)
 			add_pid_back(*pids, exec);
-		else
+		else if (exec != -1)
 		{
 			free(*pids);
 			return (exec);

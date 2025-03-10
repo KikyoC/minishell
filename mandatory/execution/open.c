@@ -9,7 +9,6 @@ static int	set_fd(t_list *node, int *fd, int flags, int perms)
 	{
 		*fd = -1;
 		perror("Minishell");
-		return (1);
 	}
 	return (0);
 }
@@ -54,18 +53,18 @@ int	set_heredoc(t_list *cmd, int *infile)
 int	open_file(t_list *node, int *infile, int *outfile, int *next)
 {
 	if (node->prev && ft_strncmp("<", node->prev->command, 2) == 0
-		&& infile >= 0 && outfile >= 0)
+		&& *infile >= 0 && *outfile >= 0)
 		return (set_fd(node, infile, O_RDONLY, 0000));
 	if (node->prev && ft_strncmp(">", node->prev->command, 2) == 0
-		&& infile >= 0 && outfile >= 0)
+		&& *infile >= 0 && *outfile >= 0)
 		return (set_fd(node, outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644));
 	if (ft_strncmp("|", node->command, 2) == 0)
 		return (set_pipe(outfile, next));
 	if (node->prev && ft_strncmp(">>", node->prev->command, 3) == 0
-		&& infile >= 0 && outfile >= 0)
+		&& *infile >= 0 && *outfile >= 0)
 		return (set_fd(node, outfile, O_WRONLY | O_CREAT | O_APPEND, 0644));
 	if (ft_strncmp("<<", node->prev->command, 3) == 0
-		&& infile >= 0 && outfile >= 0)
+		&& *infile >= 0 && *outfile >= 0)
 		return (set_heredoc(node, infile));
 	return (1);
 }

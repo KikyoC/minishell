@@ -31,7 +31,7 @@ char	*get_home(t_env **env)
 	return (NULL);
 }
 
-void	switch_pwd(t_env **env)
+void	switch_pwd(char *old_path, t_env **env)
 {
 	t_env	*old;
 	t_env	*current;
@@ -42,17 +42,21 @@ void	switch_pwd(t_env **env)
 		return ;
 	old = find("OLDPWD", env);
 	current = find("PWD", env);
-	if (!old || !current)
-		return ;
-	free(old->content);
-	old->content = current->content;
-	current->content = current_path;
+	if (old)
+	{
+		free(old->content);
+		old->content = old_path;
+	}
+	if (current)
+		current->content = current_path;
 }
 
 int	cd(t_list *lst, t_env **env)
 {
 	char	*final;
+	char	*old;
 
+	old = getcwd(NULL, PATH_MAX);
 	if (lst->flags == NULL || lst->flags[0] == NULL)
 		final = get_home(env);
 	else if (lst->flags[0] && lst->flags[1])
@@ -68,8 +72,8 @@ int	cd(t_list *lst, t_env **env)
 	if (chdir(final))
 	{
 		perror("Minishell");
-		return (errno);
+		return (1);
 	}
-	switch_pwd(env);
+	switch_pwd(old, env);
 	return (0);
 }

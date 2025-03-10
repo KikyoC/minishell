@@ -5,8 +5,8 @@ void	inthandler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		printf("\n");
 		close(0);
-		printf("^C\n");
 		g_signal_c = 130;
 	}
 	else if (sig == SIGQUIT)
