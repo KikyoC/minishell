@@ -63,7 +63,10 @@ int	main(int argc, char **argv, char **envp)
 	while (!state)
 		state = core(&env);
 	rl_clear_history();
-	exit_c = ft_atoi(find_env("?", &env));
+	if (!parse_exit_code(NULL, find_env("?", &env)))
+		exit_c = 2;
+	else
+		exit_c = ft_atoi(find_env("?", &env));
 	destroy(env);
 	if ((state > 0 || state == -2) && isatty(STDIN_FILENO))
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
