@@ -1,5 +1,4 @@
 #include "../h_files/minishell.h"
-#include <signal.h>
 
 void	handle_sigint(int sig)
 {
@@ -14,6 +13,5 @@ void	handle_sigint(int sig)
 void	handle_sigquit(int sig)
 {
 	(void)sig;
-	// kill(-1, sig);
 	ft_putstr_fd("Quit\n", 2);
 }

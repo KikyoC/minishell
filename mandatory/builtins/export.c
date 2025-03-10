@@ -117,8 +117,6 @@ int	export(t_list *lst, t_env **env)
 			continue ;
 		}
 		node = new_env(lst->flags[i], append_mode);
-		if (!node)
-			continue ;
 		add_if_required(node, env);
 		add_back(env, node, append_mode);
 	}

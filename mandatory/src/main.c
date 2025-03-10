@@ -1,6 +1,6 @@
 #include "../h_files/minishell.h"
 
-int g_signal_c = 0;
+int	g_signal_c = 0;
 
 char	*ask_user(t_env **env)
 {
@@ -39,7 +39,7 @@ int	core(t_env **env)
 	return (0);
 }
 
-static void setup(t_env **env)
+static void	setup(t_env **env)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
