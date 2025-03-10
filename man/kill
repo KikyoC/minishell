@@ -1,5 +1,0 @@
-=============
-KILL
-=============
-This is made to send a signal to a process
-You should use it as kill(pid, signal)

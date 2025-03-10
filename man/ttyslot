@@ -1,9 +1,0 @@
-============
-ttyslot
-============
-#include <unistd.h> /* sur les systèmes BSD et Linux */
-
-
-int ttyslot(void)
-get the current terminal slot
-most likely to be useless in our modern times where the shell aren't physique any more

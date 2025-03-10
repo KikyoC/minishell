@@ -1,7 +1,0 @@
-=============
-lstat
-=============
-#include <sys/stat.h>
-
-same as stat, only diff, it reads the link not the linked file on a symbolically
-linked file

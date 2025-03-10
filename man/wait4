@@ -1,5 +1,0 @@
-=============
-WAIT4
-=============
-Do like waitpid function but you can give ressource usage (rusage)
-You should use it like wait3 (pid_t pid, int *status, int options, struct rusage *ressource usage)

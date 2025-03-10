@@ -1,9 +1,0 @@
-=========
-dup
-=========
-#include <unistd.h>
-
-int dup(int oldfd);
-
-duplicate the fd.
-nothing more.

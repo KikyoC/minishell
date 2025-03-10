@@ -10,7 +10,7 @@ int	get_word(char *line, char *to_fill, t_iterate *iter)
 	k = 0;
 	j = iter->i;
 	len = 0;
-	while (ft_isalpha(line[++j]))
+	while (ft_isalpha(line[++j]) || line[j] == '_')
 	{
 		if (to_fill)
 			to_fill[k++] = line[j];

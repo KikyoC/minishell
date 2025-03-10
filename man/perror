@@ -1,8 +1,0 @@
-=========
-perror
-=========
-#include <stdio.h>
-
-void perror(const char *s);
-
-writes a message plus the last encountered error
