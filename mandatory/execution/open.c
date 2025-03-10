@@ -87,9 +87,7 @@ int	is_pipe(t_list *cmd)
 	while (cmd)
 	{
 		if (cmd->type == 2)
-		{
 			return (1);
-		}
 		cmd = cmd->next;
 	}
 	return (0);
