@@ -1,6 +1,6 @@
 #include "../h_files/minishell.h"
 
-int parse_exit_code(unsigned long long *res, char *str)
+int	parse_exit_code(unsigned long long *res, char *str)
 {
 	int			i;
 	long long	tmp;
