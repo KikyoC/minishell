@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:01:39 by cmorel            #+#    #+#             */
-/*   Updated: 2025/02/18 15:22:57 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/11 17:18:20 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_charjoin(char *str, char ch)
 
 void	skip_spaces(char *line, int *i)
 {
-	while (line[*i + 1] == ' ' && line[*i + 1])
+	while ((line[*i + 1] == ' ' || line[*i + 1] == '\t') && line[*i + 1])
 		(*i)++;
 }
 
