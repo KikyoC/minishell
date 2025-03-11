@@ -9,7 +9,7 @@ static char	*get_working_directory(t_env **env)
 
 	node = *env;
 	i = 0;
-	wd = getcwd(NULL, 50);
+	wd = getcwd(NULL, 204);
 	if (!wd)
 		return (NULL);
 	while (node && ft_strncmp(node->name, "HOME", 4))
