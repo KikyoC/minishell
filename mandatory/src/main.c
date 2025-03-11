@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:06:31 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:06:32 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/11 16:40:37 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -22,6 +22,8 @@ char	*ask_user(t_env **env)
 	{
 		prompt = get_prompt(env);
 		line = readline(prompt);
+		if (g_signal_c == 130)
+			exit_code(g_signal_c, env, -1, NULL);
 		free(prompt);
 	}
 	else
