@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes_parser.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 11:01:59 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/11 11:02:29 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../h_files/minishell.h"
 
 void	write_env(char *actual, t_env **env, int fd, int *old);
@@ -72,8 +83,8 @@ char	*parse_quotes(char *str, int multiple_args, t_env **env)
 	}
 	q[0] = -1;
 	q[1] = -1;
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		if (manage(str[i], q, p[1], &i))
 			continue ;
@@ -83,7 +94,6 @@ char	*parse_quotes(char *str, int multiple_args, t_env **env)
 			write_env(&str[i + 1], env, p[1], &i);
 		else
 			write(p[1], &str[i], 1);
-		i++;
 	}
 	close(p[1]);
 	return (fd_to_char(p[0]));
