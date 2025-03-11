@@ -1,0 +1,29 @@
+"" : permission denied
+
+^C : code d'erreur 130
+
+Ctrl-Shift-V + Tab : Command not found
+
+$'lol' : Not working
+
+unset PATH puis command
+
+cd lol => Leak
+
+exit p p => pas d'erreur ni exit code
+
+exit 1 p => pas d'erreur ni exit code
+
+exit 2222222222222222222222222222222222222222222 => pqs d'erreur ni exit code
+
+<<lol puis Ctrl-(Shift)-C => pas d'exit code
+
+ls | <in => pas d'erreur ni exit code
+
+ls | lol => code d'erreur a 141
+
+<lol | >lol ls => erreur mais n'exute pas >lol et ls + leak fd
+
+<<lol >lol | <lol ls => pas d'erreur + leak de fd
+
+
