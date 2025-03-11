@@ -38,3 +38,20 @@ void	add_pid_back(int *pids, int pid)
 		i++;
 	pids[i] = pid;
 }
+
+int	*get_pid_list(t_list *lst)
+{
+	int	*res;
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	res = ft_calloc(i + 1, sizeof(int));
+	if (!res)
+		return (NULL);
+	return (res);
+}
