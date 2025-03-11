@@ -45,7 +45,7 @@ int	good_command(t_list *lst, char **path)
 	if (!tmp)
 		return (0);
 	i = -1;
-	while (path[++i])
+	while (path && path[++i])
 	{
 		join = ft_strjoin(path[i], tmp);
 		if (is_file(join))
