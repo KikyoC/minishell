@@ -1,13 +1,3 @@
-Tom :	"" : permission denied
-
-Clem : Ctrl-Shift-V + Tab : Command not found
-
-Tom : unset PATH puis command : segfault
-
-Tom : exit p p => pas d'erreur ni exit code
-
-Tom : exit 1 p => pas d'erreur ni exit code
-
 Tom : exit 2222222222222222222222222222222222222222222 => pqs d'erreur ni exit code
 
 Tom : <<lol puis Ctrl-(Shift)-C => pas d'exit code
