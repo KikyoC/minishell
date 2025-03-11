@@ -2,8 +2,6 @@ Tom :	"" : permission denied
 
 Clem : Ctrl-Shift-V + Tab : Command not found
 
-Clem : $'lol' : Not working
-
 Tom : unset PATH puis command : segfault
 
 Tom : exit p p => pas d'erreur ni exit code
