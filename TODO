@@ -1,29 +1,25 @@
-"" : permission denied
+Tom :	"" : permission denied
 
-^C : code d'erreur 130
+Clem : ^C : code d'erreur 130
 
-Ctrl-Shift-V + Tab : Command not found
+Clem : Ctrl-Shift-V + Tab : Command not found
 
-$'lol' : Not working
+Clem : $'lol' : Not working
 
-unset PATH puis command
+Tom : unset PATH puis command : segfault
 
-cd lol => Leak
+Tom : exit p p => pas d'erreur ni exit code
 
-exit p p => pas d'erreur ni exit code
+Tom : exit 1 p => pas d'erreur ni exit code
 
-exit 1 p => pas d'erreur ni exit code
+Tom : exit 2222222222222222222222222222222222222222222 => pqs d'erreur ni exit code
 
-exit 2222222222222222222222222222222222222222222 => pqs d'erreur ni exit code
+Tom : <<lol puis Ctrl-(Shift)-C => pas d'exit code
 
-<<lol puis Ctrl-(Shift)-C => pas d'exit code
+Tom : ls | <in => pas d'erreur ni exit code
 
-ls | <in => pas d'erreur ni exit code
+Tom :ls | lol => code d'erreur a 141
 
-ls | lol => code d'erreur a 141
+Tom : <lol | >lol ls => erreur mais n'exute pas >lol et ls + leak fd
 
-<lol | >lol ls => erreur mais n'exute pas >lol et ls + leak fd
-
-<<lol >lol | <lol ls => pas d'erreur + leak de fd
-
-
+Tom : <<lol >lol | <lol ls => pas d'erreur + leak de fd
