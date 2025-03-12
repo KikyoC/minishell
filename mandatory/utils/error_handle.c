@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_handle.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 11:03:08 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/11 11:03:10 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../h_files/minishell.h"
 
 void	print_error_parsing(int sub, char *command)
@@ -12,6 +22,8 @@ void	print_error_parsing(int sub, char *command)
 	}
 	else if (sub == 2)
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+	else if (sub == 4)
+		ft_putstr_fd("Unfinished quote\n", 2);
 }
 
 void	print_error_ambigous(void)

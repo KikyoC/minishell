@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_commands.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 13:47:38 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/12 11:07:08 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 
@@ -28,7 +39,7 @@ void	give_types(t_list **curr, int code)
 		if (!(*curr)->been_quoted)
 		{
 			(*curr)->type = REDIRECT;
-			if ((*curr)->next)
+			if ((*curr)->next && (*curr))
 				(*curr)->next->type = FILE;
 		}
 		else

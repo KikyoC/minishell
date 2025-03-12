@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 11:08:09 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/12 11:24:42 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -20,7 +31,7 @@
 
 // global
 
-extern int g_signal_c;
+extern int	g_signal_c;
 
 // define
 # define PROMPT "\e[0;36m└─(\e[1;32mSegfault\e[0;36m)──\e[1;36m> \033[0m"
@@ -71,151 +82,154 @@ typedef struct s_texts
 
 typedef int	(*t_builtin)(t_list *, t_env **);
 
-int		strings(char *input, char *command);
+int			strings(char *input, char *command);
 
-char	**get_paths(char *env);
+char		**get_paths(char *env);
 
-char	*does_exist(char *cmd, char **paths);
+char		*does_exist(char *cmd, char **paths);
 
-char	**get_envp(t_env **env);
+char		**get_envp(t_env **env);
 
-char	*find_env(char *name, t_env **env);
+char		*find_env(char *name, t_env **env);
 
-void	init(t_list **lst, t_env **env);
+void		init(t_list **lst, t_env **env);
 
 t_builtin	get_builtin(t_list *lst);
 
-int		*get_pid_list(t_list *lst);
+int			*get_pid_list(t_list *lst);
 
-void	wait_all(int *pids, char *line, t_env **env);
+void		wait_all(int *pids, char *line, t_env **env);
 
-int		open_file(t_list *node, int *infile, int *outfile, int *next);
+int			open_file(t_list *node, int *infile, int *outfile, int *next);
 
-void	close_node(t_list *lst);
+void		close_node(t_list *lst);
 
-void	add_pid_back(int *fds, int fd);
+void		add_pid_back(int *fds, int fd);
 
-int		exec_builtin(t_list *c, int (*exe)
-			(t_list *l, t_env **e), int n, t_env **e);
+int			exec_builtin(t_list *c, int (*exe)
+				(t_list *l, t_env **e), int n, t_env **e);
 
-int		is_pipe(t_list *cmd);
+int			is_pipe(t_list *cmd);
 
-int		echo(t_list *lst, t_env **env);
+int			echo(t_list *lst, t_env **env);
 
-int		cd(t_list *lst, t_env **env);
+int			cd(t_list *lst, t_env **env);
 
-int		aff_env(t_list *lst, t_env **env);
+int			aff_env(t_list *lst, t_env **env);
 
-int		export(t_list *lst, t_env **env);
+int			export(t_list *lst, t_env **env);
 
-int		unset(t_list *lst, t_env **env);
+int			unset(t_list *lst, t_env **env);
 
-int		pwd(t_list *lst, t_env **env);
+int			pwd(t_list *lst, t_env **env);
 
-void	close_node(t_list *lst);
+void		close_node(t_list *lst);
 
-void	init_node(t_list *lst, t_env **env);
+void		init_node(t_list *lst, t_env **env);
 
-void	*destroy_node(t_env *node);
+void		*destroy_node(t_env *node);
 
-void	*destroy(t_env *env);
+void		*destroy(t_env *env);
 
-void	add_back(t_env **env, t_env *node, int append_mode);
+void		add_back(t_env **env, t_env *node, int append_mode);
 
-t_env	*sort_env(t_env **env);
+t_env		*sort_env(t_env **env);
 
-int		quote_parsing(char *command);
+int			quote_parsing(char *command);
 
-int		is_operator(char ch, char c);
+int			is_operator(char ch, char c, int mode);
 
-t_list	*check_until(char *line, int *j, char ch, char op);
+t_list		*check_until(char *line, int *j, char ch, char op);
 
-t_list	*ft_split_skip_quotes(char *line, char ch);
+t_list		*ft_split_skip_quotes(char *line, char ch, int mode);
 
-t_list	*find_operator(int *i, char *line, char ch);
+t_list		*find_operator(int *i, char *line, char ch, int mode);
 
-int		quote_parsing(char *command);
+int			quote_parsing(char *command);
 
-int		len_quotes(t_duet duet, char *line);
+int			len_quotes(t_duet duet, char *line);
 
-void	remove_quote(char *line, t_list *cmds);
+void		remove_quote(char *line, t_list *cmds);
 
-t_list	*get_correct_commands(t_list *cmds, t_env *env);
+t_list		*get_correct_commands(t_list *cmds, t_env *env);
 
-t_list	*get_commands(char *line, t_env *env);
+t_list		*get_commands(char *line, t_env *env);
 
-int		cpy_without_quote(char *final, char *original);
+int			cpy_without_quote(char *final, char *original);
 
-char	*ft_charjoin(char *str, char ch);
+char		*ft_charjoin(char *str, char ch);
 
-void	skip_spaces(char *line, int *i);
+void		skip_spaces(char *line, int *i);
 
-int		split_len(char **spl);
+int			split_len(char **spl);
 
-char	**split_realloc(char **old, char **cpy, int	*index);
+char		**split_realloc(char **old, char **cpy, int	*index);
 
-void	modify_flags(t_list **cmds);
+void		modify_flags(t_list **cmds);
 
-void	print_split(char **split);
+void		print_split(char **split);
 
-void	cpy_text(char *to_cpy, char *final, t_iterate *iter);
+void		cpy_text(char *to_cpy, char *final, t_iterate *iter);
 
-void	fill_word(t_iterate *iter, char *final, char *word, t_env *env);
+void		fill_word(t_iterate *iter, char *final, char *word, t_env *env);
 
-int		replace_dollars(t_env *env, char *line, char *final);
+int			replace_dollars(t_env *env, char *line, char *final);
 
-int		parse_quote(char *line);
+int			parse_quote(char *line);
 
-void	fill_word_quote(t_iterate *iter, char *final, char *word, t_env *env);
+void		fill_word_quote(t_iterate *iter,
+				char *final, char *word, t_env *env);
 
-char	reverse_quote(char quote);
+char		reverse_quote(char quote);
 
-void	cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
+void		cpy_text_add_quote(char *to_cpy, char *final, t_iterate *iter);
 
-char	*expand(char *line, t_env *env, t_list **cmd);
+char		*expand(char *line, t_env *env, t_list **cmd);
 
-char	**split_flags(char **flags);
+char		**split_flags(char **flags);
 
-void	file_flags(t_list **cmds);
+void		file_flags(t_list **cmds);
 
-int		exit_builtin(t_list *cmd, t_env **env);
+int			exit_builtin(t_list *cmd, t_env **env);
 
-void	update_code(int code, t_env	**env);
+void		update_code(int code, t_env	**env);
 
-char	**ft_realloc(char **split, char *to_add);
+char		**ft_realloc(char **split, char *to_add);
 
-void	inthandler(int sig);
+void		inthandler(int sig);
 
-char	**heredoc(char *final, int len);
+char		**heredoc(char *final, int len);
 
-char	*check_dollars(char *line, t_iterate *iter);
+char		*check_dollars(char *line, t_iterate *iter);
 
-void	heredoc_expand(char **flags, t_env *env);
+void		heredoc_expand(char **flags, t_env *env);
 
-void	make_heredoc(t_list **cmds, t_env *env);
+void		make_heredoc(t_list **cmds, t_env *env);
 
-void	error_handler(int code, int sub, char *command);
+void		error_handler(int code, int sub, char *command);
 
-t_list	*get_next(t_list *cmds);
+t_list		*get_next(t_list *cmds);
 
-char	*get_prompt(t_env **env);
+char		*get_prompt(t_env **env);
 
-int		run(t_list **lst, t_env **env, int **pids);
+int			run(t_list **lst, t_env **env, int **pids);
 
-t_env	*get_env(char **envp);
+t_env		*get_env(char **envp);
 
-void	handle_sigint(int sig);
+void		handle_sigint(int sig);
 
-int		exit_code(int code, t_env **env, int sub, t_list *cmd);
+int			exit_code(int code, t_env **env, int sub, t_list *cmd);
 
-int		handle_ambigous(t_env *env, t_list **cmds);
+int			handle_ambigous(t_env *env, t_list **cmds);
 
-int		pre_execute(t_list *cmd, char **envp, t_env **env);
+int			pre_execute(t_list *cmd, char **envp, t_env **env);
 
-void	handle_sigquit(int sig);
+void		handle_sigquit(int sig);
 
-int		triple(t_list *cmds, t_env **env);
+int			triple(t_list *cmds, t_env **env);
 
-int		parse_exit_code(unsigned long long *res, char *str);
+int			parse_exit_code(unsigned long long *res, char *str);
+
+void		remove_null_command(t_list *cmds);
 
 #endif

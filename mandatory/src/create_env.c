@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_env.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 11:06:38 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/11 11:06:45 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../h_files/minishell.h"
 
 char	*find_env(char *name, t_env **env)
@@ -68,6 +79,8 @@ void	add_back(t_env **env, t_env *element, int append_mode)
 	t_env	*node;
 	size_t	len;
 
+	if (!element)
+		return ;
 	len = ft_strlen(element->name);
 	node = *env;
 	while (node->next)

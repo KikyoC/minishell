@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   text_handle.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 13:47:52 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/11 11:35:35 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 #include <stdio.h>
@@ -13,7 +24,7 @@ char	**get_flags(char *line, t_list *cmds)
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	lst = ft_split_skip_quotes(line + i, ' ');
+	lst = ft_split_skip_quotes(line + i, ' ', 0);
 	curr = lst;
 	size = ft_lstsize(lst);
 	flags = ft_calloc (size + 1, sizeof(char *));

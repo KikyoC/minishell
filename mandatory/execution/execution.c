@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 11:09:57 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/12 11:29:12 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../h_files/minishell.h"
 
 int	children(t_list *cmd, t_env **env, char **envp, int next)
@@ -31,7 +42,7 @@ int	execute(t_list *cmd, char **envp, t_env **env, int next)
 	int		state;
 
 	state = pre_execute(cmd, envp, env);
-	if (state < 0)
+	if (state < 0 || cmd->type != 1)
 		return (state);
 	if (!cmd->command)
 	{
@@ -55,15 +66,15 @@ int	execute(t_list *cmd, char **envp, t_env **env, int next)
 
 t_list	*assign_command(t_list *cmd, int infile, int outfile, t_env **env)
 {
-	if (cmd)
+	if (cmd && cmd->type == 1)
 		init_node(cmd, env);
-	if (!cmd)
+	if (!cmd || cmd->type != 1)
 	{
 		if (infile > 2)
 			close(infile);
 		if (outfile > 2)
 			close(outfile);
-		return (NULL);
+		return (cmd);
 	}
 	cmd->input = infile;
 	cmd->output = outfile;
@@ -88,6 +99,8 @@ t_list	*prepare_command(t_list	*node, int *next, t_env **env)
 			open_file(node, &infile, &outfile, next);
 		else if (node->type == 1)
 			command = node;
+		if (node->type == 2 && !command)
+			command = node->prev;
 		if (node->type == 2)
 			break ;
 		node = node->next;
@@ -112,7 +125,7 @@ int	run(t_list **lst, t_env **env, int **pids)
 		exec = execute(cmd, get_envp(env), env, next);
 		if (exec > 1 || exec == -5)
 			add_pid_back(*pids, exec);
-		else if (exec != -1)
+		else if (exec != -1 && exec != -3)
 		{
 			free(*pids);
 			return (exec);

@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 11:13:26 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/11 11:13:33 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../h_files/minishell.h"
 
-int parse_exit_code(unsigned long long *res, char *str)
+int	parse_exit_code(unsigned long long *res, char *str)
 {
 	int			i;
 	long long	tmp;

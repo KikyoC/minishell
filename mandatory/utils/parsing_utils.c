@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 13:47:59 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/11 16:58:15 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 
-int	is_operator(char ch, char c)
+int	is_operator(char ch, char c, int mode)
 {
 	if (c == ' ')
 	{
@@ -13,12 +24,12 @@ int	is_operator(char ch, char c)
 			|| ch == '\r')
 			return (1);
 	}
-	if (ch == '>' || ch == '<' || ch == '|' || ch == c)
+	if ((mode == 1 && (ch == '>' || ch == '<' || ch == '|')) || ch == c)
 		return (1);
 	return (0);
 }
 
-t_list	*find_operator(int *i, char *line, char ch)
+t_list	*find_operator(int *i, char *line, char ch, int mode)
 {
 	t_list	*node;
 	char	*str;
@@ -27,7 +38,7 @@ t_list	*find_operator(int *i, char *line, char ch)
 
 	code = '\0';
 	count = 0;
-	while ((!is_operator(line[count], ch) || code != '\0') && line[count])
+	while ((!is_operator(line[count], ch, mode) || code != '\0') && line[count])
 	{
 		if ((line[count] == '\'' || line[count] == '"') && code == '\0')
 			code = line[count];
@@ -45,7 +56,7 @@ t_list	*find_operator(int *i, char *line, char ch)
 	return (node);
 }
 
-t_list	*ft_split_skip_quotes(char *line, char ch)
+t_list	*ft_split_skip_quotes(char *line, char ch, int mode)
 {
 	int		i;
 	t_list	*lst;
@@ -54,8 +65,8 @@ t_list	*ft_split_skip_quotes(char *line, char ch)
 	lst = NULL;
 	while (line[i])
 	{
-		if (!is_operator(line[i], ch))
-			ft_lstadd_back(&lst, find_operator(&i, line + i, ch));
+		if (!is_operator(line[i], ch, mode))
+			ft_lstadd_back(&lst, find_operator(&i, line + i, ch, mode));
 		else
 			ft_lstadd_back(&lst, check_until(line + i, &i, line[i], ch));
 	}

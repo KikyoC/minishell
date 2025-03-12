@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 11:13:38 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/11 11:13:39 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../h_files/minishell.h"
 
 static int	parse(char *str, int *append_mode)
@@ -117,8 +128,6 @@ int	export(t_list *lst, t_env **env)
 			continue ;
 		}
 		node = new_env(lst->flags[i], append_mode);
-		if (!node)
-			continue ;
 		add_if_required(node, env);
 		add_back(env, node, append_mode);
 	}

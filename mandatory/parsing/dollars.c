@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dollars.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 13:51:06 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/11 16:44:04 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 
@@ -33,6 +44,11 @@ char	*check_dollars(char *line, t_iterate *iter)
 	word = NULL;
 	if (line[iter->i] == '$')
 	{
+		if (line[iter->i + 1] == '"' || line[iter->i + 1] == '\'')
+		{
+			iter->i++;
+			return (NULL);
+		}
 		len = get_word(line, NULL, iter);
 		if (!len)
 			return (NULL);
