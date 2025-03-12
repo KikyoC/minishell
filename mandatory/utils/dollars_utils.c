@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:04:57 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 13:55:25 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 14:00:02 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -22,9 +22,7 @@ void	fill_word_quote(t_iterate *iter, char *final, char *word, t_env *env)
 {
 	char	*tmp;
 
-	printf("word : %s\n", word);
 	tmp = find_env(word, &env);
-	printf("word : %s, tmp : %s\n", word, tmp);
 	iter->i += ft_strlen(word) + 1;
 	free(word);
 	if (!tmp)
