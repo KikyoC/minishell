@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:47:45 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 12:54:32 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:19:49 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ void	remove_null_command(t_list *cmds)
 				if (curr->prev)
 					curr->prev->next = curr->next;
 				ft_lstdelone(curr, free);
-				curr = tmp->prev;
+				if (tmp)
+					curr = tmp->prev;
+				else
+					curr = tmp;
 			}
 		}
-		curr = curr->next;
+		if (curr)
+			curr = curr->next;
 	}
 }
