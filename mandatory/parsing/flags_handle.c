@@ -6,29 +6,22 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:34 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 14:32:35 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 15:01:13 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../h_files/minishell.h"
 #include <string.h>
 
-t_list	*find_command(t_list *cmd)
+t_list	*find_command(t_list **cmd)
 {
 	t_list	*curr;
 
-	curr = cmd;
+	curr = *cmd;
 	while (curr && curr->type != 1)
 		curr = curr->prev;
 	if (curr && !curr->command)
-	{
-		if (curr->next)
-			curr->next->prev = curr->prev;
-		if (curr->prev)
-			curr->prev->next = curr->next;
-		ft_lstdelone(curr, free);
 		return (NULL);
-	}
 	if (curr)
 		return (curr);
 	return (NULL);
@@ -80,7 +73,7 @@ void	modify_flags(t_list **cmds)
 	t_list	*new;
 	t_list	*tmp;
 
-	curr = find_command(*cmds);
+	curr = find_command(cmds);
 	if (!curr)
 	{
 		new = ft_lstnew(ft_strdup((*cmds)->flags[0]));
