@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:08:57 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:08:59 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 14:25:19 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -19,7 +19,7 @@ int	expand_here(char *flag, char *ptr, t_env *env)
 	ft_bzero(&iter, sizeof(t_iterate));
 	while (flag[iter.i])
 	{
-		word = check_dollars(flag, &iter);
+		word = check_dollars(flag, &iter, 0);
 		if (word)
 			fill_word(&iter, ptr, word, env);
 		else
