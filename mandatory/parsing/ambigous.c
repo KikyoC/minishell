@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:51:12 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 14:18:26 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 14:30:51 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	handle_ambigous(t_env *env, t_list **cmds)
 	i = 0;
 	while (curr)
 	{
-		printf("here is the content : %s\n", (char *)curr->content);
 		if (curr->type == REDIRECT)
 		{
 			if (curr->next && curr->next->been_expanded)
