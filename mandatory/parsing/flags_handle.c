@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:49:34 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:02:40 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 11:28:20 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ t_list	*find_command(t_list *cmd)
 	curr = cmd;
 	while (curr && curr->type != 1)
 		curr = curr->prev;
+	if (!curr->command)
+	{
+		if (curr->next)
+			curr->next->prev = curr->prev;
+		if (curr->prev)
+			curr->prev->next = curr->next;
+		ft_lstdelone(curr, free);
+		return (NULL);
+	}
 	if (curr)
 		return (curr);
 	return (NULL);
