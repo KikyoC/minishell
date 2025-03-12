@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:51:06 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 13:42:22 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 14:03:55 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	get_word(char *line, char *to_fill, t_iterate *iter)
 	return (len);
 }
 
-char	*check_dollars(char *line, t_iterate *iter)
+char	*check_dollars(char *line, t_iterate *iter, int quote)
 {
 	int		len;
 	char	*word;
@@ -44,7 +44,7 @@ char	*check_dollars(char *line, t_iterate *iter)
 	word = NULL;
 	if (line[iter->i] == '$')
 	{
-		if (line[iter->i + 1] == '"' || line[iter->i + 1] == '\'')
+		if ((line[iter->i + 1] == '"' || line[iter->i + 1] == '\'') && quote == 0)
 		{
 			iter->i++;
 			return (NULL);
@@ -70,7 +70,7 @@ void	handle_quotes(t_texts *texts, t_iterate *iter, int code)
 	{
 		if (texts->line[iter->i] == code)
 			count--;
-		word = check_dollars(texts->line, iter);
+		word = check_dollars(texts->line, iter, code);
 		if (word && code == '"')
 			fill_word(iter, texts->final, word, texts->env);
 		else
@@ -99,7 +99,7 @@ int	replace_dollars(t_env *env, char *line, char *final)
 	{
 		if (texts.line[iter.i] == '\'' || texts.line[iter.i] == '"')
 			handle_quotes(&texts, &iter, texts.line[iter.i]);
-		word = check_dollars(texts.line, &iter);
+		word = check_dollars(texts.line, &iter, 0);
 		if (word)
 			fill_word_quote(&iter, texts.final, word, texts.env);
 		else if (!word && texts.line[iter.i] && texts.line[iter.i] != '\'')
