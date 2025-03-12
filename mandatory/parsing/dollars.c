@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:51:06 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 16:44:04 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 13:42:22 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	replace_dollars(t_env *env, char *line, char *final)
 		word = check_dollars(texts.line, &iter);
 		if (word)
 			fill_word_quote(&iter, texts.final, word, texts.env);
-		else if (!word && texts.line[iter.i])
+		else if (!word && texts.line[iter.i] && texts.line[iter.i] != '\'')
 		{
 			if (texts.final)
 				texts.final[iter.j] = texts.line[(iter.i)];
