@@ -69,7 +69,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!parse_exit_code(NULL, find_env("?", &env)))
 	{
 		exit_c = 2;
-		ft_putstr_fd("Exit code is not in good format", 2);
+		ft_putstr_fd("Exit code is not in good format\n", 2);
 	}
 	else
 		exit_c = ft_atoi(find_env("?", &env));
