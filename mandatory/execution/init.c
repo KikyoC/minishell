@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:23 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:09:24 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 14:16:35 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -85,6 +85,10 @@ void	init_node(t_list *lst, t_env **env)
 		good_flags(lst);
 		if (!good_command(lst, path))
 		{
+			if (lst->command[0] == '.' && lst->command[1] == '\0')
+				lst->err_code = -6;
+			else
+				lst->err_code = -5;
 			free(lst->command);
 			lst->command = NULL;
 		}

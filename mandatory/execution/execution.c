@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:57 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 13:50:14 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:17:06 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -49,7 +49,7 @@ int	execute(t_list *cmd, char **envp, t_env **env, int next)
 		ft_putstr_fd("Minishell: Command not found\n", 2);
 		close_node(cmd);
 		ft_free_split(envp);
-		return (-5);
+		return (cmd->err_code);
 	}
 	f = fork();
 	if (f < 0)
@@ -130,7 +130,7 @@ int	run(t_list **lst, t_env **env, int **pids)
 	while (cmd)
 	{
 		exec = execute(cmd, get_envp(env), env, next);
-		if (exec > 1 || exec == -5)
+		if (exec > 1 || exec == -5 || exec == -6)
 			add_pid_back(*pids, exec);
 		else if (exec != -1 && exec != -3)
 		{

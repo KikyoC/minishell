@@ -6,10 +6,25 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:42 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:09:43 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 14:21:08 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
+
+static int	set_special_code(int code, t_env ** env)
+{
+	if (code == -5)
+	{
+		exit_code(127, env, 0, NULL);
+		return (1);
+	}
+	if (code == -6)
+	{
+		exit_code(2, env, 0, NULL);
+		return (1);
+	}
+	return (0);
+}
 
 void	wait_all(int *pids, char *line, t_env **env)
 {
@@ -25,8 +40,8 @@ void	wait_all(int *pids, char *line, t_env **env)
 		if (pids[i] != -5)
 			waitpid(pids[i], &state, 0);
 	}
-	if (i && pids[i - 1] == -5)
-		exit_code(127, env, 0, NULL);
+	if (i && set_special_code(pids[i - 1], env))
+		return ;
 	else if (i && WIFEXITED(state))
 		exit_code(WEXITSTATUS(state), env, 0, NULL);
 	else if (i && WIFSIGNALED(state))
