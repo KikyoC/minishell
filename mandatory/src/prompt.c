@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
+#include <linux/limits.h>
 
 static char	*get_working_directory(t_env **env)
 {
@@ -20,7 +21,11 @@ static char	*get_working_directory(t_env **env)
 
 	node = *env;
 	i = 0;
+<<<<<<< HEAD
 	wd = getcwd(NULL, 204);
+=======
+	wd = getcwd(NULL, PATH_MAX);
+>>>>>>> 0a775bb (Fix leak)
 	if (!wd)
 		return (NULL);
 	while (node && ft_strncmp(node->name, "HOME", 4))
