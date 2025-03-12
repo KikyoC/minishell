@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:08:51 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 15:48:44 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 15:56:55 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -24,6 +24,8 @@ void	make_heredoc(t_list **cmds, t_env *env)
 				ft_free_split(curr->flags);
 			if (curr->command)
 				curr->flags = heredoc(curr->command, ft_strlen(curr->command));
+			else
+				curr->flags = NULL;
 			if (curr->flags && curr->been_quoted == 0)
 				heredoc_expand(curr->flags, env);
 		}
