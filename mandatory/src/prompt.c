@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:07:09 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:07:11 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 12:45:28 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -21,11 +21,7 @@ static char	*get_working_directory(t_env **env)
 
 	node = *env;
 	i = 0;
-<<<<<<< HEAD
 	wd = getcwd(NULL, 204);
-=======
-	wd = getcwd(NULL, PATH_MAX);
->>>>>>> 0a775bb (Fix leak)
 	if (!wd)
 		return (NULL);
 	while (node && ft_strncmp(node->name, "HOME", 4))
