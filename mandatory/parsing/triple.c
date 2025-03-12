@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:47:45 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 11:27:59 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 12:54:32 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,3 @@ void	remove_null_command(t_list *cmds)
 		curr = curr->next;
 	}
 }
-

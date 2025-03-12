@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:06:31 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 10:46:57 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 12:55:06 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -52,7 +52,7 @@ int	core(t_env **env)
 	return (0);
 }
 
-static int setup(t_env **env, char **envp)
+static int	setup(t_env **env, char **envp)
 {
 	*env = get_env(envp);
 	if (!env)
