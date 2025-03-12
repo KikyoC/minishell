@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:57 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 11:29:12 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 13:50:14 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -76,8 +76,15 @@ t_list	*assign_command(t_list *cmd, int infile, int outfile, t_env **env)
 			close(outfile);
 		return (cmd);
 	}
+		
 	cmd->input = infile;
 	cmd->output = outfile;
+	if (infile < 0 || outfile < 0)
+	{
+		close_node(cmd);
+		exit_code(1, env, 0, NULL);
+		return (NULL);
+	}	
 	return (cmd);
 }
 
