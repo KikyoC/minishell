@@ -52,12 +52,16 @@ int	core(t_env **env)
 	return (0);
 }
 
-static void	setup(t_env **env)
+static int setup(t_env **env, char **envp)
 {
+	*env = get_env(envp);
+	if (!env)
+		return (12);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
 	rl_outstream = stderr;
 	exit_code(0, env, 0, NULL);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -69,15 +73,17 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	state = 0;
-	env = get_env(envp);
-	if (!env)
+	env = NULL;
+	if (setup(&env, envp))
 		return (12);
-	setup(&env);
 	while (!state)
 		state = core(&env);
 	rl_clear_history();
 	if (!parse_exit_code(NULL, find_env("?", &env)))
+	{
 		exit_c = 2;
+		ft_putstr_fd("Exit code is not in good format\n", 2);
+	}
 	else
 		exit_c = ft_atoi(find_env("?", &env));
 	destroy(env);

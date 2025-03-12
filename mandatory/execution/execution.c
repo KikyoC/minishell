@@ -47,10 +47,9 @@ int	execute(t_list *cmd, char **envp, t_env **env, int next)
 	if (!cmd->command)
 	{
 		ft_putstr_fd("Minishell: Command not found\n", 2);
-		exit_code(127, env, 0, NULL);
 		close_node(cmd);
 		ft_free_split(envp);
-		return (-1);
+		return (-5);
 	}
 	f = fork();
 	if (f < 0)
@@ -124,7 +123,7 @@ int	run(t_list **lst, t_env **env, int **pids)
 	while (cmd)
 	{
 		exec = execute(cmd, get_envp(env), env, next);
-		if (exec > 1)
+		if (exec > 1 || exec == -5)
 			add_pid_back(*pids, exec);
 		else if (exec != -1 && exec != -3)
 		{

@@ -35,6 +35,15 @@ void	good_flags(t_list *lst)
 	lst->flags = res;
 }
 
+int	is_file(char *str)
+{
+	struct stat	path_stat;
+
+	if (!str)
+		return (0);
+	return (!stat(str, &path_stat) && !S_ISDIR(path_stat.st_mode));
+}
+
 int	good_command(t_list *lst, char **path)
 {
 	char	*tmp;
@@ -47,10 +56,10 @@ int	good_command(t_list *lst, char **path)
 	if (!tmp)
 		return (0);
 	i = -1;
-	while (path[++i])
+	while (path && path[++i])
 	{
 		join = ft_strjoin(path[i], tmp);
-		if (join && access(join, X_OK) == 0)
+		if (is_file(join))
 		{
 			free(tmp);
 			free(lst->command);
@@ -82,21 +91,4 @@ void	init_node(t_list *lst, t_env **env)
 	}
 	if (path)
 		ft_free_split(path);
-}
-
-int	*get_pid_list(t_list *lst)
-{
-	int	*res;
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	res = ft_calloc(i + 1, sizeof(int));
-	if (!res)
-		return (NULL);
-	return (res);
 }

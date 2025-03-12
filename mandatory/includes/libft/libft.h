@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:22:13 by cmorel            #+#    #+#             */
-/*   Updated: 2025/02/24 17:57:49 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 09:17:58 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h> 
+# include <limits.h>
 
 int		ft_isdigit(int c);
 

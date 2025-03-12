@@ -29,7 +29,7 @@ int	parse_exit_code(unsigned long long *res, char *str)
 		if (!ft_isdigit(str[i]))
 			return (0);
 	tmp = ft_atoi(str);
-	if ((tmp == -1) && str[1])
+	if ((tmp == -1 || tmp == 0) && str[1])
 		return (0);
 	if (res)
 		*res = tmp;
