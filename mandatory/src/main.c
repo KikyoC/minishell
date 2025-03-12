@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:06:31 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 17:15:03 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 10:46:57 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -42,7 +42,6 @@ int	core(t_env **env)
 	if (!line)
 		return (-2);
 	cmds = get_commands(line, *env);
-	printf("cmd->command : .%s.\n", cmds->command);
 	state = run(&cmds, env, &pids);
 	ft_lstclear(&cmds, free);
 	if (state < 0)
