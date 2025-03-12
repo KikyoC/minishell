@@ -8,11 +8,11 @@ int triple(t_list *cmds, t_env **env)
 	curr = cmds;
 	while (curr)
 	{
-		if (curr->type == 1 && curr->command[0] == '|')
+		if (curr->type == 1 && curr->command && curr->command[0] == '|')
 			return (exit_code(2, env, 2, curr));
-		else if (curr->type == 1 && curr->command[0] == '<')
+		else if (curr->type == 1 && curr->command && curr->command[0] == '<')
 			return (exit_code(2, env, 2, curr));
-		else if (curr->type == 1 && curr->command[0] == '>')
+		else if (curr->type == 1 && curr->command && curr->command[0] == '>')
 			return (exit_code(2, env, 2, curr));
 		curr = curr->next;
 	}
