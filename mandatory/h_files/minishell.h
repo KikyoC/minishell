@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:08:09 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 14:03:15 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 14:19:30 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -230,6 +230,6 @@ int			triple(t_list *cmds, t_env **env);
 
 int			parse_exit_code(unsigned long long *res, char *str);
 
-void		remove_null_command(t_list *cmds);
+void		remove_null_command(t_list **cmds);
 
 #endif

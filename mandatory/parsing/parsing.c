@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:47:47 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 13:55:07 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 14:19:22 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ t_list	*get_commands(char *line, t_env *env)
 	g_signal_c = 0;
 	make_heredoc(&cmds, env);
 	if (ft_lstsize(cmds) > 1)
-		remove_null_command(cmds);
+		remove_null_command(&cmds);
 	if (!g_signal_c && handle_ambigous(env, &cmds)
 		&& check_commands(cmds, &env) && triple(cmds, &env))
 		return (cmds);
