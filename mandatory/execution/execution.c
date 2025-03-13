@@ -1,15 +1,4 @@
 # include "../h_files/minishell.h"
-#include <unistd.h>
-
-static pid_t	command_not_found(t_list *cmd, char **envp, t_env **env)
-{
-	ft_putstr_fd("Minishell: Command not found\n", 2);
-	close_node(cmd);
-	ft_free_split(envp);
-	exit_code(127, env, 0, NULL);
-	cmd->mode = 127;
-	return (-5);
-}
 
 int	builtin_children(t_list *cmd, t_env **env, char **envp)
 {
@@ -66,7 +55,7 @@ pid_t	execute(t_list *cmd, t_env **env, int next)
 	return (f);
 }
 
-void	go_next(t_list **lst)
+static void	go_next(t_list **lst)
 {
 	*lst = (*lst)->next;
 	while (*lst && (*lst)->prev->type != PIPE)
@@ -82,10 +71,7 @@ int	run(t_list **lst, t_env **env)
 	next = 0;
 	pids = get_pid_list(*lst);
 	if (!pids)
-	{
-		exit_code(12, env, 0, NULL);
-		return (1);
-	}
+		return (12);
 	prepare_command(lst, env, &next);
 	while (*lst)
 	{

@@ -6,10 +6,11 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:42 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/13 11:47:42 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:43:18 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
+#include <stdlib.h>
 
 int		set_special_code(int pid, t_env **env)
 {

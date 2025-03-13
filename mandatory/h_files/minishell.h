@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:08:09 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 17:21:11 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:31:08 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -231,5 +231,7 @@ int			parse_exit_code(unsigned long long *res, char *str);
 void		remove_null_command(t_list **cmds);
 
 int			prepare_command(t_list **node, t_env **env, int *next);
+
+pid_t		command_not_found(t_list *cmd, char **envp, t_env **env);
 
 #endif
