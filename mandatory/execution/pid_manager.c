@@ -6,27 +6,33 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:42 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:09:43 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/13 11:47:42 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
 
-void	wait_all(int *pids, char *line, t_env **env)
+int		set_special_code(int pid, t_env **env)
+{
+	if (pid == -5)
+	{
+		exit_code(127, env, 0, NULL);
+		return (1);
+	}
+	return (0);
+}
+
+void	wait_all(int *pids, t_env **env)
 {
 	int	state;
 	int	i;
 
 	state = 0;
 	i = -1;
-	add_history(line);
-	free(line);
-	while (pids[++i] > 0 || pids[i] == -5)
-	{
-		if (pids[i] != -5)
+	while (pids[++i])
+		if (pids[i] > 0)
 			waitpid(pids[i], &state, 0);
-	}
-	if (i && pids[i - 1] == -5)
-		exit_code(127, env, 0, NULL);
+	if (i && set_special_code(pids[i - 1], env))
+		i = 0 ;
 	else if (i && WIFEXITED(state))
 		exit_code(WEXITSTATUS(state), env, 0, NULL);
 	else if (i && WIFSIGNALED(state))

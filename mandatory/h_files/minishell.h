@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:08:09 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 14:19:30 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 17:21:11 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -98,11 +98,9 @@ t_builtin	get_builtin(t_list *lst);
 
 int			*get_pid_list(t_list *lst);
 
-void		wait_all(int *pids, char *line, t_env **env);
+void		wait_all(int *pids, t_env **env);
 
 int			open_file(t_list *node, int *infile, int *outfile, int *next);
-
-void		close_node(t_list *lst);
 
 void		add_pid_back(int *fds, int fd);
 
@@ -212,7 +210,7 @@ t_list		*get_next(t_list *cmds);
 
 char		*get_prompt(t_env **env);
 
-int			run(t_list **lst, t_env **env, int **pids);
+int			run(t_list **lst, t_env **env);
 
 t_env		*get_env(char **envp);
 
@@ -231,5 +229,7 @@ int			triple(t_list *cmds, t_env **env);
 int			parse_exit_code(unsigned long long *res, char *str);
 
 void		remove_null_command(t_list **cmds);
+
+int			prepare_command(t_list **node, t_env **env, int *next);
 
 #endif
