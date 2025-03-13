@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:47:45 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 15:45:22 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/13 13:35:46 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	triple(t_list *cmds, t_env **env)
 	return (1);
 }
 
-void	rm_command(t_list *curr)
+t_list	*rm_command(t_list *curr)
 {
 	t_list	*tmp;
 
@@ -42,11 +42,9 @@ void	rm_command(t_list *curr)
 		if (curr->prev)
 			curr->prev->next = curr->next;
 		ft_lstdelone(curr, free);
-		if (tmp)
-			curr = tmp->prev;
-		else
-			curr = tmp;
+		return (tmp);
 	}
+	return (curr);
 }
 
 void	remove_null_command(t_list **cmds)
@@ -59,7 +57,7 @@ void	remove_null_command(t_list **cmds)
 		if (curr->type == COMMAND)
 		{
 			if (*cmds != curr)
-				rm_command(curr);
+				curr = rm_command(curr);
 			else if (*cmds == curr && !curr->command)
 			{
 				*cmds = curr->next;
