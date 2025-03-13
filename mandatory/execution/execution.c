@@ -1,15 +1,23 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 11:09:57 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 13:50:14 by togauthi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-#include "../h_files/minishell.h"
+# include "../h_files/minishell.h"
+#include <unistd.h>
+
+static pid_t	command_not_found(t_list *cmd, char **envp, t_env **env)
+{
+	ft_putstr_fd("Minishell: Command not found\n", 2);
+	close_node(cmd);
+	ft_free_split(envp);
+	exit_code(127, env, 0, NULL);
+	cmd->mode = 127;
+	return (-5);
+}
+
+int	builtin_children(t_list *cmd, t_env **env, char **envp)
+{
+	exit_code(get_builtin(cmd)(cmd, env), env, 0, NULL);
+	close_node(cmd);
+	ft_free_split(envp);
+	return (1);
+}
 
 int	children(t_list *cmd, t_env **env, char **envp, int next)
 {
@@ -17,14 +25,8 @@ int	children(t_list *cmd, t_env **env, char **envp, int next)
 	signal(SIGQUIT, handle_sigquit);
 	if (next > 2)
 		close(next);
-	if (get_builtin(cmd) != NULL)
-	{
-		ft_free_split(envp);
-		if (cmd->input > 2)
-			close(cmd->input);
-		exec_builtin(cmd, get_builtin(cmd), next, env);
-		return (0);
-	}
+	if (get_builtin(cmd))
+		return (builtin_children(cmd, env, envp));
 	if (cmd->input > 2)
 		dup2(cmd->input, 0);
 	if (cmd->output > 2)
@@ -36,26 +38,26 @@ int	children(t_list *cmd, t_env **env, char **envp, int next)
 	return (0);
 }
 
-int	execute(t_list *cmd, char **envp, t_env **env, int next)
+pid_t	execute(t_list *cmd, t_env **env, int next)
 {
 	pid_t	f;
-	int		state;
+	char	**envp;
 
-	state = pre_execute(cmd, envp, env);
-	if (state < 0 || cmd->type != 1)
-		return (state);
+	envp = get_envp(env);
 	if (!cmd->command)
+		return (command_not_found(cmd, envp, env));
+	if (!is_pipe(cmd) && get_builtin(cmd))
 	{
-		ft_putstr_fd("Minishell: Command not found\n", 2);
+		exit_code(get_builtin(cmd)(cmd, env), env, 0, NULL);
 		close_node(cmd);
 		ft_free_split(envp);
-		return (-5);
+		return (- (!ft_strncmp("exit", cmd->command, 5)));
 	}
 	f = fork();
 	if (f < 0)
 	{
 		perror("Minishell");
-		return (1);
+		return (0);
 	}
 	if (f == 0)
 		return (children(cmd, env, envp, next));
@@ -64,83 +66,41 @@ int	execute(t_list *cmd, char **envp, t_env **env, int next)
 	return (f);
 }
 
-t_list	*assign_command(t_list *cmd, int infile, int outfile, t_env **env)
+void	go_next(t_list **lst)
 {
-	if (cmd && cmd->type == 1)
-		init_node(cmd, env);
-	if (!cmd || cmd->type != 1)
-	{
-		if (infile > 2)
-			close(infile);
-		if (outfile > 2)
-			close(outfile);
-		return (cmd);
-	}
-		
-	cmd->input = infile;
-	cmd->output = outfile;
-	if (infile < 0 || outfile < 0)
-	{
-		close_node(cmd);
-		exit_code(1, env, 0, NULL);
-		return (NULL);
-	}	
-	return (cmd);
+	*lst = (*lst)->next;
+	while (*lst && (*lst)->prev->type != PIPE)
+		(*lst) = (*lst)->next;
 }
 
-t_list	*prepare_command(t_list	*node, int *next, t_env **env)
+int	run(t_list **lst, t_env **env)
 {
-	int		infile;
-	int		outfile;
-	t_list	*command;
-
-	infile = *next;
-	outfile = 1;
-	command = NULL;
-	*next = 0;
-	if (!node || !node->command)
-		return (NULL);
-	while (node)
-	{
-		if (node->type == 2 || node->type == 3 || node->type == HEREDOC)
-			open_file(node, &infile, &outfile, next);
-		else if (node->type == 1)
-			command = node;
-		if (node->type == 2 && !command)
-			command = node->prev;
-		if (node->type == 2)
-			break ;
-		node = node->next;
-	}
-	signal(SIGINT, SIG_IGN);
-	return (assign_command(command, infile, outfile, env));
-}
-
-int	run(t_list **lst, t_env **env, int **pids)
-{
-	t_list	*cmd;
-	int		next;
-	int		exec;
+	int	next;
+	int	code;
+	int	*pids;
 
 	next = 0;
-	cmd = prepare_command(*lst, &next, env);
-	*pids = get_pid_list(*lst);
+	pids = get_pid_list(*lst);
 	if (!pids)
-		return (12);
-	while (cmd)
 	{
-		exec = execute(cmd, get_envp(env), env, next);
-		if (exec > 1 || exec == -5)
-			add_pid_back(*pids, exec);
-		else if (exec != -1 && exec != -3)
-		{
-			free(*pids);
-			return (exec);
-		}
-		cmd = cmd->next;
-		while (cmd && cmd->prev->type != 2)
-			cmd = cmd->next;
-		cmd = prepare_command(cmd, &next, env);
+		exit_code(12, env, 0, NULL);
+		return (1);
 	}
-	return (1);
+	printf("First node is .%s.\n", (*lst)->command);
+	prepare_command(lst, env, &next);
+	while (*lst)
+	{
+		code = execute(*lst, env, next);
+		if (code > 1 || code == -5)
+			add_pid_back(pids, code);
+		else if (code < 0 || code == 1)
+		{
+			free(pids);
+			return (1);
+		}
+		go_next(lst);
+		prepare_command(lst, env, &next);
+	}
+	wait_all(pids, env);
+	return (0);
 }

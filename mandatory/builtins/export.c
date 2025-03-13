@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:13:38 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:13:39 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 16:53:44 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -40,7 +40,7 @@ static int	parse(char *str, int *append_mode)
 	return (1);
 }
 
-t_env	*assign_node(char *str, int append_mode, t_env **node)
+static t_env	*assign_node(char *str, int append_mode, t_env **node)
 {
 	int		i;
 	int		j;
