@@ -6,10 +6,11 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:06:31 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/13 11:49:24 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:55:21 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
+#include <readline/history.h>
 #include <stdio.h>
 
 int	g_signal_c = 0;
@@ -42,7 +43,9 @@ int	core(t_env **env)
 	line = ask_user(env);
 	if (!line)
 		return (-2);
+	add_history(line);
 	cmds = get_commands(line, *env);
+	free(line);
 	ptr = ((void *)cmds);
 	end = run(&cmds, env);
 	ft_lstclear(&ptr, free);
