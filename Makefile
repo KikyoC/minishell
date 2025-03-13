@@ -27,7 +27,7 @@ SIGNALS_PATH = mandatory/signals/
 SRC = main.c create_env.c delete_env.c prompt.c
 EXECUTION = execution.c init.c open.c pid_manager.c builtins.c command_preparation.c fd_manager.c
 UTIL = commands.c sort_list.c env_replacer.c transform_env.c utils.c parsing_utils.c \
-	   split_skip_quotes_utils.c split_utils.c dollars_utils.c cpy_txt_utils.c quotes_parser.c ft_realloc.c error_handle.c
+	   split_skip_quotes_utils.c split_utils.c dollars_utils.c cpy_txt_utils.c quotes_parser.c ft_realloc.c error_handle.c execution_utils.c
 BUILTIN = pwd.c cd.c echo.c export.c unset.c env.c exit.c
 HEREDOC = heredoc.c heredoc_expand.c
 PARSING = parsing.c text_handle.c clean_commands.c flags_handle.c dollars.c quote_parsing.c ambigous.c triple.c
