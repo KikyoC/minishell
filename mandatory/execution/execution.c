@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:57 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/13 13:46:35 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:56:50 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -21,20 +21,29 @@ int	builtin_children(t_list *cmd, t_env **env, char **envp)
 
 int	children(t_list *cmd, t_env **env, char **envp, int next)
 {
+	int copy;
+
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, handle_sigquit);
 	if (next > 2)
 		close(next);
 	if (get_builtin(cmd))
 		return (builtin_children(cmd, env, envp));
+	copy = dup(cmd->output);
 	if (cmd->input > 2)
 		dup2(cmd->input, 0);
 	if (cmd->output > 2)
-		dup2(cmd->output, 1);
+		dup2(copy, 1);
+	close(copy);
 	close_node(cmd);
-	execve(cmd->command, cmd->flags, envp);
+	if (cmd->type == 1 && cmd->input >=0 && cmd->output >= 0)
+	{
+		execve(cmd->command, cmd->flags, envp);
+		perror("Execution error");
+	}
 	ft_free_split(envp);
-	perror("Execution error");
+	if (cmd->type != 1 || cmd->input >= 0 || cmd->output >= 0)
+		return (-1);
 	return (0);
 }
 
@@ -44,9 +53,9 @@ pid_t	execute(t_list *cmd, t_env **env, int next)
 	char	**envp;
 
 	envp = get_envp(env);
-	if (!cmd->command)
+	if (!cmd->command && cmd->type == 1)
 		return (command_not_found(cmd, envp, env));
-	if (!is_pipe(cmd) && get_builtin(cmd))
+	if (!is_pipe(cmd) && get_builtin(cmd) && cmd->input >= 0 && cmd->output >= 0)
 	{
 		exit_code(get_builtin(cmd)(cmd, env), env, 0, NULL);
 		close_node(cmd);

@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:23 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:09:24 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/13 18:00:56 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -35,16 +35,19 @@ void	good_flags(t_list *lst)
 	lst->flags = res;
 }
 
-int	is_file(char *str)
+int	is_file(char *str, t_env **env)
 {
 	struct stat	path_stat;
 
 	if (!str)
 		return (0);
-	return (!stat(str, &path_stat) && !S_ISDIR(path_stat.st_mode));
+	if (!stat(str, &path_stat) && !S_ISDIR(path_stat.st_mode))
+		return (1);
+	exit_code(126, env, 0, NULL);
+	return (0);
 }
 
-int	good_command(t_list *lst, char **path)
+int	good_command(t_list *lst, char **path, t_env **env)
 {
 	char	*tmp;
 	int		i;
@@ -59,7 +62,7 @@ int	good_command(t_list *lst, char **path)
 	while (path && path[++i])
 	{
 		join = ft_strjoin(path[i], tmp);
-		if (is_file(join))
+		if (is_file(join, env))
 		{
 			free(tmp);
 			free(lst->command);
@@ -83,7 +86,7 @@ void	init_node(t_list *lst, t_env **env)
 	if (get_builtin(lst) == NULL && lst->type == 1)
 	{
 		good_flags(lst);
-		if (!good_command(lst, path))
+		if (!good_command(lst, path, env))
 		{
 			free(lst->command);
 			lst->command = NULL;
