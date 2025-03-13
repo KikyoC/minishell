@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:22:13 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/12 09:17:58 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:19:31 by cmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_lstadd_back(t_list **lst, t_list *n);
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 
-void	ft_lstclear(t_list **lst, void (*del)(void*));
+void	*ft_lstclear(t_list **lst, void (*del)(void*));
 
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 
