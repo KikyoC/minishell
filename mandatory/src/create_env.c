@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:06:38 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:06:45 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/12 13:29:28 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -18,10 +18,9 @@ char	*find_env(char *name, t_env **env)
 
 	len = ft_strlen(name);
 	current = *env;
-	len = ft_strlen(name);
 	while (current)
 	{
-		if (ft_strncmp(name, current->name, len) == 0 && current->content[0])
+		if (ft_strncmp(name, current->name, len + 1) == 0 && current->content[0])
 			return (current->content);
 		current = current->next;
 	}
