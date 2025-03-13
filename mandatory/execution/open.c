@@ -6,28 +6,29 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:31 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/13 11:08:02 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:58:41 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
 
 static int	set_fd(t_list *node, int *fd, int flags, int perms)
 {
-	struct stat	path_stat;
+	// struct stat	path_stat;
 
 	if (*fd > 2)
 		close(*fd);
-	if (!stat(node->command, &path_stat) && S_ISDIR(path_stat.st_mode))
-	{
-		ft_putstr_fd("Minishell: It's a dirrectory\n", 2);
-		*fd = -1;
-		return (0);
-	}
+	// if (!stat(node->command, &path_stat) && S_ISDIR(path_stat.st_mode))
+	// {
+	// 	ft_putstr_fd("Minishell: It's a dirrectory\n", 2);
+	// 	*fd = -1;
+	// 	return (0);
+	// }
 	*fd = open(node->command, flags, perms);
 	if (*fd < 0)
 	{
 		*fd = -1;
 		perror("Minishell");
+		return (1);
 	}
 	return (0);
 }

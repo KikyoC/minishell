@@ -23,10 +23,8 @@ int	children(t_list *cmd, t_env **env, char **envp, int next)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, handle_sigquit);
-	//Don't know what's this
 	if (next > 2)
 		close(next);
-	//////
 	if (get_builtin(cmd))
 		return (builtin_children(cmd, env, envp));
 	if (cmd->input > 2)
@@ -50,7 +48,7 @@ pid_t	execute(t_list *cmd, t_env **env, int next)
 		return (command_not_found(cmd, envp, env));
 	if (!is_pipe(cmd) && get_builtin(cmd))
 	{
-		get_builtin(cmd)(cmd, env);
+		exit_code(get_builtin(cmd)(cmd, env), env, 0, NULL);
 		close_node(cmd);
 		ft_free_split(envp);
 		return (- (!ft_strncmp("exit", cmd->command, 5)));
@@ -88,11 +86,11 @@ int	run(t_list **lst, t_env **env)
 		exit_code(12, env, 0, NULL);
 		return (1);
 	}
+	printf("First node is .%s.\n", (*lst)->command);
 	prepare_command(lst, env, &next);
 	while (*lst)
 	{
 		code = execute(*lst, env, next);
-		// printf("Code for node %s is %i (%i)\n", (*lst)->command, code, getpid());
 		if (code > 1 || code == -5)
 			add_pid_back(pids, code);
 		else if (code < 0 || code == 1)
