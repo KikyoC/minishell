@@ -86,7 +86,6 @@ int	run(t_list **lst, t_env **env)
 		exit_code(12, env, 0, NULL);
 		return (1);
 	}
-	printf("First node is .%s.\n", (*lst)->command);
 	prepare_command(lst, env, &next);
 	while (*lst)
 	{
