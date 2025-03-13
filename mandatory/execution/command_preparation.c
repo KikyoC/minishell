@@ -36,8 +36,8 @@ int	prepare_command(t_list **node, t_env **env, int *next)
 		return (0);
 	while (*node)
 	{
-		if ((*node)->type == 2 || (*node)->type == 3 || (*node)->type == HEREDOC)
-			open_file(*node, &infile, &outfile, next);
+		if (((*node)->type == 2 || (*node)->type == 3 || (*node)->type == HEREDOC) && open_file(*node, &infile, &outfile, next))
+			exit_code(1, env, 0, NULL);
 		else if ((*node)->type == 1)
 			command = *node;
 		if ((*node)->type == 2 && !command)

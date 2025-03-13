@@ -6,12 +6,10 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:06:31 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/13 11:55:21 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:40:25 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
-#include <readline/history.h>
-#include <stdio.h>
 
 int	g_signal_c = 0;
 
