@@ -1,4 +1,15 @@
-# include "../h_files/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 11:09:57 by cmorel            #+#    #+#             */
+/*   Updated: 2025/03/13 13:20:06 by cmorel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "../h_files/minishell.h"
 
 int	builtin_children(t_list *cmd, t_env **env, char **envp)
 {
@@ -6,7 +17,7 @@ int	builtin_children(t_list *cmd, t_env **env, char **envp)
 	close_node(cmd);
 	ft_free_split(envp);
 	return (1);
-}
+
 
 int	children(t_list *cmd, t_env **env, char **envp, int next)
 {
