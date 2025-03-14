@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:57 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/13 17:56:50 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:51:38 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -51,8 +51,8 @@ pid_t	execute(t_list *cmd, t_env **env, int next)
 {
 	pid_t	f;
 	char	**envp;
-
 	envp = get_envp(env);
+
 	if (!cmd->command && cmd->type == 1)
 		return (command_not_found(cmd, envp, env));
 	if (!is_pipe(cmd) && get_builtin(cmd) && cmd->input >= 0 && cmd->output >= 0)
