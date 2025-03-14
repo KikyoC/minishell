@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:06:31 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/13 13:40:25 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:29:10 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -47,6 +47,11 @@ int	core(t_env **env)
 	ptr = ((void *)cmds);
 	end = run(&cmds, env);
 	ft_lstclear(&ptr, free);
+	if (end >= 2)
+	{
+		exit_code(end, env, 0, NULL);
+		end = -1;
+	}
 	return (end);
 }
 

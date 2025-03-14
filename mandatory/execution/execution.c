@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:57 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/13 13:46:35 by togauthi         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:38:33 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -32,9 +32,14 @@ int	children(t_list *cmd, t_env **env, char **envp, int next)
 	if (cmd->output > 2)
 		dup2(cmd->output, 1);
 	close_node(cmd);
-	execve(cmd->command, cmd->flags, envp);
+	if (cmd->type == 1 && cmd->input >= 0 && cmd->output >= 0 && cmd->mode < 2)
+	{
+		execve(cmd->command, cmd->flags, envp);
+		perror("Execution error");
+	}
 	ft_free_split(envp);
-	perror("Execution error");
+	if (cmd->type != 1 || cmd->input >= 0 || cmd->output >= 0)
+		return (-1);
 	return (0);
 }
 
@@ -44,9 +49,10 @@ pid_t	execute(t_list *cmd, t_env **env, int next)
 	char	**envp;
 
 	envp = get_envp(env);
-	if (!cmd->command)
+	if (!cmd->command && cmd->type == 1 && cmd->mode < 2)
 		return (command_not_found(cmd, envp, env));
-	if (!is_pipe(cmd) && get_builtin(cmd))
+	if (!is_pipe(cmd) && get_builtin(cmd) && cmd->input >= 0
+		&& cmd->output >= 0)
 	{
 		exit_code(get_builtin(cmd)(cmd, env), env, 0, NULL);
 		close_node(cmd);
@@ -66,11 +72,12 @@ pid_t	execute(t_list *cmd, t_env **env, int next)
 	return (f);
 }
 
-static void	go_next(t_list **lst)
+static void	go_next(t_list **lst, t_env **env, int *next)
 {
 	*lst = (*lst)->next;
 	while (*lst && (*lst)->prev->type != PIPE)
 		(*lst) = (*lst)->next;
+	prepare_command(lst, env, next);
 }
 
 int	run(t_list **lst, t_env **env)
@@ -92,10 +99,11 @@ int	run(t_list **lst, t_env **env)
 		else if (code < 0 || code == 1)
 		{
 			free(pids);
+			if ((*lst)->mode)
+				return ((*lst)->mode);
 			return (1);
 		}
-		go_next(lst);
-		prepare_command(lst, env, &next);
+		go_next(lst, env, &next);
 	}
 	wait_all(pids, env);
 	return (0);

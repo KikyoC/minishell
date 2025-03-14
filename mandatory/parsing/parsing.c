@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:47:47 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/13 14:05:33 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/14 11:25:36 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	exit_code(int code, t_env **env, int sub, t_list *cmd)
 		error_handler(code, sub, cmd->command);
 	else if (cmd && code == 1)
 		error_handler(code, sub, (char *)cmd->content);
-	else if (!cmd && code == 2)
+	else if (!cmd && code == 2 && sub == -3)
 		ft_putstr_fd("Minishell: Unfinished quotes\n", 2);
 	return (0);
 }
@@ -98,7 +98,7 @@ t_list	*get_commands(char *line, t_env *env)
 	cmds = NULL;
 	if (parse_quote(line))
 	{
-		exit_code(2, &env, 4, NULL);
+		exit_code(2, &env, 3, NULL);
 		return (NULL);
 	}
 	cmds = ft_split_skip_quotes(line, '\0', 1);

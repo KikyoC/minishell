@@ -6,10 +6,39 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:13:26 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:13:33 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/14 12:01:54 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
+
+static long long	ft_atol(char *nptr)
+{
+	int			p;
+	int			i;
+	long long	res;
+
+	p = 1;
+	i = 0;
+	res = 0;
+	while ((nptr[i] >= '\t' && nptr[i] <= '\r') || nptr[i] == ' ')
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
+		if (nptr[i++] == '-')
+			p = -1;
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		if ((p < 0 && - res == LLONG_MIN / 10 && nptr[i] > '8')
+			|| (p > 0 && res == LLONG_MAX / 10 && nptr[i] > '7'))
+		{
+			res = res * 10 + (nptr[i++] - '0');
+			if (p == 1)
+				return (-1);
+			return (0);
+		}
+		res = res * 10 + (nptr[i++] - '0');
+	}
+	return ((long long)(res * p));
+}
 
 int	parse_exit_code(unsigned long long *res, char *str)
 {
@@ -28,7 +57,7 @@ int	parse_exit_code(unsigned long long *res, char *str)
 	while (str[++i])
 		if (!ft_isdigit(str[i]))
 			return (0);
-	tmp = ft_atoi(str);
+	tmp = ft_atol(str);
 	if ((tmp == -1 || tmp == 0) && str[1])
 		return (0);
 	if (res)
