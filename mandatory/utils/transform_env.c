@@ -6,7 +6,7 @@
 /*   By: cmorel <cmorel@42angouleme.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:03:22 by cmorel            #+#    #+#             */
-/*   Updated: 2025/03/11 11:03:25 by cmorel           ###   ########.fr       */
+/*   Updated: 2025/03/17 09:27:27 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../h_files/minishell.h"
@@ -55,11 +55,14 @@ char	**get_envp(t_env **env)
 	i = 0;
 	while (node)
 	{
-		res[i] = special_join(node->name, node->content);
-		if (!res[i])
-			return (ft_free_split(res));
+		if (ft_strncmp(node->name, "?", 2))
+		{
+			res[i] = special_join(node->name, node->content);
+			if (!res[i])
+				return (ft_free_split(res));
+			i++;
+		}
 		node = node->next;
-		i++;
 	}
 	return (res);
 }
